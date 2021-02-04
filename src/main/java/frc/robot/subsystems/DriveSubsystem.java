@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.WPILibVersion;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -36,15 +34,11 @@ public class DriveSubsystem extends SubsystemBase {private final WPI_TalonFX lef
     // The gyro sensor
     private final Gyro gyro = new ADXRS450_Gyro();
   
-    
-    // Odometry class for tracking robot pose
-    private final DifferentialDriveOdometry m_odometry;
   
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem() {
  
       resetEncoders();
-      m_odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
       gyro.calibrate();
   
       leftfalcon2.follow(leftfalcon1);
@@ -62,26 +56,16 @@ public class DriveSubsystem extends SubsystemBase {private final WPI_TalonFX lef
     public void periodic() {}
 
     /**
-     * Drives the robot using arcade controls.
+     * Drives the robot using tank controls.
      *
      * @param fwd the commanded forward movement
      * @param rot the commanded rotation
      */
-    public void arcadeDrive(double fwd, double rot) {
-      m_drive.arcadeDrive(fwd, rot);
+    public void tankDrive(double fwd, double rot) {
+      m_drive.tankDrive(fwd, rot);
     }
   
-    /**
-     * Controls the left and right sides of the drive directly with voltages.
-     *
-     * @param leftVolts the commanded left output
-     * @param rightVolts the commanded right output
-     */
-    public void tankDriveVolts(double leftVolts, double rightVolts) {
-      leftfalcon1.setVoltage(leftVolts);
-      rightfalcon2.setVoltage(-rightVolts);
-      m_drive.feed();
-    }
+   
   
     /** Resets the drive encoders to currently read a position of 0. */
     public void resetEncoders() {
@@ -126,7 +110,7 @@ public class DriveSubsystem extends SubsystemBase {private final WPI_TalonFX lef
     }
   
     /** Zeroes the heading of the robot. */
-    public void zeroHeading() {
+    public void resetGyro() {
       gyro.reset();
     }
   
