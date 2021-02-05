@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 
-public class DriveSubsystem extends SubsystemBase {private final WPI_TalonFX leftfalcon1 = new WPI_TalonFX(DriveConstants.kLeftMotor1Port);
+public class DriveSubsystem extends SubsystemBase {
+    private final WPI_TalonFX leftfalcon1 = new WPI_TalonFX(DriveConstants.kLeftMotor1Port);
     private final WPI_TalonFX leftfalcon2 = new WPI_TalonFX(DriveConstants.kLeftMotor2Port);
     private final WPI_TalonFX rightfalcon1 = new WPI_TalonFX(DriveConstants.kRightMotor1Port);
     private final WPI_TalonFX rightfalcon2 = new WPI_TalonFX(DriveConstants.kRightMotor2Port);
