@@ -62,9 +62,35 @@ public final class Constants {
     
  
       }
-      public static final class ShooterConstants {
+        //driver station constants
+        public static final int RIGHT_JOYSTICK = 1;
+        public static final int LEFT_JOYSTICK = 0;
+        public static final int SECONDARY_JOYSTICK = 2;
+        public static final int DRIVER_STATION_JOY = 0;
+
+    
         //PLACEHOLDER VALUES!
-        public static final int LAUNCH_DRIVER_1 = 1;
-        public static final int LAUNCH_DRIVER_2 = 1;
-      }
+        public static final int LAUNCH_DRIVER_1 = 5;
+        public static final int LAUNCH_DRIVER_2 = 6;
+
+        public static final int SHOOT_1_SPEED = 80;
+        public static final int SHOOT_2_SPEED = 80;
+
+        public static final int REVERSE_SHOOT_1_SPEED = 10;
+        public static final int REVERSE_SHOOT_2_SPEED = 10;
+
+
+        //These should be tested, but should not have changed
+        //distance calc constants
+        public static final double KNOWN_DISTANCE = 161.3; //inches
+        public static final int PIXEL_WIDTH_KNOWN = 65; //pixels
+        public static final double KNOWN_TAPE_BOUND_WIDTH = 39.25; //inches
+        public static final double FOCAL_LENGTH = ( KNOWN_DISTANCE * PIXEL_WIDTH_KNOWN) / KNOWN_TAPE_BOUND_WIDTH;
+
+        //trajectory constants
+        public static final double GRAVITY = 386.09; // inches/ sec ^2
+        public static final int SHOOTERHEIGHT = 23; //NOT ACTUAL VALUE
+
+
+      
 }
