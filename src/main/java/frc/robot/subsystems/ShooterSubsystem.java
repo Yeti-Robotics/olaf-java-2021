@@ -7,12 +7,12 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.SparkMax;
 
-
+import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Limelight;
 private double distance;
-public enum ShooterStatus{
+public enum ShooterStatus {
     FORWARDS, BACKWARDS, OFF
 }
 public class ShooterSubsystem extends SubsystemBase {
@@ -20,9 +20,9 @@ public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX launchMotor1;
     private WPI_TalonFX launchMotor2;
     // hood go brrr
-    public SparkMax pitchMax;
+    public PWMSparkMax pitchMax;
     // turret go brrr
-    public SparkMax slewMax;
+    public PWMSparkMax slewMax;
 
     public static ShooterStatus shooterStatus;
     public ShooterSubsystem() {
