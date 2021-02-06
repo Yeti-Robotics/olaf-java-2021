@@ -4,9 +4,18 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
+import frc.robot.utils.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,6 +28,9 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private final Gyro aDXRGyro = new ADXRS450_Gyro();
+
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,6 +40,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    aDXRGyro.calibrate();
+    aDXRGyro.reset();
+    
   }
 
   /**
@@ -44,6 +60,44 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+    NetworkTableEntry ta = table.getEntry("ta");
+    NetworkTableEntry tlong = table.getEntry("tlong");
+
+//read values periodically
+    double x = tx.getDouble(0.0);
+    double y = ty.getDouble(0.0);
+    double area = ta.getDouble(0.0);
+    double t2long = tlong.getDouble(0.0);
+
+
+    SmartDashboard.putNumber("LimelightX", x);
+    SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("LimelightArea", area);
+
+    SmartDashboard.putNumber("t2long", t2long);
+
+    SmartDashboard.putNumber("distance", Limelight.getDistance());
+
+    SmartDashboard.putNumber("calculated distance", Limelight.getCalculatedDistance());
+
+    //Secondary Controls Shuffleboard
+    //if(IntakeSubsystem.getIntakePosition() == IntakeStatus.DOWN) {
+    //  SmartDashboard.putString("Intake Status", "DOWN");
+    //} else if(IntakeSubsystem.getIntakePosition() == IntakeStatus.UP) {
+    //  SmartDashboard.putString("Intake Status", "UP");
+    // }
+
+    if(ShooterSubsystem.getShooterStatus() == ShooterStatus.BACKWARDS) {
+      SmartDashboard.putString("Flywheel Status", "REVERSE");
+    } else if(ShooterSubsystem.getShooterStatus() == ShooterStatus.FORWARDS) {
+      SmartDashboard.putString("Flywheel Status", "FORWARD");
+    } else {
+      SmartDashboard.putString("Flywheel Status", "OFF");
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

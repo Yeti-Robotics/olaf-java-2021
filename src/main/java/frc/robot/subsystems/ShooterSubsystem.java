@@ -25,7 +25,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private double distance;
     public enum ShooterStatus {
-        FORWARDS, BACKWARDS, OFF
+
+        FORWARDS, BACKWARDS, OFF;
+
+
     }
 
     public static ShooterStatus shooterStatus;
@@ -83,7 +86,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        distance = Limelight.getHorDistance();
+        distance = Limelight.getCalculatedDistance();
     }
 
 }
