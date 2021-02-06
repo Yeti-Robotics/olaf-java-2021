@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -24,12 +23,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     private WPI_TalonFX leftfalcon1, leftfalcon2, rightfalcon1, rightfalcon2;  
 
-    private 
 
   
     // The robot's drive
     //broken it would seem
-    //private final DifferentialDrive m_drive = new DifferentialDrive(leftfalcon1, rightfalcon1);
+    private final DifferentialDrive m_drive = new DifferentialDrive(leftfalcon1, rightfalcon1);
   
  
   
@@ -37,11 +35,12 @@ public class DriveSubsystem extends SubsystemBase {
     private final Gyro aDXRGyro = new ADXRS450_Gyro();
   
   
+  
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem() {
  
       resetEncoders();
-     aDXRGyro.calibrate();
+      aDXRGyro.calibrate();
 
       
       leftfalcon1 = new WPI_TalonFX(DriveConstants.kLeftMotor1Port);
@@ -55,7 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
       rightfalcon2.follow(rightfalcon1);
       rightfalcon2.setInverted(InvertType.FollowMaster);
   
-      //m_drive.setDeadband(0.05);
+      m_drive.setDeadband(0.05);
   
       leftfalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
       rightfalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
@@ -72,7 +71,7 @@ public class DriveSubsystem extends SubsystemBase {
      * @param rot the commanded rotation
      */
     public void tankDrive(double fwd, double rot) {
-      //m_drive.tankDrive(fwd, rot);
+      m_drive.tankDrive(fwd, rot);
     }
 
     public void drive(double leftPower, double rightPower) {
@@ -131,12 +130,12 @@ public class DriveSubsystem extends SubsystemBase {
      * @param maxOutput the maximum output to which the drive will be constrained
      */
     public void setMaxOutput(double maxOutput) {
-      //m_drive.setMaxOutput(maxOutput);
+      m_drive.setMaxOutput(maxOutput);
     }
 
   
     /** Zeroes the heading of the robot. */
-    public void resetGyro() {
+     public void resetGyro() {
      aDXRGyro.reset();
     }
   
@@ -145,7 +144,7 @@ public class DriveSubsystem extends SubsystemBase {
      *
      * @return the robot's heading in degrees, from -180 to 180
      */
-    public double getHeading() {
+      public double getHeading() {
       return aDXRGyro.getRotation2d().getDegrees();
     }
   
@@ -160,7 +159,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     
 
+  
   }
-
     
 
