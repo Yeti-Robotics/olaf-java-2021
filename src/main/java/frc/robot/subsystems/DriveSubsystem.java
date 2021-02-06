@@ -28,19 +28,20 @@ public class DriveSubsystem extends SubsystemBase {
 
   
     // The robot's drive
-    private final DifferentialDrive m_drive = new DifferentialDrive(leftfalcon1, rightfalcon1);
+    //broken it would seem
+    //private final DifferentialDrive m_drive = new DifferentialDrive(leftfalcon1, rightfalcon1);
   
  
   
-    // The gyro sensor
-    private final Gyro gyro = new ADXRS450_Gyro();
+    // The aDXRGyro sensor
+    private final Gyro aDXRGyro = new ADXRS450_Gyro();
   
   
     /** Creates a new DriveSubsystem. */
     public DriveSubsystem() {
  
       resetEncoders();
-      gyro.calibrate();
+     aDXRGyro.calibrate();
 
       
       leftfalcon1 = new WPI_TalonFX(DriveConstants.kLeftMotor1Port);
@@ -54,7 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
       rightfalcon2.follow(rightfalcon1);
       rightfalcon2.setInverted(InvertType.FollowMaster);
   
-      m_drive.setDeadband(0.05);
+      //m_drive.setDeadband(0.05);
   
       leftfalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
       rightfalcon1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
@@ -71,7 +72,7 @@ public class DriveSubsystem extends SubsystemBase {
      * @param rot the commanded rotation
      */
     public void tankDrive(double fwd, double rot) {
-      m_drive.tankDrive(fwd, rot);
+      //m_drive.tankDrive(fwd, rot);
     }
 
     public void drive(double leftPower, double rightPower) {
@@ -84,7 +85,7 @@ public class DriveSubsystem extends SubsystemBase {
     public void stopDrive() {
       leftfalcon1.set(ControlMode.PercentOutput, 0);
 
-      rightfalcon1.set(ControlMode.PercentOutput, 0)
+      rightfalcon1.set(ControlMode.PercentOutput, 0);
     }
    
     
@@ -130,13 +131,13 @@ public class DriveSubsystem extends SubsystemBase {
      * @param maxOutput the maximum output to which the drive will be constrained
      */
     public void setMaxOutput(double maxOutput) {
-      m_drive.setMaxOutput(maxOutput);
+      //m_drive.setMaxOutput(maxOutput);
     }
 
   
     /** Zeroes the heading of the robot. */
     public void resetGyro() {
-      gyro.reset();
+     aDXRGyro.reset();
     }
   
     /**
@@ -145,7 +146,7 @@ public class DriveSubsystem extends SubsystemBase {
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-      return gyro.getRotation2d().getDegrees();
+      return aDXRGyro.getRotation2d().getDegrees();
     }
   
     /**
@@ -154,8 +155,10 @@ public class DriveSubsystem extends SubsystemBase {
      * @return The turn rate of the robot, in degrees per second
      */
     public double getTurnRate() {
-      return -gyro.getRate();
+      return  aDXRGyro.getRate();
     }
+
+    
 
   }
 
