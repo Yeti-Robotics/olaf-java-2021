@@ -120,10 +120,10 @@ public class Limelight {
         return distance;
     }
 
-    public static double getHorDistance() {
-        double horDistance;
-        horDistance = (Math.sqrt((getDistance() * getDistance()) - (85.5 * 85.5)));
-        return horDistance;
+    public static double getCalculatedDistance() {
+        double calculatedDistance;
+        calculatedDistance = (Math.sqrt((getDistance() * getDistance()) - (85.5 * 85.5)));
+        return calculatedDistance;
     }
 
     /**
