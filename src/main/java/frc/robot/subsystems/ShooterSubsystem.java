@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX launchMotor2;
     // hood go brrr
     public PWMSparkMax pitchMax;
-  // turret go brrr
+    // turret go brrr
     public PWMSparkMax slewMax;
 
     private double distance;
@@ -46,7 +46,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void reverseShoot() {
-        launchMotor1.set(ControlMode.PercentOutput, -Constants.REVERSE_SHOOT_1_SPEED);
+        launchMotor1.set(ControlMode.PercentOutput, Constants.REVERSE_SHOOT_1_SPEED);
         launchMotor2.set(ControlMode.PercentOutput, Constants.REVERSE_SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.BACKWARDS;
     }
