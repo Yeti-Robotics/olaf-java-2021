@@ -70,7 +70,7 @@ public final class Constants {
 
     
         //PLACEHOLDER VALUES!
-        public static final int LAUNCH_DRIVER_1 = 5;
+        public static final int FLYWHEEL_1 = 5;
         public static final int LAUNCH_DRIVER_2 = 6;
 
         public static final int SHOOT_1_SPEED = 80;

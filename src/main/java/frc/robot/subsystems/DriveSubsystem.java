@@ -22,11 +22,8 @@ import frc.robot.Constants.DriveConstants;
 public class DriveSubsystem extends SubsystemBase {
 
     private WPI_TalonFX leftfalcon1, leftfalcon2, rightfalcon1, rightfalcon2;  
-
-
   
     // The robot's drive
-    //broken it would seem
     private final DifferentialDrive m_drive = new DifferentialDrive(leftfalcon1, rightfalcon1);
   
  
@@ -50,9 +47,7 @@ public class DriveSubsystem extends SubsystemBase {
   
   
       leftfalcon2.follow(leftfalcon1);
-      leftfalcon2.setInverted(InvertType.FollowMaster);
       rightfalcon2.follow(rightfalcon1);
-      rightfalcon2.setInverted(InvertType.FollowMaster);
   
       m_drive.setDeadband(0.05);
   

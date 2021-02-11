@@ -16,8 +16,8 @@ import frc.robot.utils.Limelight;
 public class ShooterSubsystem extends SubsystemBase {
 
     // ball go brrr
-    private WPI_TalonFX launchMotor1;
-    private WPI_TalonFX launchMotor2;
+    private WPI_TalonFX flyWheel1;
+    private WPI_TalonFX flyWheel2;
     // hood go brrr
     public PWMSparkMax pitchMax;
     // turret go brrr
@@ -33,39 +33,40 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static ShooterStatus shooterStatus;
     public ShooterSubsystem() {
-        launchMotor1 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_1);
-        launchMotor2 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_2);
+        flyWheel1 = new WPI_TalonFX(Constants.FLYWHEEL_1);
+        flyWheel2 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_2);
 
-        launchMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        launchMotor2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        flyWheel2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
 
     }
 
     public void shoot() {
-        launchMotor1.set(ControlMode.PercentOutput, Constants.SHOOT_1_SPEED);
-        launchMotor2.set(ControlMode.PercentOutput, Constants.SHOOT_2_SPEED);
+        flyWheel1.set(ControlMode.PercentOutput, Constants.SHOOT_1_SPEED);
+        flyWheel2.set(ControlMode.PercentOutput, Constants.SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.FORWARDS;
     }
 
     public void reverseShoot() {
-        launchMotor1.set(ControlMode.PercentOutput, Constants.REVERSE_SHOOT_1_SPEED);
-        launchMotor2.set(ControlMode.PercentOutput, Constants.REVERSE_SHOOT_2_SPEED);
+        flyWheel1.set(ControlMode.PercentOutput, Constants.REVERSE_SHOOT_1_SPEED);
+        flyWheel2.set(ControlMode.PercentOutput, Constants.REVERSE_SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.BACKWARDS;
     }
 
     public void stopShoot() {
-        launchMotor1.set(ControlMode.PercentOutput, 0);
-        launchMotor2.set(ControlMode.PercentOutput, 0);
+        flyWheel1.set(ControlMode.PercentOutput, 0);
+        flyWheel2.set(ControlMode.PercentOutput, 0);
         shooterStatus = ShooterStatus.OFF;
     }
 
+    //get encoder value methods probably wrong, need review 
     public double getLeftEncoder() {
-        return launchMotor1.getSelectedSensorVelocity();
+        return flyWheel1.getSelectedSensorVelocity();
     }
 
     public double getRightEncoder() {
-        return launchMotor2.getSelectedSensorVelocity();
+        return flyWheel2.getSelectedSensorVelocity();
     }
 
     public double getAverageEncoder() {
@@ -81,7 +82,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getSpeed() {
-        return launchMotor1.getMotorOutputPercent();
+        return flyWheel1.getMotorOutputPercent();
     }    
 
     @Override
