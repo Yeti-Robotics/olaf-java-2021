@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Limelight;
@@ -31,7 +32,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    driverStationJoystick = new Joystick(Constants.DRIVER_STATION_JOY);
+    driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
     driveJoy = new Joystick(1);
 
     driveSubsystem = new DriveSubsystem();
