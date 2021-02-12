@@ -16,80 +16,44 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
     public static final class DriveConstants {
-        public static final int kLeftMotor1Port = 6;
-        public static final int kLeftMotor2Port = 3;
-        public static final int kRightMotor1Port = 14;
-        public static final int kRightMotor2Port = 7;
+        public static final int LEFT_FALCON_1 = 6;
+        public static final int LEFT_FALCON_2 = 3;
+        public static final int RIGHT_FALCON_1 = 14;
+        public static final int RIGHT_FALCON_2 = 7;
     
         public static final double HIGH_GEAR_RATIO = 5.13;
         public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
-        // public static final int[] kLeftEncoderPorts = new int[] {0, 1};
-        // public static final int[] kRightEncoderPorts = new int[] {2, 3};
-        // public static final boolean kLeftEncoderReversed = false;
-        // public static final boolean kRightEncoderReversed = true;
-    
-        public static final double kTrackwidthMeters = 0.6096;
-        public static final DifferentialDriveKinematics kDriveKinematics =
-            new DifferentialDriveKinematics(kTrackwidthMeters);
-    
-        // public static final int kEncoderCPR = 1024;
-        // public static final double kWheelDiameterMeters = 0.15;
-        // public static final double kEncoderDistancePerPulse =
-        //     // Assumes the encoders are directly mounted on the wheel shafts
-        //     (kWheelDiameterMeters * Math.PI) / (double) kEncoderCPR;
-    
-        // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-        // These characterization values MUST be determined either experimentally or theoretically
-        // for *your* robot's drive.
-        // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
-        // values for your robot.
-        public static final double ksVolts = 0.699;
-        public static final double kvVoltSecondsPerMeter = 3.51;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.208;
-    
-        // Example value only - as above, this must be tuned for your drive!
-        public static final double kPDriveVel = 1.72;
       }
     //piss n shit
-      public static final class OIConstants {
+    public static final class OIConstants {
         public static final int kDriverControllerPort = 1;
-      }
-    
-      public static final class AutoConstants {
-        // note: copy pasted directly
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-    
- 
-      }
         //driver station constants
         public static final int RIGHT_JOYSTICK = 1;
         public static final int LEFT_JOYSTICK = 0;
         public static final int SECONDARY_JOYSTICK = 2;
         public static final int DRIVER_STATION_JOY = 0;
-
+      }
     
-        //PLACEHOLDER VALUES!
-        public static final int FLYWHEEL_1 = 5;
-        public static final int LAUNCH_DRIVER_2 = 6;
-        public static final int HOOD_MAX = 7;
-        public static final int TURRET_MAX = 8;
-
-        public static final int SHOOT_1_SPEED = 80;
-        public static final int SHOOT_2_SPEED = 80;
-
-        public static final int REVERSE_SHOOT_1_SPEED = 10;
-        public static final int REVERSE_SHOOT_2_SPEED = 10;
-
-
-        //These should be tested, but should not have changed
-        //distance calc constants
-        public static final double KNOWN_DISTANCE = 161.3; //inches
-        public static final int PIXEL_WIDTH_KNOWN = 65; //pixels
-        public static final double KNOWN_TAPE_BOUND_WIDTH = 39.25; //inches
-        public static final double FOCAL_LENGTH = ( KNOWN_DISTANCE * PIXEL_WIDTH_KNOWN) / KNOWN_TAPE_BOUND_WIDTH;
-
-        //trajectory constants
-        public static final double GRAVITY = 386.09; // inches/ sec ^2
-        public static final int SHOOTERHEIGHT = 23; //NOT ACTUAL VALUE
+    public static final class ShooterConstants{
+      //PLACEHOLDER VALUES!
+      public static final int FLYWHEEL_1 = 5;
+      public static final int FLYWHEEL_2 = 6;
+      public static final int HOOD_MAX = 7;
+      public static final int TURRET_MAX = 8;
+      public static final int SHOOT_1_SPEED = 80;
+      public static final int SHOOT_2_SPEED = 80;
+      public static final int REVERSE_SHOOT_1_SPEED = 10;
+      public static final int REVERSE_SHOOT_2_SPEED = 10;
+    }
+        
+    public static final class CalcConstants{
+      //distance calc constants
+      public static final double KNOWN_DISTANCE = 161.3; //inches
+      public static final int PIXEL_WIDTH_KNOWN = 65; //pixels
+      public static final double KNOWN_TAPE_BOUND_WIDTH = 39.25; //inches
+      public static final double FOCAL_LENGTH = ( KNOWN_DISTANCE * PIXEL_WIDTH_KNOWN) / KNOWN_TAPE_BOUND_WIDTH;
+      //trajectory constants
+      public static final double GRAVITY = 386.09; // inches/ sec ^2
+      public static final int SHOOTERHEIGHT = 23; //NOT ACTUAL VALUE
+    }
 }

@@ -3,6 +3,7 @@ package frc.robot.utils;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Constants;
+import frc.robot.Constants.CalcConstants;
 
 
 public class Limelight {
@@ -116,7 +117,7 @@ public class Limelight {
 
     public static double getDistance() {
         double distance;
-        distance = (Constants.KNOWN_TAPE_BOUND_WIDTH * Constants.FOCAL_LENGTH) / getTlong();
+        distance = (CalcConstants.KNOWN_TAPE_BOUND_WIDTH * CalcConstants.FOCAL_LENGTH) / getTlong();
         return distance;
     }
 
