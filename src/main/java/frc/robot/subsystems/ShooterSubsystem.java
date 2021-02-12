@@ -1,13 +1,10 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.InvertType;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
-
 import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,21 +22,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private double distance;
     public enum ShooterStatus {
-
         FORWARDS, BACKWARDS, OFF;
-
-
     }
 
     public static ShooterStatus shooterStatus;
     public ShooterSubsystem() {
-        flyWheel1 = new WPI_TalonFX(Constants.FLYWHEEL_1);
-        flyWheel2 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_2);
+        launchMotor1 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_1);
+        launchMotor2 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_2);
+        pitchMax = new PWMSparkMax(Constants.HOOD_MAX);
+        slewMax = new PWMSparkMax(Constants.TURRET_MAX);
 
-        flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        flyWheel2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-
-
+        launchMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        launchMotor2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     }
 
     public void shoot() {
@@ -90,4 +84,23 @@ public class ShooterSubsystem extends SubsystemBase {
         distance = Limelight.getCalculatedDistance();
     }
 
+    public void setHoodAngle(double angle) {
+        //insert fancy math here
+    }
+
+    public void moveHood(double power){
+        pitchMax.set(power);
+    }
+
+    public void stopHood(){
+        pitchMax.set(0);
+    }
+
+    public void moveTurret(double power){
+        slewMax.set(power);
+    }
+
+    public void stopTurret(){
+        slewMax.set(0);
+    }
 }

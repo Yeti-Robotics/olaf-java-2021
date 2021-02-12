@@ -72,6 +72,8 @@ public final class Constants {
         //PLACEHOLDER VALUES!
         public static final int FLYWHEEL_1 = 5;
         public static final int LAUNCH_DRIVER_2 = 6;
+        public static final int HOOD_MAX = 7;
+        public static final int TURRET_MAX = 8;
 
         public static final int SHOOT_1_SPEED = 80;
         public static final int SHOOT_2_SPEED = 80;
@@ -90,7 +92,4 @@ public final class Constants {
         //trajectory constants
         public static final double GRAVITY = 386.09; // inches/ sec ^2
         public static final int SHOOTERHEIGHT = 23; //NOT ACTUAL VALUE
-
-
-      
 }
