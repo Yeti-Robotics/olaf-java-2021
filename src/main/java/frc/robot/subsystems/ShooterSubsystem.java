@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Limelight;
-
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class ShooterSubsystem extends SubsystemBase {
 
+    //pinchroller go brrr
+    private VictorSPX fireController;
     // ball go brrr
     private WPI_TalonFX launchMotor1;
     private WPI_TalonFX launchMotor2;
@@ -31,6 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
         launchMotor2 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_2);
         pitchMax = new PWMSparkMax(Constants.HOOD_MAX);
         slewMax = new PWMSparkMax(Constants.TURRET_MAX);
+        fireController = new VictorSPX(Constants.FIRE_VICTOR);
 
         launchMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         launchMotor2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);

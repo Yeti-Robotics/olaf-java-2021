@@ -70,6 +70,7 @@ public final class Constants {
 
     
         //PLACEHOLDER VALUES!
+        public static final int FIRE_VICTOR = 9;
         public static final int LAUNCH_DRIVER_1 = 5;
         public static final int LAUNCH_DRIVER_2 = 6;
         public static final int HOOD_MAX = 7;
