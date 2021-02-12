@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 // Copyright (c) FIRST and other WPILib contributors.
@@ -10,9 +11,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.Limelight;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 public class ShooterSubsystem extends SubsystemBase {
 
-    //pinchroller go brrr
+    // pinchroller go brrr
     private VictorSPX fireController;
     // ball go brrr
     private WPI_TalonFX launchMotor1;
@@ -23,11 +25,13 @@ public class ShooterSubsystem extends SubsystemBase {
     public PWMSparkMax slewMax;
 
     private double distance;
+
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
     }
 
     public static ShooterStatus shooterStatus;
+
     public ShooterSubsystem() {
         launchMotor1 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_1);
         launchMotor2 = new WPI_TalonFX(Constants.LAUNCH_DRIVER_2);
@@ -66,20 +70,20 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getAverageEncoder() {
-        return (getLeftEncoder() + getRightEncoder()) /2;
+        return (getLeftEncoder() + getRightEncoder()) / 2;
     }
 
-    public static ShooterStatus getShooterStatus(){
+    public static ShooterStatus getShooterStatus() {
         return shooterStatus;
     }
 
     public double calcHoodAngle() {
-        return Math.toDegrees(Math.asin( -Constants.GRAVITY * distance) / Constants.SHOOT_1_SPEED);
+        return Math.toDegrees(Math.asin(-Constants.GRAVITY * distance) / Constants.SHOOT_1_SPEED);
     }
 
     public double getSpeed() {
         return launchMotor1.getMotorOutputPercent();
-    }    
+    }
 
     @Override
     public void periodic() {
@@ -87,22 +91,22 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setHoodAngle(double angle) {
-        //insert fancy math here
+        // insert fancy math here
     }
 
-    public void moveHood(double power){
+    public void moveHood(double power) {
         pitchMax.set(power);
     }
 
-    public void stopHood(){
+    public void stopHood() {
         pitchMax.set(0);
     }
 
-    public void moveTurret(double power){
+    public void moveTurret(double power) {
         slewMax.set(power);
     }
 
-    public void stopTurret(){
+    public void stopTurret() {
         slewMax.set(0);
     }
 }
