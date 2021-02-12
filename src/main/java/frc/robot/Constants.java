@@ -39,6 +39,9 @@ public final class Constants {
     public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
     public static final double ROLL_IN_SPEED = 1.0;
     public static final double ROLL_OUT_SPEED = -1.0;
+    public static final int HOPPER_VICTOR = 0;
+    public static final int FUNNEL_IN_SPEED = 1;
+    public static final int FUNNEL_OUT_SPEED = -1; 
   }
 
   public static final class ShooterConstants{
