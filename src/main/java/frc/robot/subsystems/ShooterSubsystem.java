@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 // Copyright (c) FIRST and other WPILib contributors.
@@ -11,9 +12,12 @@ import frc.robot.Constants;
 import frc.robot.Constants.CalcConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.utils.Limelight;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class ShooterSubsystem extends SubsystemBase {
 
+    // pinchroller go brrr
+    private VictorSPX fireController;
     // ball go brrr
     private WPI_TalonFX flyWheel1;
     private WPI_TalonFX flyWheel2;
@@ -23,12 +27,15 @@ public class ShooterSubsystem extends SubsystemBase {
     public PWMSparkMax slewMax;
 
     private double distance;
+
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
     }
 
     public static ShooterStatus shooterStatus;
+
     public ShooterSubsystem() {
+        fireController = new VictorSPX(Constants.FIRE_VICTOR);
         flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
         flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
         pitchMax = new PWMSparkMax(ShooterConstants.HOOD_MAX);
@@ -66,10 +73,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getAverageEncoder() {
-        return (getLeftEncoder() + getRightEncoder()) /2;
+        return (getLeftEncoder() + getRightEncoder()) / 2;
     }
 
-    public static ShooterStatus getShooterStatus(){
+    public static ShooterStatus getShooterStatus() {
         return shooterStatus;
     }
 
@@ -87,22 +94,22 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setHoodAngle(double angle) {
-        //insert fancy math here
+        // insert fancy math here
     }
 
-    public void moveHood(double power){
+    public void moveHood(double power) {
         pitchMax.set(power);
     }
 
-    public void stopHood(){
+    public void stopHood() {
         pitchMax.set(0);
     }
 
-    public void moveTurret(double power){
+    public void moveTurret(double power) {
         slewMax.set(power);
     }
 
-    public void stopTurret(){
+    public void stopTurret() {
         slewMax.set(0);
     }
 }
