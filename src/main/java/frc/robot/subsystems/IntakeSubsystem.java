@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -27,6 +26,8 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeTalon = new TalonSRX(IntakeConstants.INTAKE_TALON);
     intakePistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
     hopperVictor = new VictorSPX(IntakeConstants.HOPPER_VICTOR);
+
+    intakeTalon.setInverted(true);
   }
 
   @Override

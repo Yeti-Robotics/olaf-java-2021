@@ -35,12 +35,12 @@ public class ShooterSubsystem extends SubsystemBase {
     public static ShooterStatus shooterStatus;
 
     public ShooterSubsystem() {
-        fireController = new VictorSPX(Constants.FIRE_VICTOR);
         flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
         flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
         pitchMax = new PWMSparkMax(ShooterConstants.HOOD_MAX);
         slewMax = new PWMSparkMax(ShooterConstants.TURRET_MAX);
 
+        flyWheel1.setInverted(true);
         flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         flyWheel2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     }

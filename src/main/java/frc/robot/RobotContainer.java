@@ -27,6 +27,7 @@ public class RobotContainer {
   Joystick driveJoy;
   public DriveSubsystem driveSubsystem;
   public ShooterSubsystem shooterSubsystem;
+  public IntakeSubsystem intakeSubsystem;
   public Limelight limelight;
   
 
@@ -37,20 +38,18 @@ public class RobotContainer {
 
     driveSubsystem = new DriveSubsystem();
     shooterSubsystem = new ShooterSubsystem();
+    intakeSubsystem = new IntakeSubsystem();
     limelight = new Limelight();
 
-    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.drive(getLeftY(), getRightY()), driveSubsystem));
+    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.tankDrive(getLeftY(), getRightY()), driveSubsystem));
     // Configure the button bindings
     configureButtonBindings();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    setJoystickButtonWhileHeld(driverStationJoystick, 1, new RunCommand(() -> intakeSubsystem.rollIn(), intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 2, new RunCommand(() -> intakeSubsystem.funnelIn(), intakeSubsystem));
+  }
 
   public double getLeftY() {
     if(driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1){
@@ -77,16 +76,14 @@ public class RobotContainer {
     return driverStationJoystick.getX();
   }
 
-  
+  private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whenPressed(command);
+  }
 
+  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whileHeld(command);
+  }
 
-
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return null;

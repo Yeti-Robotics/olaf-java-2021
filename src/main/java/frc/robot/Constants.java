@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
   public static final class DriveConstants {
-    public static final int LEFT_FALCON_1 = 6;
-    public static final int LEFT_FALCON_2 = 3;
-    public static final int RIGHT_FALCON_1 = 14;
-    public static final int RIGHT_FALCON_2 = 7;
+    public static final int LEFT_FALCON_1 = 3;
+    public static final int LEFT_FALCON_2 = 4;
+    public static final int RIGHT_FALCON_1 = 2;
+    public static final int RIGHT_FALCON_2 = 1;
 
     public static final double HIGH_GEAR_RATIO = 5.13;
     public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
@@ -35,18 +35,18 @@ public final class Constants {
   }
     
   public static final class IntakeConstants{
-    public static final int INTAKE_TALON = 0;
+    public static final int INTAKE_TALON = 7;
     public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
     public static final double ROLL_IN_SPEED = 1.0;
     public static final double ROLL_OUT_SPEED = -1.0;
-    public static final int HOPPER_VICTOR = 0;
+    public static final int HOPPER_VICTOR = 1;
     public static final int FUNNEL_IN_SPEED = 1;
     public static final int FUNNEL_OUT_SPEED = -1; 
   }
 
   public static final class ShooterConstants{
     //PLACEHOLDER VALUES!
-    public static final int FLYWHEEL_1 = 5;
+    public static final int FLYWHEEL_1 = 5; //rightside falcon
     public static final int FLYWHEEL_2 = 6;
     public static final int HOOD_MAX = 7;
     public static final int TURRET_MAX = 8;
