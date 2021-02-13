@@ -29,6 +29,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeTalon.setInverted(true);
     hopperVictor.setInverted(true);
+    intakeStatus = IntakeStatus.DOWN;
   }
 
   @Override
@@ -54,7 +55,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public void intakeStop(){
       intakeTalon.set(ControlMode.PercentOutput, 0);
   }
-  public static IntakeStatus getIntakePosition(){
+  public IntakeStatus getIntakePosition(){
       return intakeStatus;
   }
 
@@ -66,5 +67,9 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public void hopperStop() {
     hopperVictor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public TalonSRX getIntakeTalon(){
+    return intakeTalon;
   }
 }

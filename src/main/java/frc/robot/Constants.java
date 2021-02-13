@@ -40,8 +40,8 @@ public final class Constants {
     public static final double ROLL_IN_SPEED = 1.0;
     public static final double ROLL_OUT_SPEED = -1.0;
     public static final int HOPPER_VICTOR = 1;
-    public static final int FUNNEL_IN_SPEED = 1;
-    public static final int FUNNEL_OUT_SPEED = -1; 
+    public static final double FUNNEL_IN_SPEED = .5;
+    public static final double FUNNEL_OUT_SPEED = -.5; 
   }
 
   public static final class ShooterConstants{
@@ -55,8 +55,8 @@ public final class Constants {
     public static final int REVERSE_SHOOT_1_SPEED = 10;
     public static final int REVERSE_SHOOT_2_SPEED = 10;
     public static final int PINCH_ROLLER_VICTOR = 2;
-    public static final double PINCH_ROLLER_IN_SPEED = .5;
-    public static final double PINCH_ROLLER_OUT_SPEED = -.5;
+    public static final double PINCH_ROLLER_IN_SPEED = .75;
+    public static final double PINCH_ROLLER_OUT_SPEED = -.75;
   }
       
   public static final class CalcConstants{
