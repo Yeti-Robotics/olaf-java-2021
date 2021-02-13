@@ -29,8 +29,8 @@ public class DriveSubsystem extends SubsystemBase {
   
       leftfalcon2.follow(leftfalcon1);
       rightfalcon2.follow(rightfalcon1);
-      rightfalcon1.setInverted(true);
-      rightfalcon2.setInverted(true);
+      // rightfalcon1.setInverted(true);
+      // rightfalcon2.setInverted(true);
   
       m_drive = new DifferentialDrive(leftfalcon1, rightfalcon1);
       m_drive.setDeadband(0.05);
@@ -45,12 +45,6 @@ public class DriveSubsystem extends SubsystemBase {
   
     public void tankDrive(double fwd, double rot) {
       m_drive.tankDrive(fwd, rot);
-    }
-
-    public void drive(double leftPower, double rightPower) {
-      leftfalcon1.set(ControlMode.PercentOutput, leftPower);
-      rightfalcon1.set(ControlMode.PercentOutput, rightPower);
-      
     }
 
     public void stopDrive() {
