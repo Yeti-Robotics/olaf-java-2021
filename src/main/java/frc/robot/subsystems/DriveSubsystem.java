@@ -71,10 +71,6 @@ public class DriveSubsystem extends SubsystemBase {
     public double getRightEncoder() {
       return (rightfalcon1.getSelectedSensorPosition() * (DriveConstants.DISTANCE_PER_PULSE) / (DriveConstants.HIGH_GEAR_RATIO)) ;
     }
-
-    public double getAverageEncoderDistance() {
-      return (getLeftEncoder() + getRightEncoder()) / 2;
-    }
   
     public void setMaxOutput(double maxOutput) {
       m_drive.setMaxOutput(maxOutput);

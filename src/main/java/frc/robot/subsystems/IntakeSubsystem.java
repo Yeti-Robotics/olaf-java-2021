@@ -28,6 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
     hopperVictor = new VictorSPX(IntakeConstants.HOPPER_VICTOR);
 
     intakeTalon.setInverted(true);
+    hopperVictor.setInverted(true);
   }
 
   @Override
@@ -44,26 +45,26 @@ public class IntakeSubsystem extends SubsystemBase {
       intakeStatus = IntakeStatus.UP;
   }
   
-  public void rollIn(){
+  public void intakeIn(){
       intakeTalon.set(ControlMode.PercentOutput, IntakeConstants.ROLL_IN_SPEED);
   }
-  public void rollOut(){
+  public void intakeOut(){
       intakeTalon.set(ControlMode.PercentOutput, IntakeConstants.ROLL_OUT_SPEED);
   }
-  public void stopRoll(){
+  public void intakeStop(){
       intakeTalon.set(ControlMode.PercentOutput, 0);
   }
   public static IntakeStatus getIntakePosition(){
       return intakeStatus;
   }
 
-  public void funnelIn() {
+  public void hopperIn() {
     hopperVictor.set(ControlMode.PercentOutput, IntakeConstants.FUNNEL_IN_SPEED);
   }
-  public void funnelOut() {
+  public void hopperOut() {
     hopperVictor.set(ControlMode.PercentOutput, IntakeConstants.FUNNEL_OUT_SPEED);
   }
-  public void funnelStop() {
+  public void hopperStop() {
     hopperVictor.set(ControlMode.PercentOutput, 0);
   }
 }

@@ -54,6 +54,9 @@ public final class Constants {
     public static final int SHOOT_2_SPEED = 80;
     public static final int REVERSE_SHOOT_1_SPEED = 10;
     public static final int REVERSE_SHOOT_2_SPEED = 10;
+    public static final int PINCH_ROLLER_VICTOR = 2;
+    public static final double PINCH_ROLLER_IN_SPEED = .5;
+    public static final double PINCH_ROLLER_OUT_SPEED = -.5;
   }
       
   public static final class CalcConstants{
