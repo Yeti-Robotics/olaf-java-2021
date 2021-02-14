@@ -2,16 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
+package frc.robot.commands.hopper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 
 public class HopperInCommand extends CommandBase {
-  private final IntakeSubsystem intakeSubsystem;
-  public HopperInCommand(IntakeSubsystem intakeSubsystem) {
-    this.intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeSubsystem);
+  private final HopperSubsystem hopperSubsystem;
+  public HopperInCommand(HopperSubsystem hopperSubsystem) {
+    this.hopperSubsystem = hopperSubsystem;
+    addRequirements(hopperSubsystem);
   }
 
   @Override
@@ -19,12 +19,12 @@ public class HopperInCommand extends CommandBase {
 
   @Override
   public void execute() {
-    intakeSubsystem.hopperIn();
+    hopperSubsystem.hopperIn();
   }
 
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.hopperStop();
+    hopperSubsystem.hopperStop();
   }
 
   @Override

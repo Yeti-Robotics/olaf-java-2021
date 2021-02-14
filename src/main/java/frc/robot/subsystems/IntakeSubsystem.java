@@ -20,15 +20,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private final DoubleSolenoid intakePistons;
   private final TalonSRX intakeTalon;
-  private final VictorSPX hopperVictor; 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
     intakeTalon = new TalonSRX(IntakeConstants.INTAKE_TALON);
     intakePistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
-    hopperVictor = new VictorSPX(IntakeConstants.HOPPER_VICTOR);
 
     intakeTalon.setInverted(true);
-    hopperVictor.setInverted(true);
     intakeStatus = IntakeStatus.DOWN;
   }
 
@@ -57,16 +54,6 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public IntakeStatus getIntakePosition(){
       return intakeStatus;
-  }
-
-  public void hopperIn() {
-    hopperVictor.set(ControlMode.PercentOutput, IntakeConstants.FUNNEL_IN_SPEED);
-  }
-  public void hopperOut() {
-    hopperVictor.set(ControlMode.PercentOutput, IntakeConstants.FUNNEL_OUT_SPEED);
-  }
-  public void hopperStop() {
-    hopperVictor.set(ControlMode.PercentOutput, 0);
   }
 
   public TalonSRX getIntakeTalon(){

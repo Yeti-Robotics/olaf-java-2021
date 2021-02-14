@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.commands.intake.AllInCommand;
-import frc.robot.commands.intake.HopperInCommand;
+import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.shooter.PinchRollerInCommand;
@@ -34,6 +34,7 @@ public class RobotContainer {
   public DriveSubsystem driveSubsystem;
   public ShooterSubsystem shooterSubsystem;
   public IntakeSubsystem intakeSubsystem;
+  public HopperSubsystem hopperSubsystem;
   public Limelight limelight;
   
 
@@ -44,6 +45,7 @@ public class RobotContainer {
     shooterSubsystem = new ShooterSubsystem();
     intakeSubsystem = new IntakeSubsystem();
     driveSubsystem = new DriveSubsystem(intakeSubsystem);
+    hopperSubsystem = new HopperSubsystem();
     limelight = new Limelight();
 
     driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.tankDrive(getLeftY(), getRightY()), driveSubsystem));
@@ -53,10 +55,10 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     setJoystickButtonWhileHeld(driverStationJoystick, 1, new IntakeInCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 2, new HopperInCommand(intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 2, new HopperInCommand(hopperSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 3, new PinchRollerInCommand(shooterSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterOnOffCommand(shooterSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(shooterSubsystem, intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(shooterSubsystem, intakeSubsystem, hopperSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new ToggleIntakePistonCommand(intakeSubsystem));
   }
 
