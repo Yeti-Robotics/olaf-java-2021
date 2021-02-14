@@ -28,6 +28,9 @@ public final class Constants {
         // public static final boolean kLeftEncoderReversed = false;
         // public static final boolean kRightEncoderReversed = true;
     
+        // placeholder values
+        public static final int[] SHIFTER_SOLENOID = {0,1}; 
+
         public static final double kTrackwidthMeters = 0.6096;
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
