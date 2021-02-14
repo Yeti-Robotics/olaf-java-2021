@@ -11,7 +11,15 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drivetrain.StopDriveCommand;
+import frc.robot.commands.intake.AllInCommand;
+import frc.robot.commands.intake.HopperInCommand;
+import frc.robot.commands.intake.IntakeInCommand;
+import frc.robot.commands.intake.ToggleIntakePistonCommand;
+import frc.robot.commands.shooter.PinchRollerInCommand;
+import frc.robot.commands.shooter.ShooterOutCommand;
+import frc.robot.commands.shooter.ToggleShooterOnOffCommand;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Limelight;
 /**
@@ -23,33 +31,34 @@ import frc.robot.utils.Limelight;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public final Joystick driverStationJoystick;
-  Joystick driveJoy;
   public DriveSubsystem driveSubsystem;
   public ShooterSubsystem shooterSubsystem;
+  public IntakeSubsystem intakeSubsystem;
   public Limelight limelight;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    driverStationJoystick = new Joystick(Constants.DRIVER_STATION_JOY);
-    driveJoy = new Joystick(1);
+    driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
-    driveSubsystem = new DriveSubsystem();
     shooterSubsystem = new ShooterSubsystem();
+    intakeSubsystem = new IntakeSubsystem();
+    driveSubsystem = new DriveSubsystem(intakeSubsystem);
     limelight = new Limelight();
 
-    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.drive(getLeftY(), getRightY()), driveSubsystem));
+    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.tankDrive(getLeftY(), getRightY()), driveSubsystem));
     // Configure the button bindings
     configureButtonBindings();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    setJoystickButtonWhileHeld(driverStationJoystick, 1, new IntakeInCommand(intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 2, new HopperInCommand(intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 3, new PinchRollerInCommand(shooterSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterOnOffCommand(shooterSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(shooterSubsystem, intakeSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 6, new ToggleIntakePistonCommand(intakeSubsystem));
+  }
 
   public double getLeftY() {
     if(driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1){
@@ -76,16 +85,14 @@ public class RobotContainer {
     return driverStationJoystick.getX();
   }
 
-  
+  private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whenPressed(command);
+  }
 
+  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whileHeld(command);
+  }
 
-
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return null;
