@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.CalcConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.utils.Limelight;
@@ -22,9 +21,9 @@ public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX flyWheel1;
     private WPI_TalonFX flyWheel2;
     // hood go brrr
-    public PWMSparkMax pitchMax;
+    public PWMSparkMax hoodSpark;
     // turret go brrr
-    public PWMSparkMax slewMax;
+    public PWMSparkMax turretSpark;
 
     private double distance;
 
@@ -38,8 +37,8 @@ public class ShooterSubsystem extends SubsystemBase {
         pinchRollerVictor = new VictorSPX(ShooterConstants.PINCH_ROLLER_VICTOR);
         flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
         flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
-        pitchMax = new PWMSparkMax(ShooterConstants.HOOD_MAX);
-        slewMax = new PWMSparkMax(ShooterConstants.TURRET_MAX);
+        hoodSpark = new PWMSparkMax(ShooterConstants.HOOD_SPARK);
+        turretSpark = new PWMSparkMax(ShooterConstants.TURRET_SPARK);
 
         flyWheel1.setInverted(true);
         flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -113,18 +112,18 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void moveHood(double power) {
-        pitchMax.set(power);
+        hoodSpark.set(power);
     }
 
     public void stopHood() {
-        pitchMax.set(0);
+        hoodSpark.set(0);
     }
 
     public void moveTurret(double power) {
-        slewMax.set(power);
+        turretSpark.set(power);
     }
 
     public void stopTurret() {
-        slewMax.set(0);
+        turretSpark.set(0);
     }
 }
