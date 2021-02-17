@@ -44,7 +44,7 @@ public class RobotContainer {
 
     shooterSubsystem = new ShooterSubsystem();
     intakeSubsystem = new IntakeSubsystem();
-    driveSubsystem = new DriveSubsystem(intakeSubsystem);
+    driveSubsystem = new DriveSubsystem();
     hopperSubsystem = new HopperSubsystem();
     limelight = new Limelight();
 
