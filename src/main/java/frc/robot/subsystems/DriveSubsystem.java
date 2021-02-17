@@ -3,10 +3,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,8 +19,13 @@ public class DriveSubsystem extends SubsystemBase {
   
   private WPI_TalonFX leftfalcon1, leftfalcon2, rightfalcon1, rightfalcon2;  
 
+  private PigeonIMU lmaogyro;
+  
+  //so like im gonna create a private SRX idk what this is but allison told me and yea lmao
+  private TalonSRX lmaogyrotalon;
+
   // The robot's drive
-  private final DifferentialDrive m_drive;  
+  private final DifferentialDrive m_drive;
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {   
@@ -40,6 +47,9 @@ public class DriveSubsystem extends SubsystemBase {
     leftfalcon1.setNeutralMode(NeutralMode.Brake);
     rightfalcon1.setNeutralMode(NeutralMode.Brake);
     resetEncoders();
+  
+    lmaogyrotalon = new TalonSRX(DriveConstants.GYRO_TALON);
+    lmaogyro = new PigeonIMU(lmaogyrotalon);
   }
 
   @Override
@@ -72,9 +82,14 @@ public class DriveSubsystem extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  // public double getAngle(){
-  //   double [] ypr = new double[3];
-  //   gyro.getYawPitchRoll(ypr);
-  //   return ypr[0];
-  // }
+  public double getAngle(){
+    double [] ypr = new double[3];
+    lmaogyro.getYawPitchRoll(ypr);
+    return ypr[0];
+  }
+
+  public void resetGyro(){
+    lmaogyro.setYaw(0);
+  }
+
 }
