@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -55,8 +53,11 @@ public final class Constants {
   }
 
   public static final class TurretConstants{
-    public static final int HOOD_SPARK = 7;
     public static final int TURRET_SPARK = 8;
+  }
+  
+  public static final class HoodConstants{
+    public static final int HOOD_SPARK = 7;
   }
 
   public static final class ShooterConstants{

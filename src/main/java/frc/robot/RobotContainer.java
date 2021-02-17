@@ -11,6 +11,13 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.intake.AllInCommand;
+import frc.robot.commands.hopper.HopperInCommand;
+import frc.robot.commands.intake.IntakeInCommand;
+import frc.robot.commands.intake.ToggleIntakePistonCommand;
+import frc.robot.commands.shooter.PinchRollerInCommand;
+import frc.robot.commands.shooter.ShooterResetCommand;
+import frc.robot.commands.shooter.ToggleShooterOnOffCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.subsystems.*;
@@ -51,6 +58,12 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+    setJoystickButtonWhileHeld(driverStationJoystick, 1, new IntakeInCommand(intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 2, new HopperInCommand(hopperSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 3, new PinchRollerInCommand(shooterSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterOnOffCommand(shooterSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(shooterSubsystem, intakeSubsystem, hopperSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 6, new ToggleIntakePistonCommand(intakeSubsystem));
   }
 
   public double getLeftY() {

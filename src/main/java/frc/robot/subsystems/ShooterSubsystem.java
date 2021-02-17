@@ -6,11 +6,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CalcConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.utils.Limelight;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -20,8 +17,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // ball go brrr
     private WPI_TalonFX flyWheel1;
     private WPI_TalonFX flyWheel2;
-
-    private double distance;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;

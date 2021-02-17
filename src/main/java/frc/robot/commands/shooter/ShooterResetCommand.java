@@ -7,9 +7,9 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterOutCommand extends CommandBase {
+public class ShooterResetCommand extends CommandBase {
   private final ShooterSubsystem shooterSubsystem;
-  public ShooterOutCommand(ShooterSubsystem shooterSubsystem) {
+  public ShooterResetCommand(ShooterSubsystem shooterSubsystem) {
     this.shooterSubsystem = shooterSubsystem;
     addRequirements(shooterSubsystem);
   }
