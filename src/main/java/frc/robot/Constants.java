@@ -69,6 +69,10 @@ public final class Constants {
     public static final double PINCH_ROLLER_OUT_SPEED = -.75;
   }
 
+  public static final class PinchRollerConstants{
+    public static final int PINCH_ROLLER_VICTOR = 3;
+  }
+
   public static final class CalcConstants{
     //distance calc constants
     public static final double KNOWN_DISTANCE = 161.3; //inches
