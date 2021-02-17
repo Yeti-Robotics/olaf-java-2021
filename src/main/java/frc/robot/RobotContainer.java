@@ -15,11 +15,13 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Limelight;
+
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -29,9 +31,10 @@ public class RobotContainer {
   public IntakeSubsystem intakeSubsystem;
   public HopperSubsystem hopperSubsystem;
   public Limelight limelight;
-  
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
@@ -41,17 +44,19 @@ public class RobotContainer {
     hopperSubsystem = new HopperSubsystem();
     limelight = new Limelight();
 
-    driveSubsystem.setDefaultCommand(new RunCommand(() -> driveSubsystem.tankDrive(getLeftY(), getRightY()), driveSubsystem));
+    driveSubsystem
+        .setDefaultCommand(new RunCommand(() -> driveSubsystem.tankDrive(getLeftY(), getRightY()), driveSubsystem));
     // Configure the button bindings
     configureButtonBindings();
   }
 
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+  }
 
   public double getLeftY() {
-    if(driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1){
+    if (driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1) {
       return driverStationJoystick.getRawAxis(1);
-    }else{
+    } else {
       return 0;
     }
   }
@@ -62,9 +67,9 @@ public class RobotContainer {
 
   public double getRightY() {
 
-    if(driverStationJoystick.getRawAxis(3) >= .1 || driverStationJoystick.getRawAxis(3) <= -.1){
+    if (driverStationJoystick.getRawAxis(3) >= .1 || driverStationJoystick.getRawAxis(3) <= -.1) {
       return driverStationJoystick.getRawAxis(3);
-    }else{
+    } else {
       return 0;
     }
   }

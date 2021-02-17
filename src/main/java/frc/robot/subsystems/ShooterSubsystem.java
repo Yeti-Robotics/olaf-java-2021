@@ -20,10 +20,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // ball go brrr
     private WPI_TalonFX flyWheel1;
     private WPI_TalonFX flyWheel2;
-    // hood go brrr
-    public PWMSparkMax hoodSpark;
-    // turret go brrr
-    public PWMSparkMax turretSpark;
 
     private double distance;
 
@@ -37,8 +33,6 @@ public class ShooterSubsystem extends SubsystemBase {
         pinchRollerVictor = new VictorSPX(ShooterConstants.PINCH_ROLLER_VICTOR);
         flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
         flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
-        hoodSpark = new PWMSparkMax(ShooterConstants.HOOD_SPARK);
-        turretSpark = new PWMSparkMax(ShooterConstants.TURRET_SPARK);
 
         flyWheel1.setInverted(true);
         flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -94,36 +88,8 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterStatus;
     }
 
-    public double calcHoodAngle() {
-        return Math.toDegrees(Math.asin( - CalcConstants.GRAVITY * distance) / ShooterConstants.SHOOT_1_SPEED);
-    }
-
     public double getSpeed() {
         return flyWheel1.getMotorOutputPercent();
-    }    
-
-    @Override
-    public void periodic() {
-        distance = Limelight.getCalculatedDistance();
-    }
-
-    public void setHoodAngle(double angle) {
-        // insert fancy math here
-    }
-
-    public void moveHood(double power) {
-        hoodSpark.set(power);
-    }
-
-    public void stopHood() {
-        hoodSpark.set(0);
-    }
-
-    public void moveTurret(double power) {
-        turretSpark.set(power);
-    }
-
-    public void stopTurret() {
-        turretSpark.set(0);
-    }
+    }  
+    
 }

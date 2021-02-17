@@ -54,12 +54,15 @@ public final class Constants {
     public static final double HOPPER_OUT_SPEED = -.5; 
   }
 
+  public static final class TurretConstants{
+    public static final int HOOD_SPARK = 7;
+    public static final int TURRET_SPARK = 8;
+  }
+
   public static final class ShooterConstants{
     //PLACEHOLDER VALUES!
     public static final int FLYWHEEL_1 = 5; //rightside falcon
-    public static final int FLYWHEEL_2 = 6;
-    public static final int HOOD_SPARK = 7;
-    public static final int TURRET_SPARK = 8;
+    public static final int FLYWHEEL_2 = 6; //leftside falcon
     public static final int SHOOT_1_SPEED = 80;
     public static final int SHOOT_2_SPEED = 80;
     public static final int REVERSE_SHOOT_1_SPEED = 10;
