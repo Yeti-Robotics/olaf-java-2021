@@ -1,15 +1,15 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
 //ToDo: create IntakeSubsystem 
 //import frc.robot.subsystems.IntakeSubsystem;
 
 
 public class StopDriveCommand extends CommandBase {
-    private final DriveSubsystem drivetrainSubsystem;
+    private final DrivetrainSubsystem drivetrainSubsystem;
 
-    public StopDriveCommand(DriveSubsystem drivetrainSubsystem) {
+    public StopDriveCommand(DrivetrainSubsystem drivetrainSubsystem) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         addRequirements(drivetrainSubsystem);
     }

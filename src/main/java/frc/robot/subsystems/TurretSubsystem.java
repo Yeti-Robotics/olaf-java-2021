@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Limelight;
 import frc.robot.Constants.CalcConstants;
@@ -15,7 +17,7 @@ public class TurretSubsystem extends SubsystemBase {
     private double distance;
 
     public TurretSubsystem() {
-        turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK);
+        turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK, MotorType.kBrushless);
     }
 
     public double calcHoodAngle() {

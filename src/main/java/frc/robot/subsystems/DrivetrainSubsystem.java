@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 
-public class DriveSubsystem extends SubsystemBase {
+public class DrivetrainSubsystem extends SubsystemBase {
   
   private WPI_TalonFX leftfalcon1, leftfalcon2, rightfalcon1, rightfalcon2;  
 
@@ -28,7 +28,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final DifferentialDrive m_drive;
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem() {   
+  public DrivetrainSubsystem() {   
     leftfalcon1 = new WPI_TalonFX(DriveConstants.LEFT_FALCON_1);
     leftfalcon2 = new WPI_TalonFX(DriveConstants.LEFT_FALCON_2);
     rightfalcon1 = new WPI_TalonFX(DriveConstants.RIGHT_FALCON_1);
@@ -76,6 +76,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double getRightEncoder() {
     return (rightfalcon1.getSelectedSensorPosition() * (DriveConstants.DISTANCE_PER_PULSE) / (DriveConstants.HIGH_GEAR_RATIO)) ;
+  }
+
+  public double getAverageEncoder(){
+    return ((getLeftEncoder()+getRightEncoder())/2);
   }
 
   public void setMaxOutput(double maxOutput) {

@@ -5,14 +5,14 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class TurnForAngleCommand extends CommandBase {
-  private DriveSubsystem driveSubsystem;
+  private DrivetrainSubsystem drivetrainSubsystem;
   private double leftPower, rightPower, gyroGoal;
   
-  public TurnForAngleCommand(DriveSubsystem driveSubsystem, double gyroGoal, double leftPower, double rightPower) {
-    this.driveSubsystem = driveSubsystem;
+  public TurnForAngleCommand(DrivetrainSubsystem driveSubsystem, double gyroGoal, double leftPower, double rightPower) {
+    this.drivetrainSubsystem = driveSubsystem;
     this.gyroGoal = gyroGoal;
     this.leftPower = leftPower;
     this.rightPower = rightPower;
@@ -21,25 +21,25 @@ public class TurnForAngleCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    driveSubsystem.resetGyro();
+    drivetrainSubsystem.resetGyro();
   }
 
   @Override
   public void execute(){
     if(gyroGoal < 0){
-      driveSubsystem.tankDrive(-leftPower, rightPower);
+      drivetrainSubsystem.tankDrive(-leftPower, rightPower);
     } else {
-      driveSubsystem.tankDrive(leftPower, -rightPower);
+      drivetrainSubsystem.tankDrive(leftPower, -rightPower);
     }
   }
 
   @Override
   public boolean isFinished() {
-    return Math.abs(gyroGoal) <= driveSubsystem.getAngle();
+    return Math.abs(gyroGoal) <= drivetrainSubsystem.getAngle();
   }
 
   @Override 
   public void end(boolean interrupted) {
-    driveSubsystem.stopDrive();
+    drivetrainSubsystem.stopDrive();
   }
 }

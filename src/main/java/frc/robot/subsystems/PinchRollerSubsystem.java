@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.PinchRollerConstants;
 
 public class PinchRollerSubsystem extends SubsystemBase {
   /** Creates a new PinchRollerSubsytem. */
@@ -18,10 +18,10 @@ public class PinchRollerSubsystem extends SubsystemBase {
     pinchRollerVictor = new VictorSPX(0);
   }
   public void pinchIn(){
-    pinchRollerVictor.set(ControlMode.PercentOutput, ShooterConstants.PINCH_ROLLER_IN_SPEED);
+    pinchRollerVictor.set(ControlMode.PercentOutput, PinchRollerConstants.PINCH_ROLLER_IN_SPEED);
   }
   public void pinchOut(){
-    pinchRollerVictor.set(ControlMode.PercentOutput, ShooterConstants.PINCH_ROLLER_OUT_SPEED);
+    pinchRollerVictor.set(ControlMode.PercentOutput, PinchRollerConstants.PINCH_ROLLER_OUT_SPEED);
 }
 
 public void pinchStop(){

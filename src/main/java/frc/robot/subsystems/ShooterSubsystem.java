@@ -8,12 +8,9 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    // pinchroller go brrr
-    private VictorSPX pinchRollerVictor;
     // ball go brrr
     private WPI_TalonFX flyWheel1;
     private WPI_TalonFX flyWheel2;
@@ -25,7 +22,6 @@ public class ShooterSubsystem extends SubsystemBase {
     public static ShooterStatus shooterStatus;
 
     public ShooterSubsystem() {
-        pinchRollerVictor = new VictorSPX(ShooterConstants.PINCH_ROLLER_VICTOR);
         flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
         flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
 
@@ -33,19 +29,6 @@ public class ShooterSubsystem extends SubsystemBase {
         flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         flyWheel2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     
-        pinchRollerVictor.setInverted(true);
-    }
-
-    public void pinchIn(){
-        pinchRollerVictor.set(ControlMode.PercentOutput, ShooterConstants.PINCH_ROLLER_IN_SPEED);
-    }
-
-    public void pinchOut(){
-        pinchRollerVictor.set(ControlMode.PercentOutput, ShooterConstants.PINCH_ROLLER_OUT_SPEED);
-    }
-
-    public void pinchStop(){
-        pinchRollerVictor.set(ControlMode.PercentOutput, 0);
     }
 
     public void shoot() {

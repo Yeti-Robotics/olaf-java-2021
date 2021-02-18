@@ -7,14 +7,14 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.PinchRollerSubsystem;
 
 public class AllInCommand extends CommandBase {
-  public final ShooterSubsystem shooterSubsystem;
+  public final PinchRollerSubsystem pinchRollerSubsystem;
   public final IntakeSubsystem intakeSubsystem;
   public final HopperSubsystem hopperSubsystem;
-  public AllInCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
-    this.shooterSubsystem = shooterSubsystem;
+  public AllInCommand(PinchRollerSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
+    this.pinchRollerSubsystem = shooterSubsystem;
     this.intakeSubsystem = intakeSubsystem;
     this.hopperSubsystem = hopperSubsystem;
     addRequirements(shooterSubsystem, intakeSubsystem, hopperSubsystem);
@@ -26,13 +26,13 @@ public class AllInCommand extends CommandBase {
   @Override
   public void execute() {
     hopperSubsystem.hopperIn();
-    shooterSubsystem.pinchIn();
+    pinchRollerSubsystem.pinchIn();
   }
 
   @Override
   public void end(boolean interrupted) {
     hopperSubsystem.hopperStop();
-    shooterSubsystem.pinchStop();
+    pinchRollerSubsystem.pinchStop();
   }
 
   @Override

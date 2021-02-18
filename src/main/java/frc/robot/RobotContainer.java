@@ -7,9 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.AllInCommand;
 import frc.robot.commands.hopper.HopperInCommand;
@@ -18,7 +16,6 @@ import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.shooter.PinchRollerInCommand;
 import frc.robot.commands.shooter.ToggleShooterOnOffCommand;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.drivetrain.StopDriveCommand;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Limelight;
 
@@ -32,11 +29,14 @@ import frc.robot.utils.Limelight;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public final Joystick driverStationJoystick;
-  public DriveSubsystem driveSubsystem;
+  public DrivetrainSubsystem drivetrainSubsystem;
   public ShooterSubsystem shooterSubsystem;
   public IntakeSubsystem intakeSubsystem;
   public HopperSubsystem hopperSubsystem;
   public Limelight limelight;
+  public PinchRollerSubsystem pinchRollerSubsystem;
+  public HoodSubsystem hoodSubsystem;
+  public TurretSubsystem turretSubsystem;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -46,12 +46,15 @@ public class RobotContainer {
 
     shooterSubsystem = new ShooterSubsystem();
     intakeSubsystem = new IntakeSubsystem();
-    driveSubsystem = new DriveSubsystem();
+    drivetrainSubsystem = new DrivetrainSubsystem();
     hopperSubsystem = new HopperSubsystem();
     limelight = new Limelight();
+    pinchRollerSubsystem = new PinchRollerSubsystem();
+    hoodSubsystem = new HoodSubsystem();
+    turretSubsystem = new TurretSubsystem();
 
-    driveSubsystem
-        .setDefaultCommand(new RunCommand(() -> driveSubsystem.tankDrive(getLeftY(), getRightY()), driveSubsystem));
+    drivetrainSubsystem
+        .setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -59,9 +62,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     setJoystickButtonWhileHeld(driverStationJoystick, 1, new IntakeInCommand(intakeSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 2, new HopperInCommand(hopperSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 3, new PinchRollerInCommand(shooterSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 3, new PinchRollerInCommand(pinchRollerSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterOnOffCommand(shooterSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(shooterSubsystem, intakeSubsystem, hopperSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new ToggleIntakePistonCommand(intakeSubsystem));
   }
 

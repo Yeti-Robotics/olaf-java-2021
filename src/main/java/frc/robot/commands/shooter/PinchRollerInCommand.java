@@ -5,12 +5,12 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.PinchRollerSubsystem;
 
 public class PinchRollerInCommand extends CommandBase {
-  private final ShooterSubsystem shooterSubsystem;
-  public PinchRollerInCommand(ShooterSubsystem shooterSubsystem) {
-    this.shooterSubsystem = shooterSubsystem;
+  private final PinchRollerSubsystem pinchRollerSubsystem;
+  public PinchRollerInCommand(PinchRollerSubsystem shooterSubsystem) {
+    this.pinchRollerSubsystem = shooterSubsystem;
     addRequirements(shooterSubsystem);
   }
 
@@ -19,12 +19,12 @@ public class PinchRollerInCommand extends CommandBase {
 
   @Override
   public void execute() {
-    shooterSubsystem.pinchIn();
+    pinchRollerSubsystem.pinchIn();
   }
 
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.pinchStop();
+    pinchRollerSubsystem.pinchStop();
   }
 
   @Override

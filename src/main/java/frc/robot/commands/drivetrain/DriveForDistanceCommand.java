@@ -5,12 +5,12 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DrivetrainSubsystems;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class DriveForDistanceCommand extends CommandBase {
   private final DrivetrainSubsystem drivetrainSubsystem;
   private double distanceGoal;
-  private double = drivePower;
+  private double drivePower;
   /** Creates a new DriveForDistanceCommand. */
 
   public DriveForDistanceCommand(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal, double drivePower) {
@@ -22,13 +22,13 @@ public class DriveForDistanceCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drivetrainSubsystem.resetEncoder();
+    drivetrainSubsystem.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrainSubsystem.tankDrive(drivePower);
+    drivetrainSubsystem.tankDrive(drivePower, drivePower);
     System.out.println("Distance" + distanceGoal + "; Encoder" + this.drivetrainSubsystem.getAverageEncoder());
   }
 

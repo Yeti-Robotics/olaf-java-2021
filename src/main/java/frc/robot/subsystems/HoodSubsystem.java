@@ -25,10 +25,10 @@ public class HoodSubsystem extends SubsystemBase {
 }
 
 public void moveHood(double power) {
-    hoodSpark.set(power);
+    hoodspark.set(power);
 }
 
 public void stopHood() {
-    hoodSpark.set(0);
+    hoodspark.set(0);
 }
 }
