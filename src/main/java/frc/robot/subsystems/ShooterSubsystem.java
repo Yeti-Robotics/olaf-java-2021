@@ -6,11 +6,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CalcConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.utils.Limelight;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -20,12 +17,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // ball go brrr
     private WPI_TalonFX flyWheel1;
     private WPI_TalonFX flyWheel2;
-    // hood go brrr
-    public PWMSparkMax hoodSpark;
-    // turret go brrr
-    public PWMSparkMax turretSpark;
-
-    private double distance;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
@@ -37,8 +28,6 @@ public class ShooterSubsystem extends SubsystemBase {
         pinchRollerVictor = new VictorSPX(ShooterConstants.PINCH_ROLLER_VICTOR);
         flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
         flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
-        hoodSpark = new PWMSparkMax(ShooterConstants.HOOD_SPARK);
-        turretSpark = new PWMSparkMax(ShooterConstants.TURRET_SPARK);
 
         flyWheel1.setInverted(true);
         flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -94,36 +83,8 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterStatus;
     }
 
-    public double calcHoodAngle() {
-        return Math.toDegrees(Math.asin( - CalcConstants.GRAVITY * distance) / ShooterConstants.SHOOT_1_SPEED);
-    }
-
     public double getSpeed() {
         return flyWheel1.getMotorOutputPercent();
-    }    
-
-    @Override
-    public void periodic() {
-        distance = Limelight.getCalculatedDistance();
-    }
-
-    public void setHoodAngle(double angle) {
-        // insert fancy math here
-    }
-
-    public void moveHood(double power) {
-        hoodSpark.set(power);
-    }
-
-    public void stopHood() {
-        hoodSpark.set(0);
-    }
-
-    public void moveTurret(double power) {
-        turretSpark.set(power);
-    }
-
-    public void stopTurret() {
-        turretSpark.set(0);
-    }
+    }  
+    
 }
