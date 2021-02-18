@@ -26,6 +26,7 @@ public final class Constants {
     public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {0,1}; 
+    public static final int GYRO_TALON = 4;
   }
   public static final class AutoConstants {
     // note: copy pasted directly
