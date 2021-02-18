@@ -16,7 +16,6 @@ import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.shooter.PinchRollerInCommand;
-import frc.robot.commands.shooter.ShooterResetCommand;
 import frc.robot.commands.shooter.ToggleShooterOnOffCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drivetrain.StopDriveCommand;
