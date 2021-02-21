@@ -12,8 +12,8 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
 
     // ball go brrr
-    private WPI_TalonFX flyWheel1;
-    private WPI_TalonFX flyWheel2;
+    private WPI_TalonFX rightFlywheel;
+    private WPI_TalonFX leftFlywheel;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
@@ -22,40 +22,45 @@ public class ShooterSubsystem extends SubsystemBase {
     public static ShooterStatus shooterStatus;
 
     public ShooterSubsystem() {
-        flyWheel1 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_1);
-        flyWheel2 = new WPI_TalonFX(ShooterConstants.FLYWHEEL_2);
+        rightFlywheel = new WPI_TalonFX(ShooterConstants.RIGHT_FLYWHEEL);
+        leftFlywheel = new WPI_TalonFX(ShooterConstants.LEFT_FLYWHEEL);
 
-        flyWheel1.setInverted(true);
-        flyWheel1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        flyWheel2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        rightFlywheel.setInverted(true);
+        rightFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        leftFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     
     }
 
+    public void spin(double speed) {
+        rightFlywheel.set(ControlMode.PercentOutput, speed);
+        leftFlywheel.set(ControlMode.PercentOutput, speed);
+    }
+
     public void shoot() {
-        flyWheel1.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_1_SPEED);
-        flyWheel2.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_2_SPEED);
+        rightFlywheel.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_1_SPEED);
+        leftFlywheel.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.FORWARDS;
     }
 
     public void reverseShoot() {
-        flyWheel1.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_1_SPEED);
-        flyWheel2.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_2_SPEED);
+        rightFlywheel.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_1_SPEED);
+        leftFlywheel.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.BACKWARDS;
     }
 
     public void stopShoot() {
-        flyWheel1.set(ControlMode.PercentOutput, 0);
-        flyWheel2.set(ControlMode.PercentOutput, 0);
+        rightFlywheel.set(ControlMode.PercentOutput, 0);
+        leftFlywheel.set(ControlMode.PercentOutput, 0);
         shooterStatus = ShooterStatus.OFF;
     }
 
     //get encoder value methods probably wrong, need review 
     public double getLeftEncoder() {
-        return flyWheel1.getSelectedSensorVelocity();
+        return rightFlywheel.getSelectedSensorVelocity();
     }
 
     public double getRightEncoder() {
-        return flyWheel2.getSelectedSensorVelocity();
+        return leftFlywheel.getSelectedSensorVelocity();
     }
 
     public double getAverageEncoder() {
@@ -67,7 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getSpeed() {
-        return flyWheel1.getMotorOutputPercent();
+        return rightFlywheel.getMotorOutputPercent();
     }  
     
 }

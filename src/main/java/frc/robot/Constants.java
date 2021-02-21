@@ -55,12 +55,13 @@ public final class Constants {
 
   public static final class TurretConstants{
     public static final int TURRET_SPARK = 8;
+    public static final int HALL_EFFECT_SENSOR_ID = 69;
   }
   
   public static final class ShooterConstants{
     //PLACEHOLDER VALUES!
-    public static final int FLYWHEEL_1 = 5; //rightside falcon
-    public static final int FLYWHEEL_2 = 6; //leftside falcon
+    public static final int RIGHT_FLYWHEEL = 5; //rightside falcon
+    public static final int LEFT_FLYWHEEL = 6; //leftside falcon
     public static final int SHOOT_1_SPEED = 80;
     public static final int SHOOT_2_SPEED = 80;
     public static final int REVERSE_SHOOT_1_SPEED = 10;

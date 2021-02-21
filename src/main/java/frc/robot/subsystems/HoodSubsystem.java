@@ -9,26 +9,34 @@ import frc.robot.Constants.HoodConstants;
 
 public class HoodSubsystem extends SubsystemBase {
   /** Creates a new HoodSubsystem. */
-  private CANSparkMax hoodspark;
+  private CANSparkMax hoodSpark;
 
 
   public HoodSubsystem() {
-    hoodspark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  }
+    hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    System.out.println("hood enc value: " + hoodSpark.getEncoder());
+  }
+
+  public void moveHood(double power) {
+    hoodSpark.set(power);
+  }
+
+  public void stopHood() {
+    hoodSpark.set(0);
   }
 
   public void setHoodAngle(double angle) {
     // insert fancy math here
-}
+  }
 
-public void moveHood(double power) {
-    hoodspark.set(power);
-}
+  public void setHoodMax(){
+    // set hood to max up position
+  }
 
-public void stopHood() {
-    hoodspark.set(0);
-}
+  public void setHoodMin(){
+    // set hood to min down position
+  }
 }
