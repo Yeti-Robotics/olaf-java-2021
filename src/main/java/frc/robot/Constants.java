@@ -26,11 +26,13 @@ public final class Constants {
     public static final int[] SHIFTER_SOLENOID = {0,1}; 
     public static final int GYRO_TALON = 4;
   }
+
   public static final class AutoConstants {
     // note: copy pasted directly
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
   }
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 1;
     //driver station constants
@@ -38,6 +40,10 @@ public final class Constants {
     public static final int LEFT_JOYSTICK = 0;
     public static final int SECONDARY_JOYSTICK = 2;
     public static final int DRIVER_STATION_JOY = 0;
+  }
+
+  public static final class LEDConstants {
+    public static final int ADDRESSABLELED = 9;
   }
 
   public static final class IntakeConstants{
