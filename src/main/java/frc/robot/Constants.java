@@ -56,6 +56,7 @@ public final class Constants {
   public static final class TurretConstants{
     public static final int TURRET_SPARK = 8;
     public static final int HALL_EFFECT_SENSOR_ID = 69;
+    public static final int LIMIT_SWITCH_ID = 1337; //temporary value
   }
   
   public static final class ShooterConstants{
