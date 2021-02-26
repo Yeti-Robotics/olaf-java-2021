@@ -15,13 +15,15 @@ public class TurretSubsystem extends SubsystemBase {
     public CANSparkMax turretSpark;
     private double distance;
     private DigitalInput hallEffectSensor;
-    private DigitalInput limitSwitch;
+    private DigitalInput leftLimitSwitch;
+    private DigitalInput rightLimitSwitch;
     private CANEncoder turretEncoder;
 
     public TurretSubsystem() {
         turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK, MotorType.kBrushless);
         hallEffectSensor = new DigitalInput(TurretConstants.HALL_EFFECT_SENSOR_ID);
-        limitSwitch = new DigitalInput(TurretConstants.LIMIT_SWITCH_ID);
+        leftLimitSwitch = new DigitalInput(TurretConstants.LEFT_LIMIT_SWITCH_ID);
+        rightLimitSwitch = new DigitalInput(TurretConstants.RIGHT_LIMIT_SWITCH_ID);
         turretEncoder = turretSpark.getEncoder();
     }
 
@@ -48,6 +50,9 @@ public class TurretSubsystem extends SubsystemBase {
         Said to save the offset of the current encoder value and subtract it from subsequent reads. Not sure if I implemented it correctly
         but I tried ;)
     */
+    
+    // i implemented something that i found in this github example but idk if it works. if not we can revert to what hank originally had
+    // https://github.com/REVrobotics/SPARK-MAX-Examples/blob/master/Java/Read%20Encoder%20Values/src/main/java/frc/robot/Robot.java
     public void resetEncoder(){
         turretEncoder.setPosition(0);
     }
@@ -61,6 +66,12 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean getPhysicalLimit(){
-        return limitSwitch.get();
+        if (leftLimitSwitch.get()){
+            return true;
+        } else if (rightLimitSwitch.get()){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

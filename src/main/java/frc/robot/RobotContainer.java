@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AllInCommand;
+import frc.robot.commands.hood.TestHoodCommand;
 import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.shooter.PinchRollerInCommand;
 import frc.robot.commands.shooter.TestShootingCommand;
 import frc.robot.commands.shooter.ToggleShooterOnOffCommand;
+import frc.robot.commands.turret.TurretTestCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.*;
 import frc.robot.utils.Limelight;
@@ -67,6 +69,8 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterOnOffCommand(shooterSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new ToggleIntakePistonCommand(intakeSubsystem));
+    setJoystickButtonWhileHeld(driverStationJoystick, 7, new TestHoodCommand(hoodSubsystem, .3));
+    setJoystickButtonWhileHeld(driverStationJoystick, 8, new TurretTestCommand(turretSubsystem, .3));
   }
 
   public double getLeftY() {
@@ -82,12 +86,7 @@ public class RobotContainer {
   }
 
   public double getRightY() {
-
-    if (driverStationJoystick.getRawAxis(3) >= .1 || driverStationJoystick.getRawAxis(3) <= -.1) {
       return driverStationJoystick.getRawAxis(3);
-    } else {
-      return 0;
-    }
   }
 
   public double getRightX() {
