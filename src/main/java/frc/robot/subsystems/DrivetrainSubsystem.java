@@ -57,8 +57,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // System.out.println(getAngle());
   }
 
-  public void tankDrive(double fwd, double rot) {
-    m_drive.tankDrive(fwd, rot);
+  public void tankDrive(double leftpower, double rightpower) {
+    m_drive.tankDrive(leftpower, rightpower);
   }
   public void stopDrive() {
     leftFalcon1.set(ControlMode.PercentOutput, 0);

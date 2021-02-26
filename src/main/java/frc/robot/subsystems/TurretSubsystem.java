@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -15,13 +16,13 @@ public class TurretSubsystem extends SubsystemBase {
     private double distance;
     private DigitalInput hallEffectSensor;
     private DigitalInput limitSwitch;
-    private double encoderOffset;
+    private CANEncoder turretEncoder;
 
     public TurretSubsystem() {
         turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK, MotorType.kBrushless);
         hallEffectSensor = new DigitalInput(TurretConstants.HALL_EFFECT_SENSOR_ID);
         limitSwitch = new DigitalInput(TurretConstants.LIMIT_SWITCH_ID);
-        encoderOffset = 0.0;
+        turretEncoder = turretSpark.getEncoder();
     }
 
     public double calcHoodAngle() {
@@ -48,11 +49,11 @@ public class TurretSubsystem extends SubsystemBase {
         but I tried ;)
     */
     public void resetEncoder(){
-        encoderOffset = turretSpark.get();
+        turretEncoder.setPosition(0);
     }
 
     public double getEncoder(){
-        return turretSpark.get() - encoderOffset;
+        return turretEncoder.getPosition();
     }
 
     public boolean getMagLimit(){
