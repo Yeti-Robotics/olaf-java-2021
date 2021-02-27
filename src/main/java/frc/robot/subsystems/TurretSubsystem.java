@@ -73,9 +73,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean getPhysicalLimit(){
-        if (leftLimitSwitch.get()){
-            return true;
-        } else if (rightLimitSwitch.get()){
+        if (leftLimitSwitch.get() || rightLimitSwitch.get()){
             return true;
         } else {
             return false;
