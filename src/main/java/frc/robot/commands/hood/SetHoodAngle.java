@@ -29,7 +29,7 @@ public class SetHoodAngle extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    encoderGoal = hoodSubsystem.encoderFromAngle(angle);
+    encoderGoal = hoodSubsystem.hoodEncoderFromAngle(angle);
     if (encoderGoal < hoodSubsystem.getHoodEncoder()){
       hoodMotion = HoodMotion.BACKWARD;
       power = -power;

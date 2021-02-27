@@ -35,7 +35,7 @@ public class HoodSubsystem extends SubsystemBase {
     hoodSpark.set(-power);
   }
 
-  public double encoderFromAngle(double angle) {
+  public double hoodEncoderFromAngle(double angle) {
     // insert fancy math here
     return ((angle/360)* HoodConstants.HOOD_GEAR_RATIO * HoodConstants.COUNTS_PER_REVOLUTION);
   }

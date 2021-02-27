@@ -9,32 +9,38 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PinchRollerSubsystem;
 
-public class AllInCommand extends CommandBase {
+public class AllOutCommand extends CommandBase {
+  /** Creates a new AllOutCommand. */
   public final PinchRollerSubsystem pinchRollerSubsystem;
   public final IntakeSubsystem intakeSubsystem;
   public final HopperSubsystem hopperSubsystem;
-  public AllInCommand(PinchRollerSubsystem pinchRollerSubsystem, IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
+  public AllOutCommand(PinchRollerSubsystem pinchRollerSubsystem, IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.pinchRollerSubsystem = pinchRollerSubsystem;
     this.intakeSubsystem = intakeSubsystem;
     this.hopperSubsystem = hopperSubsystem;
     addRequirements(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     hopperSubsystem.hopperIn();
     pinchRollerSubsystem.pinchIn();
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     hopperSubsystem.hopperStop();
     pinchRollerSubsystem.pinchStop();
   }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
