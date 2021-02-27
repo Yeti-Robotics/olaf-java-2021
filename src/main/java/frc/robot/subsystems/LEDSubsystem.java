@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LEDConstants;
 
 public class LEDSubsystem extends SubsystemBase {
-  private AddressableLED m_led;
-  private AddressableLEDBuffer m_ledBuffer;
+  private AddressableLED ledStrip;
+  private AddressableLEDBuffer ledBuffer;
   public LEDSubsystem() {
-    m_led = new AddressableLED(LEDConstants.ADDRESSABLELED);
+    ledStrip = new AddressableLED(LEDConstants.ADDRESSABLE_LED);
 
-    m_ledBuffer = new AddressableLEDBuffer(69);
-    m_led.setLength(m_ledBuffer.getLength());
+    ledBuffer = new AddressableLEDBuffer(69);
+    ledStrip.setLength(ledBuffer.getLength());
     
-    m_led.setData(m_ledBuffer);
-    m_led.start();
+    ledStrip.setData(ledBuffer);
+    ledStrip.start();
   }
 
   @Override
