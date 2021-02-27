@@ -20,11 +20,12 @@ public final class Constants {
     public static final int RIGHT_FALCON_1 = 2;
     public static final int RIGHT_FALCON_2 = 1;
 
-    public static final double HIGH_GEAR_RATIO = 5.13;
+    public static final double HIGH_GEAR_RATIO = 40/26;//i think? pls double check
+    public static final double LOW_GEAR_RATIO = 34/32; // same as abv
     public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {0,1}; 
-    public static final int GYRO_TALON = 4;
+    public static final int GYRO_ID = 4;
   }
 
   public static final class AutoConstants {
@@ -79,6 +80,8 @@ public final class Constants {
 
   public static final class HoodConstants{
     public static final int HOOD_SPARK = 7;
+    public static final double COUNTS_PER_REVOLUTION = 42;
+    public static final double HOOD_GEAR_RATIO = 510/1;
   }
   
   public static final class PinchRollerConstants{

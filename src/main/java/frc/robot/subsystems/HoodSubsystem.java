@@ -1,6 +1,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -10,10 +11,12 @@ import frc.robot.Constants.HoodConstants;
 public class HoodSubsystem extends SubsystemBase {
   /** Creates a new HoodSubsystem. */
   private CANSparkMax hoodSpark;
-
+  private CANEncoder hoodEncoder;
 
   public HoodSubsystem() {
-    hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  }
+    hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  
+    hoodEncoder = hoodSpark.getEncoder();
+  }
 
   @Override
   public void periodic() {
@@ -28,15 +31,17 @@ public class HoodSubsystem extends SubsystemBase {
     hoodSpark.set(0);
   }
 
-  public void setHoodAngle(double angle) {
+  public void resetHood(double power){
+    hoodSpark.set(-power);
+  }
+
+  public double encoderFromAngle(double angle) {
     // insert fancy math here
+    return ((angle/360)* HoodConstants.HOOD_GEAR_RATIO * HoodConstants.COUNTS_PER_REVOLUTION);
   }
 
-  public void setHoodMax(){
-    // set hood to max up position
+  public double getHoodEncoder(){
+    return hoodEncoder.getPosition();
   }
 
-  public void setHoodMin(){
-    // set hood to min down position
-  }
 }

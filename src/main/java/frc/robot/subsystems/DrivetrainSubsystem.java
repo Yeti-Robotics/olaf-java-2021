@@ -12,6 +12,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 
 
@@ -21,9 +22,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private PigeonIMU gyro;
   
-  //so like im gonna create a private SRX idk what this is but allison told me and yea lmao
-  private TalonSRX gyroTalon;
-
   // The robot's drive
   private final DifferentialDrive m_drive;
 
@@ -48,8 +46,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightFalcon1.setNeutralMode(NeutralMode.Brake);
     resetEncoders();
   
-    gyroTalon = new TalonSRX(DriveConstants.GYRO_TALON);
-    gyro = new PigeonIMU(gyroTalon);
+    gyro = new PigeonIMU(DriveConstants.GYRO_ID);
   }
 
   @Override
@@ -71,11 +68,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public double getLeftEncoder() {
-    return (leftFalcon1.getSelectedSensorPosition() * (DriveConstants.DISTANCE_PER_PULSE) / (DriveConstants.HIGH_GEAR_RATIO)) ;
+    return (leftFalcon1.getSelectedSensorPosition() * (DriveConstants.DISTANCE_PER_PULSE)  / (ShiftingGearSubsystem.getShifterPosition() == ShiftingGearSubsystem.ShiftStatus.HIGH ? DriveConstants.HIGH_GEAR_RATIO : DriveConstants.LOW_GEAR_RATIO));
   }
 
   public double getRightEncoder() {
-    return (rightFalcon1.getSelectedSensorPosition() * (DriveConstants.DISTANCE_PER_PULSE) / (DriveConstants.HIGH_GEAR_RATIO)) ;
+    return (rightFalcon1.getSelectedSensorPosition() * (DriveConstants.DISTANCE_PER_PULSE) / (ShiftingGearSubsystem.getShifterPosition() == ShiftingGearSubsystem.ShiftStatus.HIGH ? DriveConstants.HIGH_GEAR_RATIO : DriveConstants.LOW_GEAR_RATIO));
   }
 
   public double getAverageEncoder(){

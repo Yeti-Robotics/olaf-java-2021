@@ -69,8 +69,10 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterOnOffCommand(shooterSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new ToggleIntakePistonCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 7, new TestHoodCommand(hoodSubsystem, .3));
-    setJoystickButtonWhileHeld(driverStationJoystick, 8, new TurretTestCommand(turretSubsystem, .3));
+    setJoystickButtonWhileHeld(driverStationJoystick, 7, new TurretTestCommand(turretSubsystem, .3));
+    setJoystickButtonWhileHeld(driverStationJoystick, 8, new TestHoodCommand(hoodSubsystem, .3));
+    setJoystickButtonWhileHeld(driverStationJoystick, 9, new TestHoodCommand(hoodSubsystem, -.3));
+
   }
 
   public double getLeftY() {
