@@ -7,13 +7,18 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 // the WPILib BSD license file in the root directory of this project.
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.CalcConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.utils.Limelight;
 
 public class ShooterSubsystem extends SubsystemBase {
 
     // ball go brrr
     private WPI_TalonFX rightFlywheel;
     private WPI_TalonFX leftFlywheel;
+
+    private double distance;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
@@ -73,6 +78,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double getSpeed() {
         return rightFlywheel.getMotorOutputPercent();
-    }  
+    }
     
+    public double calcHoodAngle(){
+        return Math.toDegrees(Math.asin(-CalcConstants.GRAVITY * distance) / ShooterConstants.SHOOT_1_SPEED); //shooter speed is placeholder rn
+    }
+
+    @Override
+    public void periodic(){
+        distance = Limelight.getCalculatedDistance();
+    }
 }
