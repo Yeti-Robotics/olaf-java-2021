@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.revrobotics.CANDigitalInput;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -51,28 +52,28 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
-    NetworkTableEntry tlong = table.getEntry("tlong");
-
-//read values periodically
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
-    double t2long = tlong.getDouble(0.0);
-
-
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
-
-    SmartDashboard.putNumber("t2long", t2long);
-
-    SmartDashboard.putNumber("distance", Limelight.getDistance());
-
-    SmartDashboard.putNumber("calculated distance", Limelight.getCalculatedDistance());
+//    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+//    NetworkTableEntry tx = table.getEntry("tx");
+//    NetworkTableEntry ty = table.getEntry("ty");
+//    NetworkTableEntry ta = table.getEntry("ta");
+//    NetworkTableEntry tlong = table.getEntry("tlong");
+//
+////read values periodically
+//    double x = tx.getDouble(0.0);
+//    double y = ty.getDouble(0.0);
+//    double area = ta.getDouble(0.0);
+//    double t2long = tlong.getDouble(0.0);
+//
+//
+//    SmartDashboard.putNumber("LimelightX", x);
+//    SmartDashboard.putNumber("LimelightY", y);
+//    SmartDashboard.putNumber("LimelightArea", area);
+//
+//    SmartDashboard.putNumber("t2long", t2long);
+//
+//    SmartDashboard.putNumber("distance", Limelight.getDistance());
+//
+//    SmartDashboard.putNumber("calculated distance", Limelight.getCalculatedDistance());
 
     //Secondary Controls Shuffleboard
     //if(IntakeSubsystem.getIntakePosition() == IntakeStatus.DOWN) {
@@ -81,12 +82,19 @@ public class Robot extends TimedRobot {
     //  SmartDashboard.putString("Intake Status", "UP");
     // }
 
-    if(ShooterSubsystem.getShooterStatus() == ShooterStatus.BACKWARDS) {
-      SmartDashboard.putString("Flywheel Status", "REVERSE");
-    } else if(ShooterSubsystem.getShooterStatus() == ShooterStatus.FORWARDS) {
-      SmartDashboard.putString("Flywheel Status", "FORWARD");
-    } else {
-      SmartDashboard.putString("Flywheel Status", "OFF");
+//    if(ShooterSubsystem.getShooterStatus() == ShooterStatus.BACKWARDS) {
+//      SmartDashboard.putString("Flywheel Status", "REVERSE");
+//    } else if(ShooterSubsystem.getShooterStatus() == ShooterStatus.FORWARDS) {
+//      SmartDashboard.putString("Flywheel Status", "FORWARD");
+//    } else {
+//      SmartDashboard.putString("Flywheel Status", "OFF");
+//    }
+
+
+
+    System.out.println("beam break reverse value: " + m_robotContainer.hoodSubsystem.getBeamBreak());
+    if (m_robotContainer.turretSubsystem.getReverseLimit()) {
+      m_robotContainer.turretSubsystem.resetEncoder();
     }
   }
 
@@ -96,6 +104,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

@@ -13,8 +13,8 @@ public class TurretTestCommand extends CommandBase {
   private double power;
   public TurretTestCommand(TurretSubsystem turretSubsystem, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
-    turretSubsystem = this.turretSubsystem;
-    power= this.power;
+    this.turretSubsystem = turretSubsystem;
+    this.power = power;
     addRequirements(turretSubsystem);
   }
 

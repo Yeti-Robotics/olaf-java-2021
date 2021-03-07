@@ -20,12 +20,13 @@ public class HoodSubsystem extends SubsystemBase {
   public HoodSubsystem() {
     hoodSpark = new CANSparkMax(HoodConstants.HOOD_SPARK, MotorType.kBrushless);  
     hoodEncoder = hoodSpark.getEncoder();
-    beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
+    beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
   }
 
   @Override
   public void periodic() {
-    System.out.println("hood enc value: " + hoodSpark.getEncoder());
+//    System.out.println("hood enc value: " + hoodSpark.getEncoder());
+//    System.out.println("beam break reverse value: " + getBeamBreak());
   }
 
   public void moveHood(double power) {

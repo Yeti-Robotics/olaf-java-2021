@@ -15,17 +15,17 @@ package frc.robot;
 public final class Constants {
 
   public static final class DriveConstants {
-    public static final int LEFT_FALCON_1 = 3;
-    public static final int LEFT_FALCON_2 = 4;
-    public static final int RIGHT_FALCON_1 = 2;
-    public static final int RIGHT_FALCON_2 = 1;
+    public static final int LEFT_FALCON_1 = 1;
+    public static final int LEFT_FALCON_2 = 2;
+    public static final int RIGHT_FALCON_1 = 3;
+    public static final int RIGHT_FALCON_2 = 4;
 
-    public static final double HIGH_GEAR_RATIO = 40/26;//i think? pls double check
-    public static final double LOW_GEAR_RATIO = 34/32; // same as abv
+    public static final double HIGH_GEAR_RATIO = 40/26.0;//i think? pls double check
+    public static final double LOW_GEAR_RATIO = 34/32.0; // same as abv
     public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {0,1}; 
-    public static final int GYRO_ID = 4;
+    public static final int GYRO_ID = 13;
   }
 
   public static final class AutoConstants {
@@ -48,23 +48,23 @@ public final class Constants {
   }
 
   public static final class IntakeConstants{
-    public static final int INTAKE_TALON = 7;
+    public static final int INTAKE_TALON = 8;
     public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
     public static final double ROLL_IN_SPEED = 1.0;
     public static final double ROLL_OUT_SPEED = -1.0;
   }
 
   public static final class HopperConstants{
-    public static final int HOPPER_VICTOR = 1;
+    public static final int HOPPER_VICTOR = 9;
     public static final double HOPPER_IN_SPEED = .5;
     public static final double HOPPER_OUT_SPEED = -.5; 
   }
 
   public static final class TurretConstants{
-    public static final int TURRET_SPARK = 8;
-    public static final int HALL_EFFECT_SENSOR_ID = 69;
+    public static final int TURRET_SPARK = 10;
     public static final double COUNTS_PER_REVOLUTION = 42;
-    public static final double TURRET_GEAR_RATIO = 325/1;
+    public static final double TURRET_GEAR_RATIO = 325/1.0;
+    public static final double TURRET_ANGLE_THRESHOLD = 5;
   }
   
   public static final class ShooterConstants{
@@ -79,13 +79,14 @@ public final class Constants {
 
 
   public static final class HoodConstants{
-    public static final int HOOD_SPARK = 7;
+    public static final int HOOD_SPARK = 11;
     public static final double COUNTS_PER_REVOLUTION = 42;
     public static final double HOOD_GEAR_RATIO = 510/1;
+    public static final int HOOD_ANGLE_THRESHOLD = 5;
   }
   
   public static final class PinchRollerConstants{
-    public static final int PINCH_ROLLER_VICTOR = 3;
+    public static final int PINCH_ROLLER_VICTOR = 7;
     public static final double PINCH_ROLLER_IN_SPEED = .75;
     public static final double PINCH_ROLLER_OUT_SPEED = -.75;
   }

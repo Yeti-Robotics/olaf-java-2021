@@ -5,6 +5,7 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class SetTurretAngle extends CommandBase {
@@ -13,10 +14,6 @@ public class SetTurretAngle extends CommandBase {
   private double angle;
   private double power;
   private double encoderGoal;
-  private enum TurretMotion{
-    FORWARD, BACKWARD, STILL
-  }
-  private TurretMotion turretMotion;
   public SetTurretAngle(TurretSubsystem turretSubsystem, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     turretSubsystem = this.turretSubsystem;
@@ -29,13 +26,7 @@ public class SetTurretAngle extends CommandBase {
   public void initialize() {
     encoderGoal = turretSubsystem.turretEncoderFromAngle(angle);
     if (encoderGoal < turretSubsystem.getEncoder()){
-      turretMotion = TurretMotion.BACKWARD;
       power = -power;
-    } else if (encoderGoal > turretSubsystem.getEncoder()){
-      turretMotion = TurretMotion.FORWARD;
-    } else {
-      turretMotion = TurretMotion.STILL;
-      power = 0;
     }
   }
 
@@ -54,12 +45,6 @@ public class SetTurretAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (turretMotion == TurretMotion.FORWARD){
-      return (encoderGoal >= turretSubsystem.getEncoder());
-    } else if (turretMotion == TurretMotion.BACKWARD){
-      return (encoderGoal <= turretSubsystem.getEncoder());
-    }else {
-      return true;
-    }
+    return Math.abs(encoderGoal - turretSubsystem.getEncoder()) <= Constants.TurretConstants.TURRET_ANGLE_THRESHOLD;
   }
 }

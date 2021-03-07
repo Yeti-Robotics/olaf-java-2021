@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANDigitalInput.LimitSwitch;
 import com.revrobotics.CANDigitalInput.LimitSwitchPolarity;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -17,14 +16,12 @@ import frc.robot.Constants.TurretConstants;
 public class TurretSubsystem extends SubsystemBase {
     public CANSparkMax turretSpark;
     private double distance;
-    private DigitalInput hallEffectSensor;
     private CANDigitalInput leftLimitSwitch;
     private CANDigitalInput rightLimitSwitch;
     private CANEncoder turretEncoder;
 
     public TurretSubsystem() {
         turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK, MotorType.kBrushless);
-        hallEffectSensor = new DigitalInput(TurretConstants.HALL_EFFECT_SENSOR_ID);
         rightLimitSwitch = turretSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
         leftLimitSwitch = turretSpark.getForwardLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
         turretEncoder = turretSpark.getEncoder();
@@ -64,19 +61,19 @@ public class TurretSubsystem extends SubsystemBase {
         return turretEncoder.getPosition();
     }
 
-    public boolean getMagLimit(){
-        return hallEffectSensor.get();
-    }
-
     public double turretEncoderFromAngle(double angle){
         return ((angle/360)* TurretConstants.TURRET_GEAR_RATIO * TurretConstants.COUNTS_PER_REVOLUTION);
     }
 
     public boolean getPhysicalLimit(){
-        if (leftLimitSwitch.get() || rightLimitSwitch.get()){
-            return true;
-        } else {
-            return false;
-        }
+        return leftLimitSwitch.get() || rightLimitSwitch.get();
+    }
+
+    public boolean getReverseLimit() {
+        return rightLimitSwitch.get();
+    }
+
+    public boolean getForwardLimit() {
+        return leftLimitSwitch.get();
     }
 }

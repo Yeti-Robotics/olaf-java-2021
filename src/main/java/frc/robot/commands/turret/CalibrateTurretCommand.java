@@ -25,7 +25,7 @@ public class CalibrateTurretCommand extends CommandBase {
     if(turretSubsystem.getPhysicalLimit()){
       turretSubsystem.moveTurret(-0.5);
     }
-    if(turretSubsystem.getMagLimit()){
+    if(turretSubsystem.getReverseLimit()){
       turretSubsystem.resetEncoder();
     }
   }
@@ -37,6 +37,6 @@ public class CalibrateTurretCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return turretSubsystem.getMagLimit();
+    return turretSubsystem.getReverseLimit();
   }
 }

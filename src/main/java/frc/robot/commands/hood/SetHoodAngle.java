@@ -5,6 +5,7 @@
 package frc.robot.commands.hood;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.HoodSubsystem;
 
 public class SetHoodAngle extends CommandBase {
@@ -13,10 +14,6 @@ public class SetHoodAngle extends CommandBase {
   private double angle;
   private double power;
   private double encoderGoal;
-  private enum HoodMotion{
-    FORWARD, BACKWARD, STILL
-  }
-  private HoodMotion hoodMotion;
 
   public SetHoodAngle(HoodSubsystem hoodSubsystem, double angle, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -31,13 +28,7 @@ public class SetHoodAngle extends CommandBase {
   public void initialize() {
     encoderGoal = hoodSubsystem.hoodEncoderFromAngle(angle);
     if (encoderGoal < hoodSubsystem.getHoodEncoder()){
-      hoodMotion = HoodMotion.BACKWARD;
-      power = -power;
-    } else if (encoderGoal > hoodSubsystem.getHoodEncoder()){
-      hoodMotion = HoodMotion.FORWARD;
-    } else {
-      hoodMotion = HoodMotion.STILL;
-      power = 0;
+        power = -power;
     }
   }
 
@@ -56,12 +47,6 @@ public class SetHoodAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (hoodMotion == HoodMotion.FORWARD){
-      return (encoderGoal >= hoodSubsystem.getHoodEncoder());
-    } else if (hoodMotion == HoodMotion.BACKWARD){
-      return (encoderGoal <= hoodSubsystem.getHoodEncoder());
-    }else {
-      return true;
-    }
+  return Math.abs(encoderGoal - hoodSubsystem.getHoodEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_THRESHOLD;
   }
 }
