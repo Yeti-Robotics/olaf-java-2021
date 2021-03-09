@@ -48,7 +48,7 @@ public final class Constants {
   }
 
   public static final class IntakeConstants{
-    public static final int INTAKE_TALON = 8;
+    public static final int INTAKE_VICTOR = 8;
     public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
     public static final double ROLL_IN_SPEED = 1.0;
     public static final double ROLL_OUT_SPEED = -1.0;

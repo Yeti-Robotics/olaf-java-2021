@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,13 +19,13 @@ public class IntakeSubsystem extends SubsystemBase {
   public static IntakeStatus intakeStatus;
 
   private final DoubleSolenoid intakePistons;
-  private final TalonSRX intakeTalon;
+  private final VictorSPX intakeVictor;
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
-    intakeTalon = new TalonSRX(IntakeConstants.INTAKE_TALON);
+    intakeVictor = new VictorSPX(IntakeConstants.INTAKE_VICTOR);
     intakePistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
 
-    intakeTalon.setInverted(true);
+    intakeVictor.setInverted(false);
     intakeStatus = IntakeStatus.DOWN;
   }
 
@@ -43,19 +44,19 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   
   public void intakeIn(){
-      intakeTalon.set(ControlMode.PercentOutput, IntakeConstants.ROLL_IN_SPEED);
+      intakeVictor.set(ControlMode.PercentOutput, IntakeConstants.ROLL_IN_SPEED);
   }
   public void intakeOut(){
-      intakeTalon.set(ControlMode.PercentOutput, IntakeConstants.ROLL_OUT_SPEED);
+      intakeVictor.set(ControlMode.PercentOutput, IntakeConstants.ROLL_OUT_SPEED);
   }
   public void intakeStop(){
-      intakeTalon.set(ControlMode.PercentOutput, 0);
+      intakeVictor.set(ControlMode.PercentOutput, 0);
   }
   public IntakeStatus getIntakePosition(){
       return intakeStatus;
   }
 
-  public TalonSRX getIntakeTalon(){
-    return intakeTalon;
+  public VictorSPX getIntakeVictor(){
+    return intakeVictor;
   }
 }
