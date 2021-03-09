@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -25,42 +26,45 @@ public class ShooterSubsystem extends SubsystemBase {
         rightFlywheel = new WPI_TalonFX(ShooterConstants.RIGHT_FLYWHEEL);
         leftFlywheel = new WPI_TalonFX(ShooterConstants.LEFT_FLYWHEEL);
 
-        rightFlywheel.setInverted(true);
+        // rightFlywheel.setInverted(true);
         rightFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         leftFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        
+        rightFlywheel.follow(leftFlywheel);
+        rightFlywheel.setInverted(InvertType.OpposeMaster);
     
     }
 
     public void spin(double speed) {
-        rightFlywheel.set(ControlMode.PercentOutput, speed);
+        // rightFlywheel.set(ControlMode.PercentOutput, speed);
         leftFlywheel.set(ControlMode.PercentOutput, speed);
     }
 
     public void shoot() {
-        rightFlywheel.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_1_SPEED);
+        // rightFlywheel.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_1_SPEED);
         leftFlywheel.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.FORWARDS;
     }
 
     public void reverseShoot() {
-        rightFlywheel.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_1_SPEED);
+        // rightFlywheel.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_1_SPEED);
         leftFlywheel.set(ControlMode.PercentOutput, ShooterConstants.REVERSE_SHOOT_2_SPEED);
         shooterStatus = ShooterStatus.BACKWARDS;
     }
 
     public void stopShoot() {
-        rightFlywheel.set(ControlMode.PercentOutput, 0);
+        // rightFlywheel.set(ControlMode.PercentOutput, 0);
         leftFlywheel.set(ControlMode.PercentOutput, 0);
         shooterStatus = ShooterStatus.OFF;
     }
 
     //get encoder value methods probably wrong, need review 
     public double getLeftEncoder() {
-        return rightFlywheel.getSelectedSensorVelocity();
+        return leftFlywheel.getSelectedSensorVelocity();
     }
 
     public double getRightEncoder() {
-        return leftFlywheel.getSelectedSensorVelocity();
+        return rightFlywheel.getSelectedSensorVelocity();
     }
 
     public double getAverageEncoder() {
@@ -72,7 +76,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double getSpeed() {
-        return rightFlywheel.getMotorOutputPercent();
+        return leftFlywheel.getMotorOutputPercent();
     }  
     
 }
