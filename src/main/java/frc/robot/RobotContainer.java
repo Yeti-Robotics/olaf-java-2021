@@ -73,7 +73,7 @@ public class RobotContainer {
     setJoystickButtonWhileHeld(driverStationJoystick, 7, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, .3));
-    setJoystickButtonWhileHeld(driverStationJoystick, 10, new TestHoodCommand(hoodSubsystem, .3)); //can be changed to SetHoodAngleCommand.java
+    setJoystickButtonWhileHeld(driverStationJoystick, 10, new TestHoodCommand(hoodSubsystem, .1)); //can be changed to SetHoodAngleCommand.java
 
   }
 

@@ -92,10 +92,10 @@ public class Robot extends TimedRobot {
 
 
 
-    System.out.println("beam break reverse value: " + m_robotContainer.hoodSubsystem.getBeamBreak());
-    if (m_robotContainer.turretSubsystem.getReverseLimit()) {
-      m_robotContainer.turretSubsystem.resetEncoder();
-    }
+    // System.out.println("beam break reverse value: " + m_robotContainer.hoodSubsystem.getBeamBreak());
+    // if (m_robotContainer.turretSubsystem.getReverseLimit()) {
+    //   m_robotContainer.turretSubsystem.resetEncoder();
+    // }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
