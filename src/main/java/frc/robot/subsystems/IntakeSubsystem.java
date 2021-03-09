@@ -25,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeVictor = new VictorSPX(IntakeConstants.INTAKE_VICTOR);
     intakePistons = new DoubleSolenoid(IntakeConstants.INTAKE_PISTONS_SOLENOID[0], IntakeConstants.INTAKE_PISTONS_SOLENOID[1]);
 
-    intakeVictor.setInverted(false);
+    intakeVictor.setInverted(true);
     intakeStatus = IntakeStatus.DOWN;
   }
 
