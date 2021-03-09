@@ -10,6 +10,7 @@ public class HopperSubsystem extends SubsystemBase {
 
     public HopperSubsystem()    {
         hopperVictor = new VictorSPX(HopperConstants.HOPPER_VICTOR);
+        hopperVictor.setInverted(true);
     }
 
     public void hopperIn()  {
