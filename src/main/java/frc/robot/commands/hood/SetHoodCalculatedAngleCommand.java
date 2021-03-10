@@ -21,7 +21,7 @@ public class SetHoodCalculatedAngleCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    new SetHoodAngle(hoodSubsystem, shooterSubsystem.calcHoodAngle(), 1.0);
+    //new SetHoodAngle(hoodSubsystem, shooterSubsystem.calcHoodAngle(), 1.0);
   }
 
   @Override
