@@ -81,9 +81,10 @@ public final class Constants {
 
   public static final class HoodConstants{
     public static final int HOOD_SPARK = 11;
-    public static final double COUNTS_PER_REVOLUTION = 42;
-    public static final double HOOD_GEAR_RATIO = 510/1;
+    public static final double COUNTS_PER_REVOLUTION = 42.0;
+    public static final double HOOD_GEAR_RATIO = 510.0/1.0;
     public static final int HOOD_ANGLE_THRESHOLD = 5;
+    public static final double FORWARD_SOFT_LIMIT = ((36.0/340.0)*360.0);
   }
   
   public static final class PinchRollerConstants{

@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANDigitalInput;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -22,6 +23,7 @@ public class HoodSubsystem extends SubsystemBase {
     hoodEncoder = hoodSpark.getEncoder();
     hoodSpark.setInverted(true);
     beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
+    hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.FORWARD_SOFT_LIMIT));
   }
 
   @Override
@@ -38,13 +40,9 @@ public class HoodSubsystem extends SubsystemBase {
     hoodSpark.set(0);
   }
 
-  public void resetHood(double power){
-    hoodSpark.set(-power);
-  }
-
   public double hoodEncoderFromAngle(double angle) {
     // insert fancy math here
-    return ((angle/360)* HoodConstants.HOOD_GEAR_RATIO * HoodConstants.COUNTS_PER_REVOLUTION);
+    return ((angle/360.0)* HoodConstants.HOOD_GEAR_RATIO * HoodConstants.COUNTS_PER_REVOLUTION);
   }
 
   public double getHoodEncoder(){
