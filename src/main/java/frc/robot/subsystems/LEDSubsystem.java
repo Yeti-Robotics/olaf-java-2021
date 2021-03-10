@@ -14,32 +14,8 @@ public class LEDSubsystem extends SubsystemBase {
   private AddressableLEDBuffer ledBuffer;
   public LEDSubsystem() {
     ledStrip = new AddressableLED(LEDConstants.ADDRESSABLE_LED);
-
-    ledBuffer = new AddressableLEDBuffer(69);
+    ledBuffer = new AddressableLEDBuffer(LEDConstants.LED_COUNT);
     ledStrip.setLength(ledBuffer.getLength());
-    
-  }
-
-  @Override
-  public void periodic() {
-    rainbow(0); //red
-    ledStrip.start();
-  }
-
-  private void rainbow(int rainbowFirstPixelHue) {
-    // For every pixel
-    for (var i = 0; i < ledBuffer.getLength(); i++) {
-      // Calculate the hue - hue is easier for rainbows because the color
-      // shape is a circle so only one value needs to precess
-      final var hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
-      // Set the value
-      ledBuffer.setHSV(i, hue, 255, 128);
-    }
-    // Increase by to make the rainbow "move"
-    rainbowFirstPixelHue += 3;
-    // Check bounds
-    rainbowFirstPixelHue %= 180;
-    ledStrip.setData(ledBuffer);
   }
 
   public void setHSV(int hue, int saturation, int value){
