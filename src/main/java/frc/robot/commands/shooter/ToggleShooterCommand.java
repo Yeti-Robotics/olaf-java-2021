@@ -20,11 +20,11 @@ public class ToggleShooterCommand extends CommandBase {
   @Override
   public void execute() {
     if (ShooterSubsystem.getShooterStatus() == ShooterSubsystem.shooterStatus.OFF) {
-      shooterSubsystem.shoot();
+      shooterSubsystem.shootFlywheel();
     } else if (ShooterSubsystem.getShooterStatus() == ShooterSubsystem.shooterStatus.FORWARDS){
-      shooterSubsystem.stopShoot();
+      shooterSubsystem.stopFlywheel();
     }else {
-      shooterSubsystem.stopShoot();
+      shooterSubsystem.stopFlywheel();
     }
   }
 
