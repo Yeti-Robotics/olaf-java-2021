@@ -66,7 +66,7 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooterStatus;
     }
 
-    public double getSpeed() {
+    public double getSetSpeed() {
         return leftFlywheel.getMotorOutputPercent();
     }
 }
