@@ -29,8 +29,9 @@ public class AllOutCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hopperSubsystem.hopperIn();
-    pinchRollerSubsystem.pinchIn();
+    hopperSubsystem.hopperOut();
+    pinchRollerSubsystem.pinchOut();
+    intakeSubsystem.intakeOut();
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +39,7 @@ public class AllOutCommand extends CommandBase {
   public void end(boolean interrupted) {
     hopperSubsystem.hopperStop();
     pinchRollerSubsystem.pinchStop();
+    intakeSubsystem.intakeStop();
   }
 
   // Returns true when the command should end.
