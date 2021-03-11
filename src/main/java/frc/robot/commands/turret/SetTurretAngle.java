@@ -16,8 +16,8 @@ public class SetTurretAngle extends CommandBase {
   private double encoderGoal;
   public SetTurretAngle(TurretSubsystem turretSubsystem, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    turretSubsystem = this.turretSubsystem;
-    angle = this.angle;
+    this.turretSubsystem = turretSubsystem;
+    this.angle = angle;
     addRequirements(turretSubsystem);
   }
 
