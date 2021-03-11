@@ -31,13 +31,13 @@ public class TestShootingCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.spin(power);
+    //shooterSubsystem.spin(power);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.stopShoot();
+    shooterSubsystem.stopFlywheel();
   }
 
   // Returns true when the command should end.

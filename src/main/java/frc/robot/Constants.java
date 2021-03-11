@@ -63,10 +63,12 @@ public final class Constants {
 
   public static final class TurretConstants{
     public static final int TURRET_SPARK = 10;
-    public static final double COUNTS_PER_REVOLUTION = 42;
-    public static final double TURRET_GEAR_RATIO = 325/1.0;
-    public static final double TURRET_ANGLE_THRESHOLD = 5;
-    public static final double TURRET_MAX_ANGLE = 270;
+    
+    public static final double COUNTS_PER_REVOLUTION = 42.0;
+    public static final double TURRET_GEAR_RATIO = 325.0/1.0;
+    public static final double TURRET_ANGLE_THRESHOLD = 5.0;
+    public static final double TURRET_MIN_ANGLE = 0.0;
+    public static final double TURRET_MAX_ANGLE = 270; // Double check angle. Is estimate
 
     //placeholders
     public static final double kPTurretVel = 0; 
