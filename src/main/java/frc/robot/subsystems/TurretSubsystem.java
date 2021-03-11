@@ -20,8 +20,8 @@ public class TurretSubsystem extends SubsystemBase {
         rightLimitSwitch = turretSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
         leftLimitSwitch = turretSpark.getForwardLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
         turretEncoder = turretSpark.getEncoder();
-        turretSpark.setSoftLimit(SoftLimitDirection.kForward, (float)turretEncoderFromAngle(TurretConstants.FORWARD_SOFT_LIMIT));
-        turretSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)turretEncoderFromAngle(TurretConstants.REVERSE_SOFT_LIMIT));
+        turretSpark.setSoftLimit(SoftLimitDirection.kForward, (float)turretEncoderFromAngle(TurretConstants.TURRET_MAX_ANGLE));
+        turretSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)turretEncoderFromAngle(TurretConstants.TURRET_MIN_ANGLE));
     }
 
     public void moveTurret(double power) {
