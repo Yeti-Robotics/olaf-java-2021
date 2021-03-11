@@ -63,9 +63,11 @@ public final class Constants {
 
   public static final class TurretConstants{
     public static final int TURRET_SPARK = 10;
-    public static final double COUNTS_PER_REVOLUTION = 42;
-    public static final double TURRET_GEAR_RATIO = 325/1.0;
-    public static final double TURRET_ANGLE_THRESHOLD = 5;
+    public static final double COUNTS_PER_REVOLUTION = 42.0;
+    public static final double TURRET_GEAR_RATIO = 325.0/1.0;
+    public static final double TURRET_ANGLE_THRESHOLD = 5.0;
+    public static final double FORWARD_SOFT_LIMIT = 240.0; //double check both angles, they are estimates.
+    public static final double REVERSE_SOFT_LIMIT = -60.0;
   }
   
   public static final class ShooterConstants{
