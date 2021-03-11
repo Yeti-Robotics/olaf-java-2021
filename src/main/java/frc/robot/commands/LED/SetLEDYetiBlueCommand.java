@@ -19,7 +19,9 @@ public class SetLEDYetiBlueCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ledSubsystem.setHSV(554 , 633 , 898); // i dont know if this is the correct value
+    for (int i = 0; i < ledSubsystem.getBufferLength(); i++) {
+    ledSubsystem.setHSV(i, 554 , 633 , 898); // i dont know if this is the correct value
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

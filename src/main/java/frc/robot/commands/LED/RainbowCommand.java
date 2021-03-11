@@ -4,16 +4,16 @@
 
 package frc.robot.commands.LED;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.LEDSubsystem;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;;
 public class RainbowCommand extends CommandBase {
   /** Creates a new RainbowCommand. */
-  public RainbowCommand() {
-  
-    // Use addRequirements() here to declare subsystem dependencies.
+  private LEDSubsystem ledSubsystem;
+  private int rainbowFirstPixelHue;
+  public RainbowCommand(LEDSubsystem ledSubsystem, int rainbowFirstPixelHue) {
+    this.ledSubsystem = ledSubsystem;
+    this.rainbowFirstPixelHue = rainbowFirstPixelHue;
+    addRequirements(ledSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -21,21 +21,19 @@ public class RainbowCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      AddressableLEDBuffer ledBuffer;
-      AddressableLED ledStrip;
     // For every pixel
-      for (int i = 0; i < ledBuffer.getLength(); i++) {
+      for (int i = 0; i < ledSubsystem.getBufferLength(); i++) {
         // Calculate the hue - hue is easier for rainbows because the color
         // shape is a circle so only one value needs to precess
-        final int hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
+        final int hue = (rainbowFirstPixelHue + (i * 180 / ledSubsystem.getBufferLength())) % 180;
         // Set the value
-        ledBuffer.setHSV(i, hue, 255, 128);
+        ledSubsystem.setHSV(i, hue, 255, 128);
       }
       // Increase by to make the rainbow "move"
       rainbowFirstPixelHue += 3;
       // Check bounds
       rainbowFirstPixelHue %= 180;
-      ledStrip.setData(ledBuffer);
+      ledSubsystem.sendData();
   }
   
 
