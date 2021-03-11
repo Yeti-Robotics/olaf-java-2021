@@ -7,9 +7,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CalcConstants;
 import frc.robot.Constants.HoodConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.utils.Limelight;
 
 public class HoodSubsystem extends SubsystemBase {
   /** Creates a new HoodSubsystem. */
@@ -52,5 +54,9 @@ public class HoodSubsystem extends SubsystemBase {
   public boolean getBeamBreak(){
     return beamBreak.get();
   }
+
+  public double calcHoodAngle() {
+    return Math.toDegrees(Math.asin(-CalcConstants.GRAVITY * Limelight.getCalculatedDistance()) / ShooterConstants.SHOOT_1_SPEED);
+}
 
 }
