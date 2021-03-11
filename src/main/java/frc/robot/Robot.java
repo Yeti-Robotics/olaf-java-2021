@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.LED.SetLEDYetiBlueCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
 import frc.robot.utils.Limelight;
@@ -104,7 +106,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-
+    if(m_robotContainer.turretSubsystem.getReverseLimit()){
+      m_robotContainer.turretSubsystem.resetEncoder();
+    } else {
+      m_robotContainer.turretSubsystem.moveTurret(-.5);
+    }
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
