@@ -108,8 +108,6 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     if(m_robotContainer.turretSubsystem.getReverseLimit()){
       m_robotContainer.turretSubsystem.resetEncoder();
-    } else {
-      m_robotContainer.turretSubsystem.moveTurret(-.5);
     }
   }
 
