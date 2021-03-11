@@ -86,7 +86,7 @@ public class RobotContainer {
   }
 
   public double getLeftX() {
-    return driverStationJoystick.getX();
+    return driverStationJoystick.getRawAxis(0);
   }
 
   public double getRightY() {
@@ -94,7 +94,7 @@ public class RobotContainer {
   }
 
   public double getRightX() {
-    return driverStationJoystick.getX();
+    return driverStationJoystick.getRawAxis(2);
   }
 
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
