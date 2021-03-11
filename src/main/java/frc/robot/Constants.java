@@ -66,6 +66,11 @@ public final class Constants {
     public static final double COUNTS_PER_REVOLUTION = 42;
     public static final double TURRET_GEAR_RATIO = 325/1.0;
     public static final double TURRET_ANGLE_THRESHOLD = 5;
+
+    //placeholders
+    public static final double kPTurretVel = 0; 
+    public static final double kITurretVel = 0;
+    public static final double kDTurretVel = 0;
   }
   
   public static final class ShooterConstants{
