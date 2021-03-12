@@ -25,7 +25,7 @@ public class HoodSubsystem extends SubsystemBase {
     hoodEncoder = hoodSpark.getEncoder();
     hoodSpark.setInverted(true);
     beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
-    hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.FORWARD_SOFT_LIMIT));
+    hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(20));//HoodConstants.FORWARD_SOFT_LIMIT));
   }
 
   @Override
@@ -47,7 +47,11 @@ public class HoodSubsystem extends SubsystemBase {
     return ((angle/360.0)* HoodConstants.HOOD_GEAR_RATIO * HoodConstants.COUNTS_PER_REVOLUTION);
   }
 
-  public double getHoodEncoder(){
+  public void resetEncoder(){
+    hoodEncoder.setPosition(0);
+}
+
+  public double getEncoder(){
     return hoodEncoder.getPosition();
   }
 
