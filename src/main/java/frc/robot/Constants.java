@@ -24,7 +24,7 @@ public final class Constants {
     public static final double LOW_GEAR_RATIO = 34/32.0; // same as abv
     public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
     // placeholder values
-    public static final int[] SHIFTER_SOLENOID = {0,1}; 
+    public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
   }
 
@@ -50,7 +50,7 @@ public final class Constants {
 
   public static final class IntakeConstants{
     public static final int INTAKE_VICTOR = 8;
-    public static final int[] INTAKE_PISTONS_SOLENOID = {2, 3};
+    public static final int[] INTAKE_PISTONS_SOLENOID = {0, 7};
     public static final double ROLL_IN_SPEED = 1.0;
     public static final double ROLL_OUT_SPEED = -1.0;
   }
@@ -64,7 +64,7 @@ public final class Constants {
   public static final class TurretConstants{
     public static final int TURRET_SPARK = 10;
     
-    public static final double COUNTS_PER_REVOLUTION = 42.0;
+    public static final double COUNTS_PER_REVOLUTION = 2048.0;
     public static final double TURRET_GEAR_RATIO = 325.0/1.0;
     public static final double TURRET_ANGLE_THRESHOLD = 5.0;
     public static final double TURRET_MIN_ANGLE = 0.0;
@@ -80,10 +80,10 @@ public final class Constants {
     //PLACEHOLDER VALUES!
     public static final int RIGHT_FLYWHEEL = 5; //rightside falcon
     public static final int LEFT_FLYWHEEL = 6; //leftside falcon
-    public static final int SHOOT_1_SPEED = 80;
-    public static final int SHOOT_2_SPEED = 80;
-    public static final int REVERSE_SHOOT_1_SPEED = 10;
-    public static final int REVERSE_SHOOT_2_SPEED = 10;
+    public static final double SHOOT_1_SPEED = 1.0;
+    public static final double SHOOT_2_SPEED = 1.0;
+    public static final double REVERSE_SHOOT_1_SPEED = -1.0;
+    public static final double REVERSE_SHOOT_2_SPEED = -1.0;
   }
 
 
@@ -91,8 +91,8 @@ public final class Constants {
     public static final int HOOD_SPARK = 11;
     public static final double COUNTS_PER_REVOLUTION = 42.0;
     public static final double HOOD_GEAR_RATIO = 510.0/1.0;
-    public static final int HOOD_ANGLE_THRESHOLD = 5;
-    public static final double FORWARD_SOFT_LIMIT = ((36.0/340.0)*360.0);
+    public static final int HOOD_ANGLE_TOLERANCE = 1;
+    public static final double FORWARD_SOFT_LIMIT = 28.0; //((36.0/340.0)*360.0);
   }
   
   public static final class PinchRollerConstants{

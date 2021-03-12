@@ -75,14 +75,14 @@ public class RobotContainer {
     // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
 
     //secondary buttons
-    setJoystickButtonWhileHeld(driverStationJoystick, 1, new ToggleShooterCommand(shooterSubsystem)); //toggle flywheel
+    setJoystickButtonWhenPressed(driverStationJoystick, 1, new ToggleShooterCommand(shooterSubsystem)); //toggle flywheel
     setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
-    // setJoystickButtonWhileHeld(driverStationJoystick, 3, ); //ntohing
+    setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
     setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
-    setJoystickButtonWhenPressed(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
+    setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
     setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //shoot
     setJoystickButtonWhileHeld(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
-    // setJoystickButtonWhenPressed(driverStationJoystick, 8, ); //nothing
+    setJoystickButtonWhileHeld(driverStationJoystick, 3, new IntakeInCommand(intakeSubsystem)); //temp
     setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -.1)); //turret L
     setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, .1)); //turret R
 

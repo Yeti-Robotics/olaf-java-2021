@@ -27,7 +27,7 @@ public class SetHoodAngle extends CommandBase {
   @Override
   public void initialize() {
     encoderGoal = hoodSubsystem.hoodEncoderFromAngle(angle);
-    if (encoderGoal < hoodSubsystem.getHoodEncoder()){
+    if (encoderGoal < hoodSubsystem.getEncoder()){
         power = -power;
     }
   }
@@ -47,6 +47,6 @@ public class SetHoodAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-  return Math.abs(encoderGoal - hoodSubsystem.getHoodEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_THRESHOLD;
+  return Math.abs(encoderGoal - hoodSubsystem.getEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_TOLERANCE;
   }
 }

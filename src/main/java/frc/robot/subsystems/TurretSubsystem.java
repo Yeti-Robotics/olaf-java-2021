@@ -17,8 +17,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     public TurretSubsystem() {
         turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK, MotorType.kBrushless);
-        rightLimitSwitch = turretSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
-        leftLimitSwitch = turretSpark.getForwardLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyOpen);
+        rightLimitSwitch = turretSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
+        leftLimitSwitch = turretSpark.getForwardLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
         turretEncoder = turretSpark.getEncoder();
         turretSpark.setSoftLimit(SoftLimitDirection.kForward, (float)turretEncoderFromAngle(TurretConstants.TURRET_MAX_ANGLE));
         turretSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)turretEncoderFromAngle(TurretConstants.TURRET_MIN_ANGLE));
@@ -51,7 +51,11 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public double turretEncoderFromAngle(double angle){
-        return ((angle/360.0)* TurretConstants.TURRET_GEAR_RATIO * TurretConstants.COUNTS_PER_REVOLUTION);
+        return ((angle / 360.0)* TurretConstants.TURRET_GEAR_RATIO * TurretConstants.COUNTS_PER_REVOLUTION);
+    }
+
+    public double turretAngleFromEncoder(double encoderValue){
+        return (encoderValue * 360.0) / (TurretConstants.TURRET_GEAR_RATIO * TurretConstants.COUNTS_PER_REVOLUTION);
     }
 
     public boolean getPhysicalLimit(){
