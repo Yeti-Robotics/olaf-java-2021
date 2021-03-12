@@ -6,11 +6,11 @@ package frc.robot.commands.LED;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubsystem;
-public class RainbowCommand extends CommandBase {
+public class RainbowLEDCommand extends CommandBase {
   /** Creates a new RainbowCommand. */
   private LEDSubsystem ledSubsystem;
   private int rainbowFirstPixelHue;
-  public RainbowCommand(LEDSubsystem ledSubsystem, int rainbowFirstPixelHue) {
+  public RainbowLEDCommand(LEDSubsystem ledSubsystem, int rainbowFirstPixelHue) {
     this.ledSubsystem = ledSubsystem;
     this.rainbowFirstPixelHue = rainbowFirstPixelHue;
     addRequirements(ledSubsystem);

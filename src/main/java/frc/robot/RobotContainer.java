@@ -41,6 +41,7 @@ public class RobotContainer {
   public PinchRollerSubsystem pinchRollerSubsystem;
   public HoodSubsystem hoodSubsystem;
   public TurretSubsystem turretSubsystem;
+  public LEDSubsystem ledSubsystem;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,6 +57,7 @@ public class RobotContainer {
     pinchRollerSubsystem = new PinchRollerSubsystem();
     hoodSubsystem = new HoodSubsystem();
     turretSubsystem = new TurretSubsystem();
+    ledSubsystem = new LEDSubsystem();
 
     drivetrainSubsystem
         .setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
