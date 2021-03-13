@@ -64,14 +64,15 @@ public final class Constants {
   public static final class TurretConstants{
     public static final int TURRET_SPARK = 10;
     
-    public static final double COUNTS_PER_REVOLUTION = 2048.0;
-    public static final double TURRET_GEAR_RATIO = 325.0/1.0;
+    public static final double COUNTS_PER_REVOLUTION = 42.0;
+    public static final double TURRET_GEAR_RATIO = 227.5 / 1.0; //325.0/1.0;
+    public static final double COUNTS_PER_DEGREE = (TURRET_GEAR_RATIO) / 360.0;
     public static final double TURRET_ANGLE_THRESHOLD = 5.0;
     public static final double TURRET_MIN_ANGLE = 0.0;
     public static final double TURRET_MAX_ANGLE = 270; // Double check angle. Is estimate
 
     //placeholders
-    public static final double kPTurretVel = 0; 
+    public static final double kPTurretVel = 0.01; 
     public static final double kITurretVel = 0;
     public static final double kDTurretVel = 0;
   }
@@ -90,9 +91,10 @@ public final class Constants {
   public static final class HoodConstants{
     public static final int HOOD_SPARK = 11;
     public static final double COUNTS_PER_REVOLUTION = 42.0;
-    public static final double HOOD_GEAR_RATIO = 510.0/1.0;
+    public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
+    public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
     public static final int HOOD_ANGLE_TOLERANCE = 1;
-    public static final double FORWARD_SOFT_LIMIT = 28.0; //((36.0/340.0)*360.0);
+    public static final double MAX_HOOD_ANGLE = 30.0;
   }
   
   public static final class PinchRollerConstants{
@@ -109,6 +111,6 @@ public final class Constants {
     public static final double FOCAL_LENGTH = ( KNOWN_DISTANCE * PIXEL_WIDTH_KNOWN) / KNOWN_TAPE_BOUND_WIDTH;
     //trajectory constants
     public static final double GRAVITY = 386.09; // inches/ sec ^2
-    public static final int SHOOTERHEIGHT = 23; //NOT ACTUAL VALUE
+    public static final double SHOOTER_HEIGHT = 21.5; // inches
   }
 }

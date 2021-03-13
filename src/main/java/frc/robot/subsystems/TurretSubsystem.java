@@ -51,11 +51,11 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public double turretEncoderFromAngle(double angle){
-        return ((angle / 360.0)* TurretConstants.TURRET_GEAR_RATIO * TurretConstants.COUNTS_PER_REVOLUTION);
+        return TurretConstants.COUNTS_PER_DEGREE * angle;
     }
 
     public double turretAngleFromEncoder(double encoderValue){
-        return (encoderValue * 360.0) / (TurretConstants.TURRET_GEAR_RATIO * TurretConstants.COUNTS_PER_REVOLUTION);
+        return encoderValue / TurretConstants.COUNTS_PER_DEGREE;
     }
 
     public boolean getPhysicalLimit(){

@@ -17,9 +17,9 @@ public class SetHoodAngle extends CommandBase {
 
   public SetHoodAngle(HoodSubsystem hoodSubsystem, double angle, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
-    hoodSubsystem = this.hoodSubsystem;
-    angle = this.angle;
-    power = Math.abs(this.power);
+    this.hoodSubsystem = hoodSubsystem;
+    this.angle = angle;
+    this.power = Math.abs(power);
     addRequirements(hoodSubsystem);
   }
 

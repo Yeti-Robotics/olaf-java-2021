@@ -26,12 +26,7 @@ public class TurnToTargetPIDCommand extends PIDCommand {
         // This should return the setpoint (can also be a constant)
         0.0,
         // This uses the output
-        output -> {
-          if(Limelight.getTx() > 0){
-            turretSubsystem.moveTurret(output);
-          } else {
-            turretSubsystem.moveTurret(-output);
-          }
+        output -> {turretSubsystem.moveTurret(-output);
         }
     );
     // Use addRequirements() here to declare subsystem dependencies.
@@ -45,6 +40,7 @@ public class TurnToTargetPIDCommand extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // System.out.println("i am aligned (supposedly)");
     return getController().atSetpoint() || turretSubsystem.getPhysicalLimit();
   }
 }
