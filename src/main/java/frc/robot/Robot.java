@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.LED.SetLEDYetiBlueCommand;
+import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
 import frc.robot.utils.Limelight;
@@ -46,56 +49,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder())
+    + " limelight distance: " + Limelight.getHorDistance() + " raw hood encoder value: " + m_robotContainer.hoodSubsystem.getEncoder()
+     + " shooter velocity (left): " + m_robotContainer.shooterSubsystem.getLeftEncoder());
+    
+
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-
-//    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-//    NetworkTableEntry tx = table.getEntry("tx");
-//    NetworkTableEntry ty = table.getEntry("ty");
-//    NetworkTableEntry ta = table.getEntry("ta");
-//    NetworkTableEntry tlong = table.getEntry("tlong");
-//
-////read values periodically
-//    double x = tx.getDouble(0.0);
-//    double y = ty.getDouble(0.0);
-//    double area = ta.getDouble(0.0);
-//    double t2long = tlong.getDouble(0.0);
-//
-//
-//    SmartDashboard.putNumber("LimelightX", x);
-//    SmartDashboard.putNumber("LimelightY", y);
-//    SmartDashboard.putNumber("LimelightArea", area);
-//
-//    SmartDashboard.putNumber("t2long", t2long);
-//
-//    SmartDashboard.putNumber("distance", Limelight.getDistance());
-//
-//    SmartDashboard.putNumber("calculated distance", Limelight.getCalculatedDistance());
-
-    //Secondary Controls Shuffleboard
-    //if(IntakeSubsystem.getIntakePosition() == IntakeStatus.DOWN) {
-    //  SmartDashboard.putString("Intake Status", "DOWN");
-    //} else if(IntakeSubsystem.getIntakePosition() == IntakeStatus.UP) {
-    //  SmartDashboard.putString("Intake Status", "UP");
-    // }
-
-//    if(ShooterSubsystem.getShooterStatus() == ShooterStatus.BACKWARDS) {
-//      SmartDashboard.putString("Flywheel Status", "REVERSE");
-//    } else if(ShooterSubsystem.getShooterStatus() == ShooterStatus.FORWARDS) {
-//      SmartDashboard.putString("Flywheel Status", "FORWARD");
-//    } else {
-//      SmartDashboard.putString("Flywheel Status", "OFF");
-//    }
-
-
-
-    // System.out.println("beam break reverse value: " + m_robotContainer.hoodSubsystem.getBeamBreak());
-    // if (m_robotContainer.turretSubsystem.getReverseLimit()) {
-    //   m_robotContainer.turretSubsystem.resetEncoder();
-    // }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -104,7 +67,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    if(m_robotContainer.turretSubsystem.getForwardLimit()){
+      m_robotContainer.turretSubsystem.resetEncoder();
+    }
+    if (m_robotContainer.hoodSubsystem.getBeamBreak()){
+      m_robotContainer.hoodSubsystem.resetEncoder();
+    }
 
+    // System.out.println("whore distance: " + Limelight.getHorDistance() + " & estimated angle to shoot from: " + m_robotContainer.hoodSubsystem.calcHoodAngle());
+
+    // System.out.println("Hood encoder: " + m_robotContainer.hoodSubsystem.getEncoder());
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

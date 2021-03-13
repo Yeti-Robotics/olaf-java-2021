@@ -17,9 +17,9 @@ public class SetHoodAngle extends CommandBase {
 
   public SetHoodAngle(HoodSubsystem hoodSubsystem, double angle, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
-    hoodSubsystem = this.hoodSubsystem;
-    angle = this.angle;
-    power = Math.abs(this.power);
+    this.hoodSubsystem = hoodSubsystem;
+    this.angle = angle;
+    this.power = Math.abs(power);
     addRequirements(hoodSubsystem);
   }
 
@@ -27,7 +27,7 @@ public class SetHoodAngle extends CommandBase {
   @Override
   public void initialize() {
     encoderGoal = hoodSubsystem.hoodEncoderFromAngle(angle);
-    if (encoderGoal < hoodSubsystem.getHoodEncoder()){
+    if (encoderGoal < hoodSubsystem.getEncoder()){
         power = -power;
     }
   }
@@ -47,6 +47,6 @@ public class SetHoodAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-  return Math.abs(encoderGoal - hoodSubsystem.getHoodEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_THRESHOLD;
+  return Math.abs(encoderGoal - hoodSubsystem.getEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_TOLERANCE;
   }
 }

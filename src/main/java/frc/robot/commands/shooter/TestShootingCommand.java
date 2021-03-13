@@ -15,12 +15,9 @@ public class TestShootingCommand extends CommandBase {
    * Creates a new TestShootingCommand.
    */
   private final ShooterSubsystem shooterSubsystem;
-  private final double power;
-  public TestShootingCommand(ShooterSubsystem shooterSubsystem, double power) {
+  public TestShootingCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.shooterSubsystem = shooterSubsystem;
-    this.power = power;
-    
+    this.shooterSubsystem = shooterSubsystem;    
   }
 
   // Called when the command is initially scheduled.
@@ -31,13 +28,13 @@ public class TestShootingCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.spin(power);
+    shooterSubsystem.shootFlywheel();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.stopShoot();
+    shooterSubsystem.stopFlywheel();
   }
 
   // Returns true when the command should end.
