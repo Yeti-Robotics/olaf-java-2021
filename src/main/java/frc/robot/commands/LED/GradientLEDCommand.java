@@ -10,8 +10,12 @@ import frc.robot.subsystems.LEDSubsystem;
 public class GradientLEDCommand extends CommandBase {
   /** Creates a new GradientLEDCommand. */
   private LEDSubsystem ledSubsystem;
+  private int firstHueValue;
+  private int lastHueValue;
   public GradientLEDCommand(LEDSubsystem ledSubsystem, int firstHueValue, int lastHueValue) {
     this.ledSubsystem = ledSubsystem;
+    this.firstHueValue = firstHueValue;
+    this.lastHueValue = lastHueValue;
     addRequirements(ledSubsystem);
   }
 
@@ -25,14 +29,14 @@ public class GradientLEDCommand extends CommandBase {
     for (int i = 0; i < ledSubsystem.getBufferLength(); i++) {
       // Calculate the hue - hue is easier for rainbows because the color
       // shape is a circle so only one value needs to precess
-      final int hue = (rainbowFirstPixelHue + (i * 180 / ledSubsystem.getBufferLength())) % 180;
+      final int hue = (firstHueValue + (i * 180 / ledSubsystem.getBufferLength())) % 180;
       // Set the value
       ledSubsystem.setHSV(i, hue, 255, 128);
     }
     // Increase by to make the rainbow "move"
-    rainbowFirstPixelHue += 3;
+    firstHueValue += 3;
     // Check bounds
-    rainbowFirstPixelHue %= 180;
+    firstHueValue %= 180;
     ledSubsystem.sendData();
   }
 
