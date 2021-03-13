@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -11,8 +12,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-
-    // ball go brrr
     private WPI_TalonFX rightFlywheel;
     private WPI_TalonFX leftFlywheel;
 
@@ -33,6 +32,9 @@ public class ShooterSubsystem extends SubsystemBase {
         rightFlywheel.setInverted(InvertType.OpposeMaster);
     
         shooterStatus = ShooterStatus.OFF;
+    }
+    @Override
+    public void periodic(){
     }
 
     public void shootFlywheel() {
@@ -69,4 +71,5 @@ public class ShooterSubsystem extends SubsystemBase {
     public double getSetSpeed() {
         return leftFlywheel.getMotorOutputPercent();
     }
+
 }

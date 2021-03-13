@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.LED.SetLEDYetiBlueCommand;
+import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
 import frc.robot.utils.Limelight;
@@ -48,6 +49,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder())
+    + " limelight distance: " + Limelight.getHorDistance() + " raw hood encoder value: " + m_robotContainer.hoodSubsystem.getEncoder()
+     + " shooter velocity (left): " + m_robotContainer.shooterSubsystem.getLeftEncoder());
+    
+
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -61,14 +67,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    if(!m_robotContainer.turretSubsystem.getForwardLimit()){
+    if(m_robotContainer.turretSubsystem.getForwardLimit()){
       m_robotContainer.turretSubsystem.resetEncoder();
     }
     if (m_robotContainer.hoodSubsystem.getBeamBreak()){
       m_robotContainer.hoodSubsystem.resetEncoder();
     }
-    // System.out.println("Turret angle: " + m_robotContainer.turretSubsystem.turretAngleFromEncoder(m_robotContainer.turretSubsystem.getEncoder()));
-    // System.out.println("limelight: " + Limelight.isTarget() + " " + Limelight.getTx());
+
+    // System.out.println("whore distance: " + Limelight.getHorDistance() + " & estimated angle to shoot from: " + m_robotContainer.hoodSubsystem.calcHoodAngle());
+
     // System.out.println("Hood encoder: " + m_robotContainer.hoodSubsystem.getEncoder());
   }
 
