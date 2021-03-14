@@ -57,8 +57,8 @@ public final class Constants {
 
   public static final class HopperConstants{
     public static final int HOPPER_VICTOR = 9;
-    public static final double HOPPER_IN_SPEED = .5;
-    public static final double HOPPER_OUT_SPEED = -.5; 
+    public static final double HOPPER_IN_SPEED = .4;
+    public static final double HOPPER_OUT_SPEED = -.4; 
   }
 
   public static final class TurretConstants{
@@ -85,6 +85,12 @@ public final class Constants {
     public static final double SHOOT_2_SPEED = 1.0;
     public static final double REVERSE_SHOOT_1_SPEED = -1.0;
     public static final double REVERSE_SHOOT_2_SPEED = -1.0;
+
+    public static final double ENCODER_RESOLUTION = 2048.0;
+    public static final double PULLEY_RATIO = 48.0 / 36.0;
+    public static final double ENCODER_TIME_CONVERSION = 600.0; // minutes per 100 ms
+    public static final double MAX_RPM = 7500;
+    public static final double FEED_FORWARD = 69.420; // place
   }
 
 
@@ -99,8 +105,8 @@ public final class Constants {
   
   public static final class PinchRollerConstants{
     public static final int PINCH_ROLLER_VICTOR = 7;
-    public static final double PINCH_ROLLER_IN_SPEED = .75;
-    public static final double PINCH_ROLLER_OUT_SPEED = -.75;
+    public static final double PINCH_ROLLER_IN_SPEED = .60;
+    public static final double PINCH_ROLLER_OUT_SPEED = -.60;
   }
 
   public static final class CalcConstants{

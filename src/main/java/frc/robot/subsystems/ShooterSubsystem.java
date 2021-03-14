@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
@@ -14,6 +15,7 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX rightFlywheel;
     private WPI_TalonFX leftFlywheel;
+    public double setPoint = 6500;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
@@ -25,20 +27,39 @@ public class ShooterSubsystem extends SubsystemBase {
         rightFlywheel = new WPI_TalonFX(ShooterConstants.RIGHT_FLYWHEEL);
         leftFlywheel = new WPI_TalonFX(ShooterConstants.LEFT_FLYWHEEL);
 
-        rightFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        leftFlywheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        rightFlywheel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+        leftFlywheel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         
         rightFlywheel.follow(leftFlywheel);
         rightFlywheel.setInverted(InvertType.OpposeMaster);
     
         shooterStatus = ShooterStatus.OFF;
+
+        //coast mode
+        leftFlywheel.setNeutralMode(NeutralMode.Coast);
+        rightFlywheel.setNeutralMode(NeutralMode.Coast);
+
+        //closed loop configuration
+        leftFlywheel.configNominalOutputForward(0.0);
+        leftFlywheel.configNominalOutputReverse(0.0);
+
+        leftFlywheel.selectProfileSlot(0, 0);
+        leftFlywheel.config_kF(0, 0.0517594042839351); // centeres around 16,000 vel/100ms
+        leftFlywheel.config_kP(0, 0.25); 
+        leftFlywheel.config_kI(0, 0.0); //0.0003
+        leftFlywheel.config_kD(0, 2.5);//1.9);
     }
     @Override
     public void periodic(){
     }
 
     public void shootFlywheel() {
-        leftFlywheel.set(ControlMode.PercentOutput, ShooterConstants.SHOOT_2_SPEED);
+        leftFlywheel.set(ControlMode.Velocity, getVelocityUnitsFromRPM(setPoint));
+        shooterStatus = ShooterStatus.FORWARDS;
+    }
+
+    public void shootFlywheel(double speed) {
+        leftFlywheel.set(ControlMode.PercentOutput, speed);
         shooterStatus = ShooterStatus.FORWARDS;
     }
 
@@ -72,4 +93,11 @@ public class ShooterSubsystem extends SubsystemBase {
         return leftFlywheel.getMotorOutputPercent();
     }
 
+    public double getFlywheelRPM() {
+        return getAverageEncoder() * ShooterConstants.PULLEY_RATIO * (ShooterConstants.ENCODER_TIME_CONVERSION / ShooterConstants.ENCODER_RESOLUTION);
+    }
+
+    public double getVelocityUnitsFromRPM(double RPM){
+        return RPM / (ShooterConstants.PULLEY_RATIO * (ShooterConstants.ENCODER_TIME_CONVERSION / ShooterConstants.ENCODER_RESOLUTION));
+    }
 }
