@@ -13,9 +13,11 @@ public class DriveForDistanceCommand extends CommandBase {
   private double drivePower;
   /** Creates a new DriveForDistanceCommand. */
 
-  public DriveForDistanceCommand(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal, double drivePower) {
+  public DriveForDistanceCommand(DrivetrainSubsystem drivetrainSubsystem, double distanceGoal, double drivePower) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.drivePower = drivePower;
+    this.distanceGoal = distanceGoal;
+    addRequirements(drivetrainSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,7 +31,7 @@ public class DriveForDistanceCommand extends CommandBase {
   @Override
   public void execute() {
     drivetrainSubsystem.tankDrive(drivePower, drivePower);
-    System.out.println("Distance" + distanceGoal + "; Encoder" + this.drivetrainSubsystem.getAverageEncoder());
+    System.out.println("Distance: " + drivetrainSubsystem.getRightEncoder() + "; Encoder: " + drivetrainSubsystem.getRawEncoder());
   }
 
   // Called once the command ends or is interrupted.

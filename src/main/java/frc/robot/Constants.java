@@ -20,9 +20,9 @@ public final class Constants {
     public static final int RIGHT_FALCON_1 = 3;
     public static final int RIGHT_FALCON_2 = 4;
 
-    public static final double HIGH_GEAR_RATIO = 40/26.0;//i think? pls double check
-    public static final double LOW_GEAR_RATIO = 34/32.0; // same as abv
-    public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
+    public static final double HIGH_GEAR_RATIO = 6.86;//40/26.0;//i think? pls double check
+    public static final double LOW_GEAR_RATIO = 9.93;//34/32.0; // same as abv
+    public static final double DISTANCE_PER_PULSE = (4 * Math.PI )/2048; //wheel diam in inches :)
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
