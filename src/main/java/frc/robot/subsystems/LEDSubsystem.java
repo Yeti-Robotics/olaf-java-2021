@@ -18,20 +18,20 @@ public class LEDSubsystem extends SubsystemBase {
     ledStrip.setLength(ledBuffer.getLength());
   }
 
-  public void setHSV(int hue, int saturation, int value){
-    for (var i = 0; i < ledBuffer.getLength(); i++) {
-      // Sets the specified LED to the HSV values for red
+  public void setHSV(int i, int hue, int saturation, int value){
       ledBuffer.setHSV(i, hue, saturation, value);
-   }
-   ledStrip.setData(ledBuffer);
   }
   
-  public void setRGB(int red, int green, int cyan){
-    for (var i = 0; i < ledBuffer.getLength(); i++) {
-      // Sets the specified LED to the RGB values for red
-      ledBuffer.setRGB(i, red, green, cyan);
-   }
-   ledStrip.setData(ledBuffer);
+  public void setRGB(int i, int red, int green, int cyan){
+   ledBuffer.setRGB(i, red, green, cyan);
+  }
+
+  public int getBufferLength(){
+    return ledBuffer.getLength();
+  }
+
+  public void sendData(){
+    ledStrip.setData(ledBuffer);
   }
 
 }

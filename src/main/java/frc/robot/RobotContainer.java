@@ -49,6 +49,7 @@ public class RobotContainer {
   public PinchRollerSubsystem pinchRollerSubsystem;
   public HoodSubsystem hoodSubsystem;
   public TurretSubsystem turretSubsystem;
+  public LEDSubsystem ledSubsystem;
   public ShiftingGearSubsystem shiftingGearSubsystem;
 
   /**
@@ -65,10 +66,9 @@ public class RobotContainer {
     pinchRollerSubsystem = new PinchRollerSubsystem();
     hoodSubsystem = new HoodSubsystem();
     turretSubsystem = new TurretSubsystem();
+    ledSubsystem = new LEDSubsystem();
     shiftingGearSubsystem = new ShiftingGearSubsystem();
-
-    // drivetrainSubsystem
-    //     .setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+    
     drivetrainSubsystem
         .setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
     // Configure the button bindings
