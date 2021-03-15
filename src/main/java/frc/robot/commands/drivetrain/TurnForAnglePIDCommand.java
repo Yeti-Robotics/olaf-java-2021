@@ -16,7 +16,7 @@ public class TurnForAnglePIDCommand extends PIDCommand {
   public TurnForAnglePIDCommand(double gyroGoal, DrivetrainSubsystem drivetrainSubsystem) {
     super(
         // The controller that the command will use
-        new PIDController(0.03, 0, 0.0025),
+        new PIDController(0.03, 0.002, 0.002),
         // new PIDController(.45*0.07, .54*0.07/1.06, 0.005),
         // This should return the measurement
         drivetrainSubsystem::getAngle,
@@ -39,9 +39,7 @@ public class TurnForAnglePIDCommand extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.gyroGoal = gyroGoal;
-    drivetrainSubsystem.resetGyro();
     getController().setTolerance(2.0);
-
   }
 
   @Override
@@ -53,7 +51,7 @@ public class TurnForAnglePIDCommand extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return false;
-    return getController().atSetpoint();
+    return false;
+    // return getController().atSetpoint();
   }
 }
