@@ -27,12 +27,14 @@ public class AllInCommand extends CommandBase {
   public void execute() {
     hopperSubsystem.hopperIn();
     pinchRollerSubsystem.pinchIn();
+    intakeSubsystem.intakeIn();
   }
 
   @Override
   public void end(boolean interrupted) {
     hopperSubsystem.hopperStop();
     pinchRollerSubsystem.pinchStop();
+    intakeSubsystem.intakeStop();
   }
 
   @Override

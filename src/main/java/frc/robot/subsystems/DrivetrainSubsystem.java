@@ -56,6 +56,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void tankDrive(double leftpower, double rightpower) {
     m_drive.tankDrive(leftpower, rightpower);
   }
+
+  public void cheezyDrive(double straight, double turn) {
+    m_drive.curvatureDrive(straight, -turn, false);
+  }
+
   public void stopDrive() {
     leftFalcon1.set(ControlMode.PercentOutput, 0);
     rightFalcon1.set(ControlMode.PercentOutput, 0);
@@ -90,6 +95,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public void resetGyro(){
     gyro.setYaw(0);
+  }
+
+  public double getRawEncoder() {
+    return leftFalcon1.getSelectedSensorPosition(); //temp method
   }
 
 }

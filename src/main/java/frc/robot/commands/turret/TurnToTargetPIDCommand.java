@@ -33,7 +33,7 @@ public class TurnToTargetPIDCommand extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     this.turretSubsystem = turretSubsystem;
     getController().enableContinuousInput(-28,28);
-    getController().setTolerance(1.0);
+    getController().setTolerance(.5);
     addRequirements(turretSubsystem);
   }
 

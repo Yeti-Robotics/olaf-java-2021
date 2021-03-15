@@ -20,9 +20,9 @@ public final class Constants {
     public static final int RIGHT_FALCON_1 = 3;
     public static final int RIGHT_FALCON_2 = 4;
 
-    public static final double HIGH_GEAR_RATIO = 40/26.0;//i think? pls double check
-    public static final double LOW_GEAR_RATIO = 34/32.0; // same as abv
-    public static final double DISTANCE_PER_PULSE = (0.098552*Math.PI )/2048; //wheel diam in meters :)
+    public static final double HIGH_GEAR_RATIO = 6.86;//40/26.0;//i think? pls double check
+    public static final double LOW_GEAR_RATIO = 9.93;//34/32.0; // same as abv
+    public static final double DISTANCE_PER_PULSE = (4 * Math.PI )/2048; //wheel diam in inches :)
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
@@ -57,8 +57,8 @@ public final class Constants {
 
   public static final class HopperConstants{
     public static final int HOPPER_VICTOR = 9;
-    public static final double HOPPER_IN_SPEED = .5;
-    public static final double HOPPER_OUT_SPEED = -.5; 
+    public static final double HOPPER_IN_SPEED = .4;
+    public static final double HOPPER_OUT_SPEED = -.4; 
   }
 
   public static final class TurretConstants{
@@ -85,6 +85,12 @@ public final class Constants {
     public static final double SHOOT_2_SPEED = 1.0;
     public static final double REVERSE_SHOOT_1_SPEED = -1.0;
     public static final double REVERSE_SHOOT_2_SPEED = -1.0;
+
+    public static final double ENCODER_RESOLUTION = 2048.0;
+    public static final double PULLEY_RATIO = 48.0 / 36.0;
+    public static final double ENCODER_TIME_CONVERSION = 600.0; // minutes per 100 ms
+    public static final double MAX_RPM = 7500;
+    public static final double FEED_FORWARD = 69.420; // place
   }
 
 
@@ -99,8 +105,8 @@ public final class Constants {
   
   public static final class PinchRollerConstants{
     public static final int PINCH_ROLLER_VICTOR = 7;
-    public static final double PINCH_ROLLER_IN_SPEED = .75;
-    public static final double PINCH_ROLLER_OUT_SPEED = -.75;
+    public static final double PINCH_ROLLER_IN_SPEED = .60;
+    public static final double PINCH_ROLLER_OUT_SPEED = -.60;
   }
 
   public static final class CalcConstants{

@@ -27,6 +27,8 @@ import frc.robot.utils.Limelight;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  // private double maxRPM = 0.0;
+  // private double maxEncoder = 0.0;
 
   private RobotContainer m_robotContainer;
   /**
@@ -49,15 +51,25 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder())
-    + " limelight distance: " + Limelight.getHorDistance() + " raw hood encoder value: " + m_robotContainer.hoodSubsystem.getEncoder()
-     + " shooter velocity (left): " + m_robotContainer.shooterSubsystem.getLeftEncoder());
+    // if(m_robotContainer.shooterSubsystem.getFlywheelRPM() > maxRPM){
+    //   maxRPM = m_robotContainer.shooterSubsystem.getFlywheelRPM();
+    // }
+    // if(m_robotContainer.shooterSubsystem.getAverageEncoder() > maxEncoder){
+    //   maxEncoder = m_robotContainer.shooterSubsystem.getAverageEncoder();
+    // }
+
+    // System.out.println("Flywheel RPM, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getFlywheelRPM() + " - " + m_robotContainer.shooterSubsystem.setPoint);
+    // System.out.println("Flywheel Enc, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getAverageEncoder() + " - " + m_robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(m_robotContainer.shooterSubsystem.setPoint) + "\n.");
     
+    // System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
 
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    System.out.println("Distance: " + m_robotContainer.drivetrainSubsystem.getLeftEncoder() + "; Encoder: " + m_robotContainer.drivetrainSubsystem.getRawEncoder() + "; gear status: " + m_robotContainer.shiftingGearSubsystem.shiftStatus);
+
+    
     CommandScheduler.getInstance().run();
   }
 
@@ -67,6 +79,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    // maxRPM = 0.0;
+    // maxEncoder = 0.0;
     if(m_robotContainer.turretSubsystem.getForwardLimit()){
       m_robotContainer.turretSubsystem.resetEncoder();
     }
