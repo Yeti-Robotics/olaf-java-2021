@@ -13,7 +13,7 @@ public class TurnForAnglePIDCommand extends PIDCommand {
   private double gyroGoal;
   private DrivetrainSubsystem drivetrainSubsystem;
   /** Creates a new TurnForAnglePIDCommand. */
-  public TurnForAnglePIDCommand(double gyroGoal, DrivetrainSubsystem drivetrainSubsystem) {
+  public TurnForAnglePIDCommand(DrivetrainSubsystem drivetrainSubsystem, double gyroGoal) {
     super(
         // The controller that the command will use
         new PIDController(0.03, 0.002, 0.002),

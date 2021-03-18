@@ -5,8 +5,8 @@
 package frc.robot.commands.galsearch;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.drivetrain.DriveForDistanceCommand;
-import frc.robot.commands.drivetrain.TurnForAngleCommand;
+import frc.robot.commands.drivetrain.DriveForDistancePIDCommand;
+import frc.robot.commands.drivetrain.TurnForAnglePIDCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -22,16 +22,16 @@ public class PathARedCommandGroup extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ToggleIntakePistonCommand(intakeSubsystem),
-      new DriveForDistanceCommand(drivetrainSubsystem, 60, .5),
-      new IntakeInCommand(intakeSubsystem),
-      new TurnForAngleCommand(drivetrainSubsystem, 26.56505118, .5, .5),// positive is clockwise
-      new DriveForDistanceCommand(drivetrainSubsystem, Math.sqrt(31.25), .5),
-      new IntakeInCommand(intakeSubsystem),
-      new TurnForAngleCommand(drivetrainSubsystem, -71.5650511771 -26.56505118, .5, .5),
-      new DriveForDistanceCommand(drivetrainSubsystem, Math.sqrt(62.5), .5),
-      new IntakeInCommand(intakeSubsystem), 
-      new TurnForAngleCommand(drivetrainSubsystem, 71.5650511771, .5, .5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 180, .5)
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 60),
+      new IntakeInCommand(intakeSubsystem).withTimeout(4),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, 26.56505118),// positive is clockwise
+      new DriveForDistancePIDCommand(drivetrainSubsystem, Math.sqrt(31.25)),
+      new IntakeInCommand(intakeSubsystem).withTimeout(4),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, -71.5650511771 -26.56505118),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, Math.sqrt(62.5)),
+      new IntakeInCommand(intakeSubsystem).withTimeout(4), 
+      new TurnForAnglePIDCommand(drivetrainSubsystem, 71.5650511771),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 180)
     );
   }
 }

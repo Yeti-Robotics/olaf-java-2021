@@ -11,11 +11,11 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DriveForDistancePID extends PIDCommand {
+public class DriveForDistancePIDCommand extends PIDCommand {
   private DrivetrainSubsystem drivetrainSubsystem;
   private double encoderGoal;
   /** Creates a new DriveForDistancePID. */
-  public DriveForDistancePID(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal) {
+  public DriveForDistancePIDCommand(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal) {
     super(
         // The controller that the command will use
         new PIDController(0.3, 0, 0),
