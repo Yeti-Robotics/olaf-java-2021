@@ -30,6 +30,7 @@ import frc.robot.commands.turret.TurnToTargetPIDCommand;
 import frc.robot.commands.turret.TurretTestCommand;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 import frc.robot.utils.Limelight;
 
 /**
@@ -70,8 +71,11 @@ public class RobotContainer {
     ledSubsystem = new LEDSubsystem();
     shiftingGearSubsystem = new ShiftingGearSubsystem();
     
-    drivetrainSubsystem
-        .setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+    if(drivetrainSubsystem.getDriveMode() == DriveMode.TANK){
+      drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+    } else {
+      drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+    }
     // Configure the button bindings
     configureButtonBindings();
   }

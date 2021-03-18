@@ -24,6 +24,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // The robot's drive
   private final DifferentialDrive m_drive;
 
+  private DriveMode driveMode;
+
+  public enum DriveMode {
+    TANK, CHEEZY;
+  }
+
   /** Creates a new DriveSubsystem. */
   public DrivetrainSubsystem() {   
     leftFalcon1 = new WPI_TalonFX(DriveConstants.LEFT_FALCON_1);
@@ -46,6 +52,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     resetEncoders();
   
     gyro = new PigeonIMU(DriveConstants.GYRO_ID);
+
+    driveMode = DriveMode.TANK;
   }
 
   @Override
@@ -101,4 +109,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
     return leftFalcon1.getSelectedSensorPosition(); //temp method
   }
 
+  public DriveMode getDriveMode(){
+    return driveMode;
+  }
+
+  public void setDriveMode(DriveMode driveMode){
+    this.driveMode = driveMode;
+  }
 }
