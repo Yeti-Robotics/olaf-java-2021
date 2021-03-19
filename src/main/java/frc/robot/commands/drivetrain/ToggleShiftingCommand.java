@@ -5,21 +5,25 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShiftingGearSubsystem;
 
 public class ToggleShiftingCommand extends CommandBase {
   private final ShiftingGearSubsystem shiftingGearSubsystem;
+  private DrivetrainSubsystem drivetrainSubsystem;
 
   /** Creates a new ToggleShiftingCommand. */
-  public ToggleShiftingCommand(ShiftingGearSubsystem shiftingGearSubsystem) {
+  public ToggleShiftingCommand(ShiftingGearSubsystem shiftingGearSubsystem, DrivetrainSubsystem drivetrainSubsystem) {
     this.shiftingGearSubsystem = shiftingGearSubsystem;
-        addRequirements(shiftingGearSubsystem);
+    this.drivetrainSubsystem = drivetrainSubsystem;
+        addRequirements(shiftingGearSubsystem, drivetrainSubsystem);
   
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    drivetrainSubsystem.resetEncoders();
     if (ShiftingGearSubsystem.getShifterPosition() == ShiftingGearSubsystem.ShiftStatus.HIGH) {
       shiftingGearSubsystem.shiftDown();
   } else {
