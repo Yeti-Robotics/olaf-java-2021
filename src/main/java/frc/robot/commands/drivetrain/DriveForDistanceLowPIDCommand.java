@@ -7,6 +7,8 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.ShiftingGearSubsystem;
+import frc.robot.subsystems.ShiftingGearSubsystem.ShiftStatus;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,6 +16,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class DriveForDistanceLowPIDCommand extends PIDCommand {
   private DrivetrainSubsystem drivetrainSubsystem;
   private double encoderGoal;
+  private ShiftingGearSubsystem shiftingGearSubsystem;
   /** Creates a new DriveForDistancePID. */
   public DriveForDistanceLowPIDCommand(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal) {
     super(
@@ -44,6 +47,9 @@ public class DriveForDistanceLowPIDCommand extends PIDCommand {
   public void initialize() {
     super.initialize();
     drivetrainSubsystem.resetEncoders();
+    if(shiftingGearSubsystem.shiftStatus == ShiftStatus.HIGH) {
+      shiftingGearSubsystem.shiftDown();
+    }
   }
 
   // Returns true when the command should end.
