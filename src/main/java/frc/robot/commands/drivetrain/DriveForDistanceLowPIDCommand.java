@@ -30,8 +30,10 @@ public class DriveForDistanceLowPIDCommand extends PIDCommand {
         output -> {
           if(encoderGoal < 0){
             drivetrainSubsystem.tankDrive(-output, -output);
+            System.out.println("on the move (forwards)");
           } else {
             drivetrainSubsystem.tankDrive(output, output);
+            System.out.println("on the move (backwards)");
           }
         }
     );
@@ -47,9 +49,7 @@ public class DriveForDistanceLowPIDCommand extends PIDCommand {
   public void initialize() {
     super.initialize();
     drivetrainSubsystem.resetEncoders();
-    if(shiftingGearSubsystem.shiftStatus == ShiftStatus.HIGH) {
-      shiftingGearSubsystem.shiftDown();
-    }
+    shiftingGearSubsystem.shiftDown();
   }
 
   // Returns true when the command should end.

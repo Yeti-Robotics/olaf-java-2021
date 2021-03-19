@@ -47,9 +47,7 @@ public class DriveForDistanceHighPIDCommand extends PIDCommand {
   public void initialize() {
     super.initialize();
     drivetrainSubsystem.resetEncoders();
-    if(shiftingGearSubsystem.shiftStatus == ShiftStatus.LOW) {
-      shiftingGearSubsystem.shiftUp();
-    }
+    shiftingGearSubsystem.shiftUp();
   }
 
   // Returns true when the command should end.
