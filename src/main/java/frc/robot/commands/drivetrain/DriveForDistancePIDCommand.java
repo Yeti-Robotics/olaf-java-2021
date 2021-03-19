@@ -8,50 +8,47 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class TurnForAnglePIDCommand extends PIDCommand {
-
-  private double gyroGoal;
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class DriveForDistancePIDCommand extends PIDCommand {
   private DrivetrainSubsystem drivetrainSubsystem;
-  /** Creates a new TurnForAnglePIDCommand. */
-  public TurnForAnglePIDCommand(DrivetrainSubsystem drivetrainSubsystem, double gyroGoal) {
+  private double encoderGoal;
+  /** Creates a new DriveForDistancePID. */
+  public DriveForDistancePIDCommand(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal) {
     super(
         // The controller that the command will use
-        new PIDController(0.03, 0.002, 0.002),
-        // new PIDController(.45*0.07, .54*0.07/1.06, 0.005),
+        new PIDController(0.3, 0, 0),
         // This should return the measurement
-        drivetrainSubsystem::getAngle,
+        drivetrainSubsystem::getAverageEncoder,
         // This should return the setpoint (can also be a constant)
-        gyroGoal,
+        encoderGoal,
         // This uses the output
         output -> {
-        if(gyroGoal < 0){
-          drivetrainSubsystem.tankDrive(-output, output);
-          System.out.println("should b clockwise");
+          if(encoderGoal < 0){
+            drivetrainSubsystem.tankDrive(-output, -output);
+          } else {
+            drivetrainSubsystem.tankDrive(output, output);
+          }
         }
-        else {
-          drivetrainSubsystem.tankDrive(-output, output);
-          System.out.println("should b ccw");
-        }
-      }
     );
-        // Use the output h;
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     this.drivetrainSubsystem = drivetrainSubsystem;
-    this.gyroGoal = gyroGoal;
-    getController().setTolerance(2.0);
+    this.encoderGoal = encoderGoal;
+    drivetrainSubsystem.resetEncoders();
+    getController().setTolerance(1.0);
   }
-
+  
   @Override
-    public void initialize() {
-      super.initialize();
-      drivetrainSubsystem.resetGyro();
+  public void initialize() {
+    super.initialize();
+    drivetrainSubsystem.resetEncoders();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
-    // return getController().atSetpoint();
   }
 }

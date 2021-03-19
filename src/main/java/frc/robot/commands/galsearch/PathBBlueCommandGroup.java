@@ -5,8 +5,8 @@
 package frc.robot.commands.galsearch;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.drivetrain.DriveForDistanceCommand;
-import frc.robot.commands.drivetrain.TurnForAngleCommand;
+import frc.robot.commands.drivetrain.DriveForDistancePIDCommand;
+import frc.robot.commands.drivetrain.TurnForAnglePIDCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -20,17 +20,17 @@ public class PathBBlueCommandGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TurnForAngleCommand(drivetrainSubsystem,-78.69006753,  .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 152.9705854, 0.5),
+      new TurnForAnglePIDCommand(drivetrainSubsystem,-78.69006753),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 152.9705854),
       new IntakeInCommand(intakeSubsystem).withTimeout(.4),
-      new TurnForAngleCommand( drivetrainSubsystem, 123.69006753,.5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 84.85281374, 0.5),
+      new TurnForAnglePIDCommand( drivetrainSubsystem, 123.69006753),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 84.85281374),
       new IntakeInCommand(intakeSubsystem).withTimeout(.4),
-      new TurnForAngleCommand(drivetrainSubsystem, -90, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 84.85281374, 0.5),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, -90),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 84.85281374),
       new IntakeInCommand(intakeSubsystem).withTimeout(.4),
-      new TurnForAngleCommand(drivetrainSubsystem, 45, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 30, 0.5),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, 45),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 30),
       new IntakeInCommand(intakeSubsystem).withTimeout(.4)
     );
   }
