@@ -4,7 +4,16 @@
 
 package frc.robot;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
+
+
 import com.revrobotics.CANDigitalInput;
+
+import org.usfirst.frc.team3506.robot.commands.domain.RobotInput;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -27,6 +36,10 @@ import frc.robot.utils.Limelight;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  public static boolean recording;
+  public static List<RobotInput> inputSequence = new ArrayList<RobotInput>();
+	public static List<RobotInput> recentInputSequence = new ArrayList<RobotInput>();
+
   // private double maxRPM = 0.0;
   // private double maxEncoder = 0.0;
 
@@ -39,6 +52,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    recording = false;
     m_robotContainer = new RobotContainer();   
   }
 
@@ -134,5 +148,24 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    Scheduler.getInstance().run();
+		if (recording) {
+			RobotInput currentInput = new RobotInput();
+			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getLeftY());
+			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getRightY());
+			for (int i = 0; i < 3; i++) {
+				for (int j = 1; j <= 11; j++) {
+					if (i == 0 && j != 4 && j != 5) {
+						currentInput.setButtonState(Joysticks.LEFT, j, oi.getButtonStatus(Joysticks.LEFT, j));
+					} else if (i == 1) {
+						currentInput.setButtonState(Joysticks.RIGHT, j, oi.getButtonStatus(Joysticks.RIGHT, j));
+					} else if (i == 2) {
+						currentInput.setButtonState(Joysticks.ARM, j, oi.getButtonStatus(Joysticks.ARM, j));
+					}
+				}
+			}
+			inputSequence.add(currentInput);
+		}
+  }
 }
