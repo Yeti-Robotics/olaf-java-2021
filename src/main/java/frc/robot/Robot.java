@@ -149,7 +149,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    Scheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
 		if (recording) {
 			RobotInput currentInput = new RobotInput();
 			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getLeftY());

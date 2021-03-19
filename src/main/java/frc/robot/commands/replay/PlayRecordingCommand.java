@@ -73,7 +73,7 @@ public class PlayRecordingCommand extends CommandBase {
 						if (isButtonPressed(i, j) && !activatedButtons[i * 11 + j]) {
 							switch (i) {
 								case 0:
-									RobotInput.elicitCommand(Joysticks.LEFT, j);
+									RobotInput.elicitCommand(m_robotContainer.driverStationJoystick, j);
 									activatedButtons[i * 11 + j - 1] = true;
 									break;
 								case 1:

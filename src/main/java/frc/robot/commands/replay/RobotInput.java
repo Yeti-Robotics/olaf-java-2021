@@ -1,12 +1,12 @@
-package org.usfirst.frc.team3506.robot.commands.domain;
+package frc.robot.commands.replay;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 
 public class RobotInput implements Serializable {
@@ -20,9 +20,9 @@ public class RobotInput implements Serializable {
 	public boolean[] leftButtons = new boolean[11];
 	public boolean[] rightButtons = new boolean[11];
 	public boolean[] armButtons = new boolean[11];
-	public static edu.wpi.first.wpilibj2.command.Command[] leftCommands = new Command[11];
-	public static Command[] rightCommands = new Command[11];
-	public static Command[] armCommands = new Command[11];
+	public static CommandBase[] leftCommands = new CommandBase[11];
+	public static CommandBase[] rightCommands = new CommandBase[11];
+	public static CommandBase[] armCommands = new CommandBase[11];
 
 	public void setButtonState(Joysticks joystick, int button, boolean state) {
 		button--;
@@ -76,13 +76,13 @@ public class RobotInput implements Serializable {
 		button--;
 		switch (joystick) {
 			case LEFT:
-				Scheduler.getInstance().add(RobotInput.leftCommands[button]);
+				CommandScheduler.getInstance().schedule(RobotInput.leftCommands[button]);
 				break;
 			case RIGHT:
-				Scheduler.getInstance().add(RobotInput.rightCommands[button]);
+				CommandScheduler.getInstance().schedule(RobotInput.rightCommands[button]);
 				break;
 			case ARM:
-				Scheduler.getInstance().add(RobotInput.armCommands[button]);
+				CommandScheduler.getInstance().schedule(RobotInput.armCommands[button]);
 				break;
 		}
 	}
