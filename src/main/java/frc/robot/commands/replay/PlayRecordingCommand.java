@@ -29,10 +29,9 @@ public class PlayRecordingCommand extends CommandBase {
   private DrivetrainSubsystem drivetrainSubsystem;
   private RobotContainer robotContainer;
 
-  public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem, RobotContainer robotContainer) {
+  public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem) {
     this.filename = filename;
 	this.drivetrainSubsystem = drivetrainSubsystem;
-	this.robotContainer = robotContainer;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -66,31 +65,31 @@ public class PlayRecordingCommand extends CommandBase {
 					-Constants.USER_SPEED_CONTROL_MODIFIER
 							* localInputSequence.get(parsingIndex).getJoysticksYAxisStatus()[0],
 					Constants.USER_SPEED_CONTROL_MODIFIER
-							* localInputSequence.get(parsingIndex).getJoysticksYAxisStatus()[1]);
-			for (int i = 0; i < 3; i++) {
-				for (int j = 1; j <= 11; j++) {
-					if (parsingIndex != 0 && parsingIndex != 1) {
-						for (int a = 0; a < 33; a++) {
-							activatedButtons[a] = false;
-						}
-						if (isButtonPressed(i, j) && !activatedButtons[i * 11 + j]) {
-							switch (i) {
-								case 0:
-									RobotInput.elicitCommand(robotContainer.driverStationJoystick, j);
-									activatedButtons[i * 11 + j - 1] = true;
-									break;
-								case 1:
-									RobotInput.elicitCommand(Joysticks.RIGHT, j);
-									activatedButtons[i * 11 + j - 1] = true;
-									break;
-								case 2:
-									RobotInput.elicitCommand(Joysticks.ARM, j);
-									activatedButtons[i * 11 + j - 1] = true;
-							}
-						}
-					}
-				}
-			}
+							* localInputSequence.get(parsingIndex).getJoysticksYAxisStatus()[0]);
+			// for (int i = 0; i < 3; i++) {
+			// 	for (int j = 1; j <= 11; j++) {
+			// 		if (parsingIndex != 0 && parsingIndex != 1) {
+			// 			for (int a = 0; a < 33; a++) {
+			// 				activatedButtons[a] = false;
+			// 			}
+			// 			if (isButtonPressed(i, j) && !activatedButtons[i * 11 + j]) {
+			// 				switch (i) {
+			// 					case 0:
+			// 						RobotInput.elicitCommand(RobotInput.Joystick.LEFT, j);
+			// 						activatedButtons[i * 11 + j - 1] = true;
+			// 						break;
+			// 					case 1:
+			// 						RobotInput.elicitCommand(RobotInput.Joystick.RIGHT, j);
+			// 						activatedButtons[i * 11 + j - 1] = true;
+			// 						break;
+			// 					case 2:
+			// 						RobotInput.elicitCommand(RobotInput.Joystick.ARM, j);
+			// 						activatedButtons[i * 11 + j - 1] = true;
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 		}
 		parsingIndex++;
   }
@@ -109,21 +108,21 @@ public class PlayRecordingCommand extends CommandBase {
   private boolean isButtonPressed(int i, int j) {
 		switch (i) {
 			case 0:
-				if (localInputSequence.get(parsingIndex).getButtonStatus(Joysticks.LEFT, j) == true
-						&& localInputSequence.get(parsingIndex - 1).getButtonStatus(Joysticks.LEFT, j) == true
-						&& localInputSequence.get(parsingIndex - 2).getButtonStatus(Joysticks.LEFT, j) == true) {
+				if (localInputSequence.get(parsingIndex).getButtonStatus(RobotInput.Joystick.LEFT, j) == true
+						&& localInputSequence.get(parsingIndex - 1).getButtonStatus(RobotInput.Joystick.LEFT, j) == true
+						&& localInputSequence.get(parsingIndex - 2).getButtonStatus(RobotInput.Joystick.LEFT, j) == true) {
 					return true;
 				}
 			case 1:
-				if (localInputSequence.get(parsingIndex).getButtonStatus(Joysticks.RIGHT, j) == true
-						&& localInputSequence.get(parsingIndex - 1).getButtonStatus(Joysticks.RIGHT, j) == true
-						&& localInputSequence.get(parsingIndex - 2).getButtonStatus(Joysticks.RIGHT, j) == true) {
+				if (localInputSequence.get(parsingIndex).getButtonStatus(RobotInput.Joystick.RIGHT, j) == true
+						&& localInputSequence.get(parsingIndex - 1).getButtonStatus(RobotInput.Joystick.RIGHT, j) == true
+						&& localInputSequence.get(parsingIndex - 2).getButtonStatus(RobotInput.Joystick.RIGHT, j) == true) {
 					return true;
 				}
 			case 2:
-				if (localInputSequence.get(parsingIndex).getButtonStatus(Joysticks.ARM, j) == true
-						&& localInputSequence.get(parsingIndex - 1).getButtonStatus(Joysticks.ARM, j) == true
-						&& localInputSequence.get(parsingIndex - 2).getButtonStatus(Joysticks.ARM, j) == true) {
+				if (localInputSequence.get(parsingIndex).getButtonStatus(RobotInput.Joystick.ARM, j) == true
+						&& localInputSequence.get(parsingIndex - 1).getButtonStatus(RobotInput.Joystick.ARM, j) == true
+						&& localInputSequence.get(parsingIndex - 2).getButtonStatus(RobotInput.Joystick.ARM, j) == true) {
 					return true;
 				}
 			default:

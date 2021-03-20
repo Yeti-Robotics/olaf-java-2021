@@ -20,6 +20,9 @@ import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.pinchroller.PinchRollerInCommand;
+import frc.robot.commands.replay.InitiateRecordingCommand;
+import frc.robot.commands.replay.PlayRecordingCommand;
+import frc.robot.commands.replay.TerminateAndSaveRecordingCommand;
 import frc.robot.commands.shooter.SpinToRPMCommand;
 import frc.robot.commands.shooter.StopFullIntakeCommand;
 import frc.robot.commands.shooter.StopShooterCommand;
@@ -87,14 +90,18 @@ public class RobotContainer {
     // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
 
     //secondary buttons
-    setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnForAnglePIDCommand(180, drivetrainSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 1, new InitiateRecordingCommand());
+    setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
+    setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand("", drivetrainSubsystem));
+    // setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnForAnglePIDCommand(180, drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 1, new BarrelRacingCommandGroup(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 1, new FireBallCommandGroup(shooterSubsystem, intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); //intakeSubsystem, hopperSubsystem, pinchRollerSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
-    setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 3, new StopShooterCommand(shooterSubsystem));
+    // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+    // setJoystickButtonWhileHeld(driverStationJoystick, 3, new StopShooterCommand(shooterSubsystem));
+    setJoystickButtonWhenPressed(drivetrainSubsystem, 4, new );
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopFullIntakeCommand(intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); 
-    setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
+    // setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
     setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
     // setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //shoot
     setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
@@ -134,5 +141,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return null;
+  }
+
+  public boolean getButtonStatus(Joystick joystick, int button) {
+    return driverStationJoystick.getRawButton(button);
   }
 }

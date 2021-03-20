@@ -120,5 +120,5 @@ public final class Constants {
     public static final double SHOOTER_HEIGHT = 21.5; // inches
   }
 
-  public static final double USER_SPEED_CONTROL_MODIFIER = 0.8;
+  public static final double USER_SPEED_CONTROL_MODIFIER = 0.5; //0.8 in og code
 }

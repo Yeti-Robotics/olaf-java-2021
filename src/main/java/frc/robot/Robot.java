@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.LED.SetLEDYetiBlueCommand;
+import frc.robot.commands.replay.RobotInput;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
@@ -151,19 +152,19 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 		if (recording) {
 			frc.robot.commands.replay.RobotInput currentInput = new frc.robot.commands.replay.RobotInput();
-			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getLeftY());
-			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getRightY());
-			for (int i = 0; i < 3; i++) {
-				for (int j = 1; j <= 11; j++) {
-					if (i == 0 && j != 4 && j != 5) {
-						currentInput.setButtonState(Joysticks.LEFT, j, oi.getButtonStatus(Joysticks.LEFT, j));
-					} else if (i == 1) {
-						currentInput.setButtonState(Joysticks.RIGHT, j, oi.getButtonStatus(Joysticks.RIGHT, j));
-					} else if (i == 2) {
-						currentInput.setButtonState(Joysticks.ARM, j, oi.getButtonStatus(Joysticks.ARM, j));
-					}
-				}
-			}
+			currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
+			currentInput.setJoystickYAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightY());
+			// for (int i = 0; i < 3; i++) {
+			// 	for (int j = 1; j <= 11; j++) {
+			// 		if (i == 0 && j != 4 && j != 5) {
+			// 			currentInput.setButtonState(RobotInput.Joystick.LEFT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
+			// 		} else if (i == 1) {
+			// 			currentInput.setButtonState(RobotInput.Joystick.RIGHT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
+			// 		} else if (i == 2) {
+			// 			currentInput.setButtonState(RobotInput.Joystick.ARM, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
+			// 		}
+			// 	}
+			// }
 			inputSequence.add(currentInput);
 		}
   }

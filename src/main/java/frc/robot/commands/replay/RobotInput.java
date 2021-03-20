@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class RobotInput implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static enum Joysticks {
+	public static enum Joystick {
 		LEFT, RIGHT, ARM
 	};
 
@@ -25,7 +25,7 @@ public class RobotInput implements Serializable {
 	public static CommandBase[] rightCommands = new CommandBase[11];
 	public static CommandBase[] armCommands = new CommandBase[11];
 
-	public void setButtonState(Joysticks joystick, int button, boolean state) {
+	public void setButtonState(Joystick joystick, int button, boolean state) {
 		button--;
 		switch (joystick) {
 			case LEFT:
@@ -40,7 +40,7 @@ public class RobotInput implements Serializable {
 		}
 	}
 
-	public void setJoystickYAxis(Joysticks driverStationJoystick, double val) {
+	public void setJoystickYAxis(Joystick driverStationJoystick, double val) {
 		switch (driverStationJoystick) {
 			case LEFT:
 				leftY = val;
@@ -59,7 +59,7 @@ public class RobotInput implements Serializable {
 		return joysticksYAxisStatus;
 	}
 
-	public boolean getButtonStatus(Joysticks joystick, int button) {
+	public boolean getButtonStatus(Joystick joystick, int button) {
 		button--;
 		switch (joystick) {
 			case LEFT:
@@ -73,7 +73,7 @@ public class RobotInput implements Serializable {
 		}
 	}
 
-	public static void elicitCommand(Joysticks joystick, int button) {
+	public static void elicitCommand(Joystick joystick, int button) {
 		button--;
 		switch (joystick) {
 			case LEFT:
