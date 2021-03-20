@@ -61,6 +61,7 @@ public class PlayRecordingCommand extends CommandBase {
   @Override
   public void execute() {
     if (localInputSequence.size() != 0) {
+		System.out.println("i am doing the thing! wow success");
 			drivetrainSubsystem.tankDrive(
 					-Constants.USER_SPEED_CONTROL_MODIFIER
 							* localInputSequence.get(parsingIndex).getJoysticksYAxisStatus()[0],
@@ -97,6 +98,7 @@ public class PlayRecordingCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+	  System.out.println("done playing");
   }
 
   // Returns true when the command should end.

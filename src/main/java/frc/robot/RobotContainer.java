@@ -102,7 +102,7 @@ public class RobotContainer {
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 3, new StopShooterCommand(shooterSubsystem));
-    // setJoystickButtonWhenPressed(drivetrainSubsystem, 4, new );
+    // setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleDriveModeCommand(drivetrainSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopFullIntakeCommand(intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); 
     // setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
     setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in

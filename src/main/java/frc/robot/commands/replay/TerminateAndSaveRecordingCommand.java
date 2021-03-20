@@ -39,8 +39,10 @@ public class TerminateAndSaveRecordingCommand extends CommandBase {
       ObjectOutputStream os = new ObjectOutputStream(fs);
       os.writeObject(Robot.inputSequence);
       os.close();
+      System.out.println("i got a file baby");
     } catch(Exception e){
       e.printStackTrace();
+      System.out.println("im fucking broken");
     }
     Robot.recentInputSequence = new ArrayList<RobotInput>();
     for(RobotInput input : Robot.inputSequence){
@@ -52,6 +54,7 @@ public class TerminateAndSaveRecordingCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("i've supposedly saved my file");
   }
 
   // Returns true when the command should end.
