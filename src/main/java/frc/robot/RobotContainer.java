@@ -100,7 +100,8 @@ public class RobotContainer {
         //secondary buttons
         setJoystickButtonWhenPressed(driverStationJoystick, 1, new InitiateRecordingCommand());
         setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
-        setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand("", drivetrainSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand(drivetrainSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoystick, 4, new PlayRecordingCommand("1616256179828recording.txt", drivetrainSubsystem));
         // setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnForAnglePIDCommand(180, drivetrainSubsystem));
         // setJoystickButtonWhenPressed(driverStationJoystick, 1, new BarrelRacingCommandGroup(drivetrainSubsystem));
         // setJoystickButtonWhenPressed(driverStationJoystick, 1, new FireBallCommandGroup(shooterSubsystem, intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); //intakeSubsystem, hopperSubsystem, pinchRollerSubsystem));

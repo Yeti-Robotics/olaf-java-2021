@@ -33,12 +33,26 @@ public class TerminateAndSaveRecordingCommand extends CommandBase {
   @Override
   public void execute() {
     try {
-      File file = new File("/home/lvuser/recordings/" + System.currentTimeMillis() + "recording.txt");
+      String filename = "/home/lvuser/recordings/" + System.currentTimeMillis() + "recording.txt";
+      File file = new File(filename);
       FileOutputStream fs = new FileOutputStream(file);
       ObjectOutputStream os = new ObjectOutputStream(fs);
       os.writeObject(Robot.inputSequence);
       os.close();
+      fs.close();
       System.out.println("i got a file baby");
+
+      file = new File(filename + ".csv");
+      fs = new FileOutputStream(file);
+      StringBuilder out = new StringBuilder();
+      out.append("index, leftX, leftY, rightX, rightY");
+      for (int i = 0; i < Robot.inputSequence.size(); i++) {
+        double[] joystickX = Robot.inputSequence.get(i).getJoysticksXAxisStatus();
+        double[] joystickY = Robot.inputSequence.get(i).getJoysticksYAxisStatus();
+        out.append(String.format("%d, %f, %f, %f, %f\n", i, joystickX[0], joystickY[0], joystickX[1], joystickY[1]));
+      }
+      fs.write(out.toString().getBytes());
+      fs.close();
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("im fucking broken");

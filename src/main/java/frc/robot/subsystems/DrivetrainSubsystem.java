@@ -53,7 +53,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   
     gyro = new PigeonIMU(DriveConstants.GYRO_ID);
 
-    driveMode = DriveMode.ARCADE;
+    driveMode = DriveMode.TANK;
   }
 
   @Override

@@ -31,9 +31,13 @@ public class PlayRecordingCommand extends CommandBase {
     private RobotContainer robotContainer;
 
     public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem) {
-        this.filename = filename;
+        this.filename = "/home/lvuser/recordings/" + filename;
         this.drivetrainSubsystem = drivetrainSubsystem;
-        // Use addRequirements() here to declare subsystem dependencies.
+    }
+
+    public PlayRecordingCommand(DrivetrainSubsystem drivetrainSubsystem) {
+        this.filename = null;
+        this.drivetrainSubsystem = drivetrainSubsystem;
     }
 
     // Called when the command is initially scheduled.
@@ -44,7 +48,7 @@ public class PlayRecordingCommand extends CommandBase {
             activatedButtons[i] = false;
         }
         parsingIndex = 0;
-        if (!filename.equals(new String(""))) {
+        if (filename != null) {
             System.out.println("im in");
             try {
                 System.out.println("trying to get the file?");
@@ -52,6 +56,7 @@ public class PlayRecordingCommand extends CommandBase {
                 FileInputStream fs = new FileInputStream(file);
                 ObjectInputStream os = new ObjectInputStream(fs);
                 localInputSequence = (List<RobotInput>) os.readObject();
+                System.out.println("input size: " + localInputSequence.size());
                 os.close();
             } catch (Exception e) {
                 e.printStackTrace();
