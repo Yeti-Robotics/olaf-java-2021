@@ -24,7 +24,7 @@ public class DriveForDistanceProfiledPIDCommand extends ProfiledPIDCommand {
         // The ProfiledPIDController used by the command
         new ProfiledPIDController(
             // The PID gains
-            0.05,
+            0.1,
             0,
             0,
             // The motion profile constraints
@@ -50,8 +50,12 @@ public class DriveForDistanceProfiledPIDCommand extends ProfiledPIDCommand {
     this.encoderGoal = encoderGoal;
     drivetrainSubsystem.resetEncoders();
     getController().setTolerance(1.0);
+  }
 
-
+  @Override
+  public void initialize() {
+    super.initialize();
+    drivetrainSubsystem.resetEncoders();
   }
 
   // Returns true when the command should end.
