@@ -27,7 +27,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private DriveMode driveMode;
 
   public enum DriveMode {
-    TANK, CHEEZY;
+    TANK, CHEEZY, ARCADE;
   }
 
   /** Creates a new DriveSubsystem. */
@@ -53,7 +53,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   
     gyro = new PigeonIMU(DriveConstants.GYRO_ID);
 
-    driveMode = DriveMode.TANK;
+    driveMode = DriveMode.ARCADE;
   }
 
   @Override
@@ -67,6 +67,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public void cheezyDrive(double straight, double turn) {
     m_drive.curvatureDrive(straight, -turn, false);
+  }
+
+  public void arcadeDrive(double straight, double turn) {
+    m_drive.arcadeDrive(straight, -turn);
   }
 
   public void stopDrive() {

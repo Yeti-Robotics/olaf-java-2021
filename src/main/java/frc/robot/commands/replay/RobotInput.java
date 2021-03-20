@@ -17,13 +17,23 @@ public class RobotInput implements Serializable {
 		LEFT, RIGHT, ARM
 	};
 
+	private static boolean isRecording = false;
 	private double leftY, rightY, armY;
+	private double leftX, rightX;
 	public boolean[] leftButtons = new boolean[11];
 	public boolean[] rightButtons = new boolean[11];
 	public boolean[] armButtons = new boolean[11];
 	public static CommandBase[] leftCommands = new CommandBase[11];
 	public static CommandBase[] rightCommands = new CommandBase[11];
 	public static CommandBase[] armCommands = new CommandBase[11];
+
+	public static boolean getRecordingState() {
+		return isRecording;
+	}
+
+	public static void setRecordingState(boolean isRecording) {
+		RobotInput.isRecording = isRecording;
+	}
 
 	public void setButtonState(Joystick joystick, int button, boolean state) {
 		button--;
@@ -38,6 +48,23 @@ public class RobotInput implements Serializable {
 				armButtons[button] = state;
 				break;
 		}
+	}
+
+	public void setJoystickXAxis(Joystick driverStationJoystick, double val) {
+		switch (driverStationJoystick) {
+			case LEFT:
+				leftX = val;
+				break;
+			case RIGHT:
+				rightX = val;
+				break;
+			case ARM:
+				break;
+		}
+	}
+
+	public double[] getJoysticksXAxisStatus() {
+		return new double[]{ leftX, rightX};
 	}
 
 	public void setJoystickYAxis(Joystick driverStationJoystick, double val) {
@@ -55,8 +82,7 @@ public class RobotInput implements Serializable {
 	}
 
 	public double[] getJoysticksYAxisStatus() {
-		double[] joysticksYAxisStatus = { leftY, rightY, armY };
-		return joysticksYAxisStatus;
+		return new double[]{ leftY, rightY, armY };
 	}
 
 	public boolean getButtonStatus(Joystick joystick, int button) {

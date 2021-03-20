@@ -36,9 +36,8 @@ import frc.robot.utils.Limelight;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static boolean recording;
-  public static List<frc.robot.commands.replay.RobotInput> inputSequence = new ArrayList<frc.robot.commands.replay.RobotInput>();
-	public static List<frc.robot.commands.replay.RobotInput> recentInputSequence = new ArrayList<frc.robot.commands.replay.RobotInput>();
+  public static List<RobotInput> inputSequence = new ArrayList<RobotInput>();
+	public static List<RobotInput> recentInputSequence = new ArrayList<RobotInput>();
 
   // private double maxRPM = 0.0;
   // private double maxEncoder = 0.0;
@@ -52,7 +51,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    recording = false;
     m_robotContainer = new RobotContainer();   
   }
 
@@ -140,7 +138,36 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (RobotInput.getRecordingState()) {
+      RobotInput currentInput = new RobotInput();
+      switch (m_robotContainer.drivetrainSubsystem.getDriveMode()) {
+        case TANK:
+          currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
+          currentInput.setJoystickYAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightY());
+          break;
+        case CHEEZY:
+        case ARCADE:
+          currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
+          currentInput.setJoystickXAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightX());
+          break;
+      }
+      currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
+      currentInput.setJoystickXAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightX());
+      // for (int i = 0; i < 3; i++) {
+      // 	for (int j = 1; j <= 11; j++) {
+      // 		if (i == 0 && j != 4 && j != 5) {
+      // 			currentInput.setButtonState(RobotInput.Joystick.LEFT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
+      // 		} else if (i == 1) {
+      // 			currentInput.setButtonState(RobotInput.Joystick.RIGHT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
+      // 		} else if (i == 2) {
+      // 			currentInput.setButtonState(RobotInput.Joystick.ARM, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
+      // 		}
+      // 	}
+      // }
+      inputSequence.add(currentInput);
+    }
+  }
 
   @Override
   public void testInit() {
@@ -152,22 +179,5 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     CommandScheduler.getInstance().run();
-		if (recording) {
-			frc.robot.commands.replay.RobotInput currentInput = new frc.robot.commands.replay.RobotInput();
-			currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
-			currentInput.setJoystickYAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightY());
-			// for (int i = 0; i < 3; i++) {
-			// 	for (int j = 1; j <= 11; j++) {
-			// 		if (i == 0 && j != 4 && j != 5) {
-			// 			currentInput.setButtonState(RobotInput.Joystick.LEFT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
-			// 		} else if (i == 1) {
-			// 			currentInput.setButtonState(RobotInput.Joystick.RIGHT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
-			// 		} else if (i == 2) {
-			// 			currentInput.setButtonState(RobotInput.Joystick.ARM, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
-			// 		}
-			// 	}
-			// }
-			inputSequence.add(currentInput);
-		}
   }
 }
