@@ -18,10 +18,10 @@ public class DriveForDistanceLowPIDCommand extends PIDCommand {
   private double encoderGoal;
   private ShiftingGearSubsystem shiftingGearSubsystem;
   /** Creates a new DriveForDistancePID. */
-  public DriveForDistanceLowPIDCommand(DrivetrainSubsystem drivetrainSubsystem, double encoderGoal) {
+  public DriveForDistanceLowPIDCommand(DrivetrainSubsystem drivetrainSubsystem, ShiftingGearSubsystem shiftingGearSubsystem, double encoderGoal) {
     super(
         // The controller that the command will use
-        new PIDController(0.349, 0, 0),
+        new PIDController(0.324, 0, 0.0),
         // This should return the measurement
         drivetrainSubsystem::getAverageEncoder,
         // This should return the setpoint (can also be a constant)
@@ -30,16 +30,17 @@ public class DriveForDistanceLowPIDCommand extends PIDCommand {
         output -> {
           if(encoderGoal < 0){
             drivetrainSubsystem.tankDrive(-output, -output);
-            System.out.println("on the move (forwards)");
+            System.out.println("on the move (backwards)");
           } else {
             drivetrainSubsystem.tankDrive(output, output);
-            System.out.println("on the move (backwards)");
+            System.out.println("on the move (forwards)");
           }
         }
     );
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     this.drivetrainSubsystem = drivetrainSubsystem;
+    this.shiftingGearSubsystem = shiftingGearSubsystem;
     this.encoderGoal = encoderGoal;
     drivetrainSubsystem.resetEncoders();
     getController().setTolerance(1.0);
