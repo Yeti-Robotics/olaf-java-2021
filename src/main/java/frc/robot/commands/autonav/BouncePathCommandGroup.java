@@ -5,8 +5,8 @@
 package frc.robot.commands.autonav;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.drivetrain.DriveForDistanceCommand;
-import frc.robot.commands.drivetrain.TurnForAngleCommand;
+import frc.robot.commands.drivetrain.DriveForDistancePIDCommand;
+import frc.robot.commands.drivetrain.TurnForAnglePIDCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,25 +18,25 @@ public class BouncePathCommandGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveForDistanceCommand(drivetrainSubsystem, 30, 0.),
-      new TurnForAngleCommand(drivetrainSubsystem, -26.57, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 30, 0.5),
-      new TurnForAngleCommand(drivetrainSubsystem, 26.57, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 60, 0.5),
-      new TurnForAngleCommand(drivetrainSubsystem,63.43,  .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem,60, 0.5),
-      new TurnForAngleCommand( drivetrainSubsystem,-63.43, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem,30, 0.5),
-      new TurnForAngleCommand( drivetrainSubsystem, -14.04,.5,.5), 
-      new DriveForDistanceCommand(drivetrainSubsystem,30, 0.5),
-      new TurnForAngleCommand(drivetrainSubsystem,14.04,  .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem,30, .5),
-      new TurnForAngleCommand( drivetrainSubsystem,75.96, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem,30, .5),
-      new TurnForAngleCommand(drivetrainSubsystem,-76.96,  .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem,30, .5),
-      new TurnForAngleCommand(drivetrainSubsystem, -14.04, .5,.5),
-      new DriveForDistanceCommand(drivetrainSubsystem, 30, .5)
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 30),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, -26.57),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 30),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, 26.57),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 60),
+      new TurnForAnglePIDCommand(drivetrainSubsystem,63.43),
+      new DriveForDistancePIDCommand(drivetrainSubsystem,60),
+      new TurnForAnglePIDCommand( drivetrainSubsystem,-63.43),
+      new DriveForDistancePIDCommand(drivetrainSubsystem,30),
+      new TurnForAnglePIDCommand( drivetrainSubsystem, -14.04), 
+      new DriveForDistancePIDCommand(drivetrainSubsystem,30),
+      new TurnForAnglePIDCommand(drivetrainSubsystem,14.04),
+      new DriveForDistancePIDCommand(drivetrainSubsystem,30),
+      new TurnForAnglePIDCommand( drivetrainSubsystem,75.96),
+      new DriveForDistancePIDCommand(drivetrainSubsystem,30),
+      new TurnForAnglePIDCommand(drivetrainSubsystem,-76.96),
+      new DriveForDistancePIDCommand(drivetrainSubsystem,30),
+      new TurnForAnglePIDCommand(drivetrainSubsystem, -14.04),
+      new DriveForDistancePIDCommand(drivetrainSubsystem, 30)
     );
   }
 }
