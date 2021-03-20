@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AllInCommand;
+import frc.robot.commands.AllInShootCommand;
 import frc.robot.commands.AllOutCommand;
 import frc.robot.commands.autonav.BarrelRacingCommandGroup;
 import frc.robot.commands.drivetrain.DriveForDistanceCommand;
@@ -102,7 +103,7 @@ public class RobotContainer {
         // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
 
     //secondary buttons
-    setJoystickButtonWhenPressed(driverStationJoystick, 1, new DriveForDistanceProfiledPIDCommand(drivetrainSubsystem, 120));
+    setJoystickButtonWhileHeld(driverStationJoystick, 1, new AllInShootCommand(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem, intakeSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 1, new BarrelRacingCommandGroup(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 1, new FireBallCommandGroup(shooterSubsystem, intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); //intakeSubsystem, hopperSubsystem, pinchRollerSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
@@ -113,8 +114,8 @@ public class RobotContainer {
     setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
     // setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //shoot
     setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
-    // setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
-    setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+     setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
+//    setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -.1)); //turret L
     setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, .1)); //turret R
   }

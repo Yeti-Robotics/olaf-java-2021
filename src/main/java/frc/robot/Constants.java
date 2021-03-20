@@ -104,6 +104,7 @@ public final class Constants {
     public static final double ENCODER_TIME_CONVERSION = 600.0; // minutes per 100 ms
     public static final double MAX_RPM = 7500;
     public static final double FEED_FORWARD = 69.420; // place
+    public static final double RPM_TOLERANCE = 25;
   }
 
 
