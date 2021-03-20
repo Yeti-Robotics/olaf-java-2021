@@ -45,6 +45,7 @@ public class AllInShootCommand extends CommandBase {
   public void end(boolean interrupted) {
     hopperSubsystem.hopperStop();
     pinchRollerSubsystem.pinchStop();
+    shooterSubsystem.stopFlywheel();
   }
 
   // Returns true when the command should end.
