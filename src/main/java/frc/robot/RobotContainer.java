@@ -23,6 +23,9 @@ import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.pinchroller.PinchRollerInCommand;
+import frc.robot.commands.replay.InitiateRecordingCommand;
+import frc.robot.commands.replay.PlayRecordingCommand;
+import frc.robot.commands.replay.TerminateAndSaveRecordingCommand;
 import frc.robot.commands.shooter.SpinToRPMCommand;
 import frc.robot.commands.shooter.StopFullIntakeCommand;
 import frc.robot.commands.shooter.StopShooterCommand;
@@ -44,99 +47,113 @@ import frc.robot.utils.Limelight;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  public final Joystick driverStationJoystick;
-  public DrivetrainSubsystem drivetrainSubsystem;
-  public ShooterSubsystem shooterSubsystem;
-  public IntakeSubsystem intakeSubsystem;
-  public HopperSubsystem hopperSubsystem;
-  public Limelight limelight;
-  public PinchRollerSubsystem pinchRollerSubsystem;
-  public HoodSubsystem hoodSubsystem;
-  public TurretSubsystem turretSubsystem;
-  public LEDSubsystem ledSubsystem;
-  public ShiftingGearSubsystem shiftingGearSubsystem;
+    // The robot's subsystems and commands are defined here...
+    public final Joystick driverStationJoystick;
+    public DrivetrainSubsystem drivetrainSubsystem;
+    public ShooterSubsystem shooterSubsystem;
+    public IntakeSubsystem intakeSubsystem;
+    public HopperSubsystem hopperSubsystem;
+    public Limelight limelight;
+    public PinchRollerSubsystem pinchRollerSubsystem;
+    public HoodSubsystem hoodSubsystem;
+    public TurretSubsystem turretSubsystem;
+    public LEDSubsystem ledSubsystem;
+    public ShiftingGearSubsystem shiftingGearSubsystem;
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
-    shooterSubsystem = new ShooterSubsystem();
-    intakeSubsystem = new IntakeSubsystem();
-    drivetrainSubsystem = new DrivetrainSubsystem();
-    hopperSubsystem = new HopperSubsystem();
-    limelight = new Limelight();
-    pinchRollerSubsystem = new PinchRollerSubsystem();
-    hoodSubsystem = new HoodSubsystem();
-    turretSubsystem = new TurretSubsystem();
-    ledSubsystem = new LEDSubsystem();
-    shiftingGearSubsystem = new ShiftingGearSubsystem();
-    
-    // if(drivetrainSubsystem.getDriveMode() == DriveMode.TANK){
-    //   drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
-    // } else {
-      drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-    // }
-    // Configure the button bindings
-    configureButtonBindings();
-  }
+        shooterSubsystem = new ShooterSubsystem();
+        intakeSubsystem = new IntakeSubsystem();
+        drivetrainSubsystem = new DrivetrainSubsystem();
+        hopperSubsystem = new HopperSubsystem();
+        limelight = new Limelight();
+        pinchRollerSubsystem = new PinchRollerSubsystem();
+        hoodSubsystem = new HoodSubsystem();
+        turretSubsystem = new TurretSubsystem();
+        ledSubsystem = new LEDSubsystem();
+        shiftingGearSubsystem = new ShiftingGearSubsystem();
 
-  private void configureButtonBindings() {
-
-    //joystick buttons (primary driver)
-    setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
-
-    //secondary buttons
-    setJoystickButtonWhenPressed(driverStationJoystick, 1, new DriveForDistanceLowPIDCommand(drivetrainSubsystem, 120));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 1, new BarrelRacingCommandGroup(drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 1, new FireBallCommandGroup(shooterSubsystem, intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); //intakeSubsystem, hopperSubsystem, pinchRollerSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
-    setJoystickButtonWhileHeld(driverStationJoystick, 2, new ToggleDriveModeCommand(drivetrainSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 3, new StopShooterCommand(shooterSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopFullIntakeCommand(intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); 
-    setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
-    setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
-    // setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //shoot
-    setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
-    // setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
-    setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -.1)); //turret L
-    setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, .1)); //turret R
-  }
-
-  public double getLeftY() {
-    if (driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1) {
-      return driverStationJoystick.getRawAxis(1);
-    } else {
-      return 0;
+        switch (drivetrainSubsystem.getDriveMode()) {
+            case TANK:
+                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+                break;
+            case CHEEZY:
+                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+                break;
+            case ARCADE:
+                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        }
+        // Configure the button bindings
+        configureButtonBindings();
     }
-  }
 
-  public double getLeftX() {
-    return driverStationJoystick.getRawAxis(0);
-  }
+    private void configureButtonBindings() {
 
-  public double getRightY() {
-      return driverStationJoystick.getRawAxis(3);
-  }
+        //joystick buttons (primary driver)
+        setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
 
-  public double getRightX() {
-    return driverStationJoystick.getRawAxis(2);
-  }
+        //secondary buttons
+        setJoystickButtonWhenPressed(driverStationJoystick, 1, new InitiateRecordingCommand());
+        setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
+        setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand(drivetrainSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoystick, 4, new PlayRecordingCommand("1616256179828recording.txt", drivetrainSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnForAnglePIDCommand(180, drivetrainSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 1, new BarrelRacingCommandGroup(drivetrainSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 1, new FireBallCommandGroup(shooterSubsystem, intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); //intakeSubsystem, hopperSubsystem, pinchRollerSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
+        // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 3, new StopShooterCommand(shooterSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleDriveModeCommand(drivetrainSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopFullIntakeCommand(intakeSubsystem, hopperSubsystem, pinchRollerSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
+        setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
+        // setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //shoot
+        setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
+        // setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
+        setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -.1)); //turret L
+        setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, .1)); //turret R
+    }
 
-  private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
-    new JoystickButton(joystick, button).whenPressed(command);
-  }
+    public double getLeftY() {
+        if (driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1) {
+            return driverStationJoystick.getRawAxis(1);
+        } else {
+            return 0;
+        }
+    }
 
-  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
-    new JoystickButton(joystick, button).whileHeld(command);
-  }
+    public double getLeftX() {
+        return driverStationJoystick.getRawAxis(0);
+    }
 
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
-  }
+    public double getRightY() {
+        return driverStationJoystick.getRawAxis(3);
+    }
+
+    public double getRightX() {
+        return driverStationJoystick.getRawAxis(2);
+    }
+
+    private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
+        new JoystickButton(joystick, button).whenPressed(command);
+    }
+
+    private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+        new JoystickButton(joystick, button).whileHeld(command);
+    }
+
+    public Command getAutonomousCommand() {
+        // An ExampleCommand will run in autonomous
+        return null;
+    }
+
+    public boolean getButtonStatus(Joystick joystick, int button) {
+        return driverStationJoystick.getRawButton(button);
+    }
 }
