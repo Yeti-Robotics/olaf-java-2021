@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -39,8 +40,8 @@ public class RobotInput implements Serializable {
 		}
 	}
 
-	public void setJoystickYAxis(Joysticks joystick, double val) {
-		switch (joystick) {
+	public void setJoystickYAxis(Joysticks driverStationJoystick, double val) {
+		switch (driverStationJoystick) {
 			case LEFT:
 				leftY = val;
 				break;

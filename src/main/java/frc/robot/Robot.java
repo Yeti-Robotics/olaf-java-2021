@@ -12,7 +12,6 @@ import java.util.List;
 
 import com.revrobotics.CANDigitalInput;
 
-import org.usfirst.frc.team3506.robot.commands.domain.RobotInput;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -37,8 +36,8 @@ import frc.robot.utils.Limelight;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static boolean recording;
-  public static List<RobotInput> inputSequence = new ArrayList<RobotInput>();
-	public static List<RobotInput> recentInputSequence = new ArrayList<RobotInput>();
+  public static List<frc.robot.commands.replay.RobotInput> inputSequence = new ArrayList<frc.robot.commands.replay.RobotInput>();
+	public static List<frc.robot.commands.replay.RobotInput> recentInputSequence = new ArrayList<frc.robot.commands.replay.RobotInput>();
 
   // private double maxRPM = 0.0;
   // private double maxEncoder = 0.0;
@@ -151,7 +150,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     CommandScheduler.getInstance().run();
 		if (recording) {
-			RobotInput currentInput = new RobotInput();
+			frc.robot.commands.replay.RobotInput currentInput = new frc.robot.commands.replay.RobotInput();
 			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getLeftY());
 			currentInput.setJoystickYAxis(m_robotContainer.driverStationJoystick, m_robotContainer.getRightY());
 			for (int i = 0; i < 3; i++) {

@@ -15,6 +15,7 @@ import java.util.List;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class PlayRecordingCommand extends CommandBase {
@@ -26,10 +27,12 @@ public class PlayRecordingCommand extends CommandBase {
 	private int parsingIndex;
   private boolean[] activatedButtons = new boolean[33];
   private DrivetrainSubsystem drivetrainSubsystem;
+  private RobotContainer robotContainer;
 
-  public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem) {
+  public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem, RobotContainer robotContainer) {
     this.filename = filename;
-    this.drivetrainSubsystem = drivetrainSubsystem;
+	this.drivetrainSubsystem = drivetrainSubsystem;
+	this.robotContainer = robotContainer;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -73,7 +76,7 @@ public class PlayRecordingCommand extends CommandBase {
 						if (isButtonPressed(i, j) && !activatedButtons[i * 11 + j]) {
 							switch (i) {
 								case 0:
-									RobotInput.elicitCommand(m_robotContainer.driverStationJoystick, j);
+									RobotInput.elicitCommand(robotContainer.driverStationJoystick, j);
 									activatedButtons[i * 11 + j - 1] = true;
 									break;
 								case 1:
