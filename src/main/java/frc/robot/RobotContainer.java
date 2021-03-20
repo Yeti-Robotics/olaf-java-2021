@@ -4,20 +4,7 @@
 
 package frc.robot;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -38,6 +25,9 @@ import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
 import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.pinchroller.PinchRollerInCommand;
+import frc.robot.commands.replay.InitiateRecordingCommand;
+import frc.robot.commands.replay.PlayRecordingCommand;
+import frc.robot.commands.replay.TerminateAndSaveRecordingCommand;
 import frc.robot.commands.shooter.SpinToRPMCommand;
 import frc.robot.commands.shooter.StopFullIntakeCommand;
 import frc.robot.commands.shooter.StopShooterCommand;
@@ -61,50 +51,55 @@ import frc.robot.utils.Limelight;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  public final Joystick driverStationJoystick;
-  public DrivetrainSubsystem drivetrainSubsystem;
-  public ShooterSubsystem shooterSubsystem;
-  public IntakeSubsystem intakeSubsystem;
-  public HopperSubsystem hopperSubsystem;
-  public Limelight limelight;
-  public PinchRollerSubsystem pinchRollerSubsystem;
-  public HoodSubsystem hoodSubsystem;
-  public TurretSubsystem turretSubsystem;
-  public LEDSubsystem ledSubsystem;
-  public ShiftingGearSubsystem shiftingGearSubsystem;
+    // The robot's subsystems and commands are defined here...
+    public final Joystick driverStationJoystick;
+    public DrivetrainSubsystem drivetrainSubsystem;
+    public ShooterSubsystem shooterSubsystem;
+    public IntakeSubsystem intakeSubsystem;
+    public HopperSubsystem hopperSubsystem;
+    public Limelight limelight;
+    public PinchRollerSubsystem pinchRollerSubsystem;
+    public HoodSubsystem hoodSubsystem;
+    public TurretSubsystem turretSubsystem;
+    public LEDSubsystem ledSubsystem;
+    public ShiftingGearSubsystem shiftingGearSubsystem;
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
 
-    shooterSubsystem = new ShooterSubsystem();
-    intakeSubsystem = new IntakeSubsystem();
-    drivetrainSubsystem = new DrivetrainSubsystem();
-    hopperSubsystem = new HopperSubsystem();
-    limelight = new Limelight();
-    pinchRollerSubsystem = new PinchRollerSubsystem();
-    hoodSubsystem = new HoodSubsystem();
-    turretSubsystem = new TurretSubsystem();
-    ledSubsystem = new LEDSubsystem();
-    shiftingGearSubsystem = new ShiftingGearSubsystem();
-    
-    // if(drivetrainSubsystem.getDriveMode() == DriveMode.TANK){
-    //   drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
-    // } else {
-      drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-    // }
-    // Configure the button bindings
-    configureButtonBindings();
-  }
+        shooterSubsystem = new ShooterSubsystem();
+        intakeSubsystem = new IntakeSubsystem();
+        drivetrainSubsystem = new DrivetrainSubsystem();
+        hopperSubsystem = new HopperSubsystem();
+        limelight = new Limelight();
+        pinchRollerSubsystem = new PinchRollerSubsystem();
+        hoodSubsystem = new HoodSubsystem();
+        turretSubsystem = new TurretSubsystem();
+        ledSubsystem = new LEDSubsystem();
+        shiftingGearSubsystem = new ShiftingGearSubsystem();
 
-  private void configureButtonBindings() {
+        switch (drivetrainSubsystem.getDriveMode()) {
+            case TANK:
+                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+                break;
+            case CHEEZY:
+                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+                break;
+            case ARCADE:
+                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        }
+        // Configure the button bindings
+        configureButtonBindings();
+    }
 
-    //joystick buttons (primary driver)
-    setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
+    private void configureButtonBindings() {
+
+        //joystick buttons (primary driver)
+        setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
 
     //secondary buttons
     setJoystickButtonWhenPressed(driverStationJoystick, 1, new DriveForDistanceProfiledPIDCommand(drivetrainSubsystem, 120));
@@ -124,36 +119,40 @@ public class RobotContainer {
     setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, .1)); //turret R
   }
 
-  public double getLeftY() {
-    if (driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1) {
-      return driverStationJoystick.getRawAxis(1);
-    } else {
-      return 0;
+    public double getLeftY() {
+        if (driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1) {
+            return driverStationJoystick.getRawAxis(1);
+        } else {
+            return 0;
+        }
     }
-  }
 
-  public double getLeftX() {
-    return driverStationJoystick.getRawAxis(0);
-  }
+    public double getLeftX() {
+        return driverStationJoystick.getRawAxis(0);
+    }
 
-  public double getRightY() {
-      return driverStationJoystick.getRawAxis(3);
-  }
+    public double getRightY() {
+        return driverStationJoystick.getRawAxis(3);
+    }
 
-  public double getRightX() {
-    return driverStationJoystick.getRawAxis(2);
-  }
+    public double getRightX() {
+        return driverStationJoystick.getRawAxis(2);
+    }
 
-  private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
-    new JoystickButton(joystick, button).whenPressed(command);
-  }
+    private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
+        new JoystickButton(joystick, button).whenPressed(command);
+    }
 
-  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
-    new JoystickButton(joystick, button).whileHeld(command);
-  }
+    private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+        new JoystickButton(joystick, button).whileHeld(command);
+    }
 
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
-  }
+    public Command getAutonomousCommand() {
+        // An ExampleCommand will run in autonomous
+        return null;
+    }
+
+    public boolean getButtonStatus(Joystick joystick, int button) {
+        return driverStationJoystick.getRawButton(button);
+    }
 }
