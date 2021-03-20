@@ -43,20 +43,16 @@ public class PlayRecordingCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("starting to play the recording");
         for (int i = 0; i < 33; i++) {
             activatedButtons[i] = false;
         }
         parsingIndex = 0;
         if (filename != null) {
-            System.out.println("im in");
             try {
-                System.out.println("trying to get the file?");
                 File file = new File(filename);
                 FileInputStream fs = new FileInputStream(file);
                 ObjectInputStream os = new ObjectInputStream(fs);
                 localInputSequence = (List<RobotInput>) os.readObject();
-                System.out.println("input size: " + localInputSequence.size());
                 os.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,7 +66,6 @@ public class PlayRecordingCommand extends CommandBase {
     @Override
     public void execute() {
         if (localInputSequence.size() != 0) {
-            System.out.println("i am doing the thing! wow success");
 			switch (drivetrainSubsystem.getDriveMode()) {
 				case TANK:
 					drivetrainSubsystem.tankDrive(localInputSequence.get(parsingIndex).getJoysticksYAxisStatus()[0], localInputSequence.get(parsingIndex).getJoysticksYAxisStatus()[1]);
@@ -117,8 +112,7 @@ public class PlayRecordingCommand extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-        System.out.println("done playing");
+    public void end(boolean interrupted){
     }
 
     // Returns true when the command should end.

@@ -40,22 +40,8 @@ public class TerminateAndSaveRecordingCommand extends CommandBase {
       os.writeObject(Robot.inputSequence);
       os.close();
       fs.close();
-      System.out.println("i got a file baby");
-
-      file = new File(filename + ".csv");
-      fs = new FileOutputStream(file);
-      StringBuilder out = new StringBuilder();
-      out.append("index, leftX, leftY, rightX, rightY");
-      for (int i = 0; i < Robot.inputSequence.size(); i++) {
-        double[] joystickX = Robot.inputSequence.get(i).getJoysticksXAxisStatus();
-        double[] joystickY = Robot.inputSequence.get(i).getJoysticksYAxisStatus();
-        out.append(String.format("%d, %f, %f, %f, %f\n", i, joystickX[0], joystickY[0], joystickX[1], joystickY[1]));
-      }
-      fs.write(out.toString().getBytes());
-      fs.close();
     } catch(Exception e) {
       e.printStackTrace();
-      System.out.println("im fucking broken");
     }
     Robot.recentInputSequence = new ArrayList<RobotInput>();
     Robot.recentInputSequence.addAll(Robot.inputSequence);
@@ -65,7 +51,6 @@ public class TerminateAndSaveRecordingCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("i've supposedly finished saved my file");
   }
 
   // Returns true when the command should end.
