@@ -62,8 +62,8 @@ public class HoodSubsystem extends SubsystemBase {
     return beamBreak.get();
   }
 
-  // public double calcHoodAngle() {
-  //   return Math.toDegrees(Math.asin((-CalcConstants.GRAVITY * Limelight.getHorDistance()) / ShooterSubsystem.flywheelVel ));
-  // }
+   public double calcHoodAngle(double distance) {
+     return ((.0867898* distance) + 12.4589);
+   }
 
 }
