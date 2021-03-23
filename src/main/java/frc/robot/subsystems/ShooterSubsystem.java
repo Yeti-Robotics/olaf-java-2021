@@ -15,7 +15,7 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX rightFlywheel;
     private WPI_TalonFX leftFlywheel;
-    public double setPoint = 6600;
+    public double setPoint = 6700;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;

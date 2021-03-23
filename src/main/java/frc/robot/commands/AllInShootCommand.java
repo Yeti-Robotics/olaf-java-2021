@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PinchRollerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -14,12 +16,14 @@ public class AllInShootCommand extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
   private HopperSubsystem hopperSubsystem;
   private PinchRollerSubsystem pinchRollerSubsystem;
-  public AllInShootCommand(ShooterSubsystem shooterSubsystem, HopperSubsystem hopperSubsystem, PinchRollerSubsystem pinchRollerSubsystem) {
+  private IntakeSubsystem intakeSubsystem;
+  public AllInShootCommand(ShooterSubsystem shooterSubsystem, HopperSubsystem hopperSubsystem, PinchRollerSubsystem pinchRollerSubsystem, IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
     this.hopperSubsystem = hopperSubsystem;
     this.pinchRollerSubsystem = pinchRollerSubsystem;
-    addRequirements(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem);
+    this.intakeSubsystem = intakeSubsystem;
+    addRequirements(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem, intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,10 +35,12 @@ public class AllInShootCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Math.abs(shooterSubsystem.getFlywheelRPM()- shooterSubsystem.setPoint) <= 50){
+    if (Math.abs(shooterSubsystem.getFlywheelRPM()- shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
+      intakeSubsystem.intakeIn();
       hopperSubsystem.hopperIn();
       pinchRollerSubsystem.pinchIn();
     } else {
+      intakeSubsystem.intakeStop();
       hopperSubsystem.hopperStop();
       pinchRollerSubsystem.pinchStop();
     }
@@ -44,6 +50,7 @@ public class AllInShootCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     hopperSubsystem.hopperStop();
+    intakeSubsystem.intakeStop();
     pinchRollerSubsystem.pinchStop();
     shooterSubsystem.stopFlywheel();
   }

@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveKinematicsConstraint;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -26,6 +31,14 @@ public final class Constants {
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
+
+    public static final double ksVolts = 0.583;
+    public static final double kvVoltSecondsPerMeter = 0.142;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.00871;
+    public static final double trackWidthMeters = 1.9730585666928624; //quetisonably meters lol
+
+    public static final double MAX_SPEED_INCHES_PER_SEC = 9.08 * 12.0;
+    public static final double MAX_ACCEL_INCHES_PER_SEC2 = 7.5 * 12.0;
   }
 
   public static final class AutoConstants {
@@ -91,6 +104,7 @@ public final class Constants {
     public static final double ENCODER_TIME_CONVERSION = 600.0; // minutes per 100 ms
     public static final double MAX_RPM = 7500;
     public static final double FEED_FORWARD = 69.420; // place
+    public static final double RPM_TOLERANCE = 25;
   }
 
 
