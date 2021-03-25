@@ -43,7 +43,7 @@ public class EndAndSaveRecordingToJSONCommand extends CommandBase {
     try
     {
         //Write content to file
-        Files.writeString(filePath, "{ "+'"'+ "path" + '"' + ": " + Robot.recentInputSequence.toString() + "}", StandardOpenOption.APPEND);
+        Files.writeString(filePath, "{ "+'"'+ "path" + '"' + ": " + Robot.recentInputSequence + "}", StandardOpenOption.APPEND);
         //Verify file content
         String content = Files.readString(filePath);
         System.out.println(content);
