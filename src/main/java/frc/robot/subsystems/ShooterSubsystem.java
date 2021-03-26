@@ -11,11 +11,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.utils.Limelight;
 
 public class ShooterSubsystem extends SubsystemBase {
     private WPI_TalonFX rightFlywheel;
     private WPI_TalonFX leftFlywheel;
-    public double setPoint = 6700;
+    public double setPoint;
 
     public enum ShooterStatus {
         FORWARDS, BACKWARDS, OFF;
@@ -47,14 +48,16 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheel.config_kF(0, 0.0517594042839351); // centeres around 16,000 vel/100ms
         leftFlywheel.config_kP(0, 0.25); 
         leftFlywheel.config_kI(0, 0.0); //0.0003
-        leftFlywheel.config_kD(0, 2.5);//1.9);
+        leftFlywheel.config_kD(0, 2.5);//2.5);//1.9);
+
+        setPoint = 6700;
     }
     @Override
     public void periodic(){
     }
 
     public void shootFlywheel() {
-        leftFlywheel.set(ControlMode.Velocity, getVelocityUnitsFromRPM(setPoint));
+        leftFlywheel.set(ControlMode.Velocity, getVelocityUnitsFromRPM(calcFlywheelRPM()));
         shooterStatus = ShooterStatus.FORWARDS;
     }
 
@@ -100,4 +103,18 @@ public class ShooterSubsystem extends SubsystemBase {
     public double getVelocityUnitsFromRPM(double RPM){
         return RPM / (ShooterConstants.PULLEY_RATIO * (ShooterConstants.ENCODER_TIME_CONVERSION / ShooterConstants.ENCODER_RESOLUTION));
     }
+
+    public void setSetPoint(double setPoint){
+        this.setPoint = setPoint;
+    }
+
+    public double calcFlywheelRPM(){
+        double distance = Limelight.getHorDistance();
+        if(distance < 186.0){
+            return 6600.0;
+        }
+        return 6700.0;
+    }
+
+
 }

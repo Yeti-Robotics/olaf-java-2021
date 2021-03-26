@@ -113,7 +113,7 @@ public final class Constants {
     public static final double COUNTS_PER_REVOLUTION = 42.0;
     public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
     public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-    public static final int HOOD_ANGLE_TOLERANCE = 1;
+    public static final double HOOD_ANGLE_TOLERANCE = .5;
     public static final double MAX_HOOD_ANGLE = 30.0;
   }
   

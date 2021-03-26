@@ -10,7 +10,6 @@ public class SetCalcHoodAngleCommand extends CommandBase {
     private final HoodSubsystem hoodSubsystem;
     private double encoderGoal;
     private double power;
-
     public SetCalcHoodAngleCommand(HoodSubsystem hoodSubsystem, double power) {
         this.hoodSubsystem = hoodSubsystem;
         this.power = Math.abs(power);
@@ -27,6 +26,7 @@ public class SetCalcHoodAngleCommand extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("Current Angle: " + hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder()) +"; Calculated Hood Angle: " + hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
         hoodSubsystem.moveHood(power);
     }
 

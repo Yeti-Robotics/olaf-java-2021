@@ -110,35 +110,33 @@ public class RobotContainer {
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
     setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
     setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand("1616449849206recording.txt", drivetrainSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopFullIntakeCommand(intakeSubsystem, hopperSubsystem, pinchRollerSubsystem)); 
-    setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleIntakePistonCommand(intakeSubsystem)); //hood out
+    setJoystickButtonWhenPressed(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
     setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
+    setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInShootCommand(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem, intakeSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 6, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //shoot
-    setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
+    // setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
      setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
 //    setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 9, new SetCalcHoodAngleCommand(hoodSubsystem, .05)); //turret L
-    setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, .1)); //turret R
+    setJoystickButtonWhenPressed(driverStationJoystick, 9, new SetCalcHoodAngleCommand(hoodSubsystem, .05)); //turret L
+    setJoystickButtonWhileHeld(driverStationJoystick, 10, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //turret R
   }
 
     public double getLeftY() {
-        if (driverStationJoystick.getRawAxis(1) >= .1 || driverStationJoystick.getRawAxis(1) <= -.1) {
-            return driverStationJoystick.getRawAxis(1);
-        } else {
-            return 0;
-        }
+        return -driverStationJoystick.getRawAxis(0);
+        
     }
 
     public double getLeftX() {
-        return driverStationJoystick.getRawAxis(0);
+        return driverStationJoystick.getRawAxis(1);
     }
 
     public double getRightY() {
-        return driverStationJoystick.getRawAxis(3);
+        return -driverStationJoystick.getRawAxis(2);
     }
 
     public double getRightX() {
-        return driverStationJoystick.getRawAxis(2);
+        return driverStationJoystick.getRawAxis(3);
     }
 
     private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
@@ -151,6 +149,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
+        //barrel racing path
         return new PlayRecordingCommand("1616448884869recording.txt", drivetrainSubsystem);
     }
 
