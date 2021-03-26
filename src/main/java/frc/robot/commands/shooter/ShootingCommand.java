@@ -24,6 +24,7 @@ public class ShootingCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooterSubsystem.setSetPoint(shooterSubsystem.calcFlywheelRPM());
   }
 
   // Called every time the scheduler runs while the command is scheduled.

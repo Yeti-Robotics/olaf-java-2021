@@ -10,6 +10,7 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PinchRollerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.utils.Limelight;
 
 public class AllInShootCommand extends CommandBase {
   /** Creates a new AllInShootCommand. */
@@ -29,12 +30,14 @@ public class AllInShootCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooterSubsystem.setSetPoint(shooterSubsystem.calcFlywheelRPM());
     shooterSubsystem.shootFlywheel();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("Current RPM: "+ shooterSubsystem.getFlywheelRPM() +"; Calculated RPM: " + shooterSubsystem.setPoint);
     if (Math.abs(shooterSubsystem.getFlywheelRPM()- shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
       intakeSubsystem.intakeIn();
       hopperSubsystem.hopperIn();

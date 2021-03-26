@@ -27,6 +27,7 @@ public class SetCalcHoodAngleCommand extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("Current Angle: " + hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder()) +"; Calculated Hood Angle: " + hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
         hoodSubsystem.moveHood(power);
     }
 
