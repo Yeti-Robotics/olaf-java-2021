@@ -17,16 +17,18 @@ public class PinchRollerSubsystem extends SubsystemBase {
 public PinchRollerSubsystem() {
     pinchRollerVictor = new VictorSPX(PinchRollerConstants.PINCH_ROLLER_VICTOR);
   }
+
   public void pinchIn(){
     pinchRollerVictor.set(ControlMode.PercentOutput, PinchRollerConstants.PINCH_ROLLER_IN_SPEED);
   }
+
   public void pinchOut(){
     pinchRollerVictor.set(ControlMode.PercentOutput, PinchRollerConstants.PINCH_ROLLER_OUT_SPEED);
-}
+  }
 
-public void pinchStop(){
+  public void pinchStop(){
     pinchRollerVictor.set(ControlMode.PercentOutput, 0);
-}
+  }
 
   @Override
   public void periodic() {

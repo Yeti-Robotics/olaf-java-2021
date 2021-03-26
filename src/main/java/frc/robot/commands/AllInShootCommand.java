@@ -38,13 +38,13 @@ public class AllInShootCommand extends CommandBase {
   @Override
   public void execute() {
     System.out.println("Current RPM: "+ shooterSubsystem.getFlywheelRPM() +"; Calculated RPM: " + shooterSubsystem.setPoint);
-    if (Math.abs(shooterSubsystem.getFlywheelRPM()- shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
+    if (Math.abs(shooterSubsystem.getFlywheelRPM() - shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
       intakeSubsystem.intakeIn();
-      hopperSubsystem.hopperIn();
+      // hopperSubsystem.hopperIn();
       pinchRollerSubsystem.pinchIn();
     } else {
       intakeSubsystem.intakeStop();
-      hopperSubsystem.hopperStop();
+      // hopperSubsystem.hopperStop();
       pinchRollerSubsystem.pinchStop();
     }
   }
@@ -52,7 +52,7 @@ public class AllInShootCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hopperSubsystem.hopperStop();
+    // hopperSubsystem.hopperStop();
     intakeSubsystem.intakeStop();
     pinchRollerSubsystem.pinchStop();
     shooterSubsystem.stopFlywheel();

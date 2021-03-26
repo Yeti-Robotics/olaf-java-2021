@@ -10,7 +10,6 @@ public class SetCalcHoodAngleCommand extends CommandBase {
     private final HoodSubsystem hoodSubsystem;
     private double encoderGoal;
     private double power;
-
     public SetCalcHoodAngleCommand(HoodSubsystem hoodSubsystem, double power) {
         this.hoodSubsystem = hoodSubsystem;
         this.power = Math.abs(power);
