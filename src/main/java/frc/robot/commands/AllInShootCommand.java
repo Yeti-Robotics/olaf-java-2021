@@ -18,6 +18,7 @@ public class AllInShootCommand extends CommandBase {
   private HopperSubsystem hopperSubsystem;
   private PinchRollerSubsystem pinchRollerSubsystem;
   private IntakeSubsystem intakeSubsystem;
+  private boolean readyToFire = false;
   public AllInShootCommand(ShooterSubsystem shooterSubsystem, HopperSubsystem hopperSubsystem, PinchRollerSubsystem pinchRollerSubsystem, IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
@@ -32,30 +33,48 @@ public class AllInShootCommand extends CommandBase {
   public void initialize() {
     shooterSubsystem.setSetPoint(shooterSubsystem.calcFlywheelRPM());
     shooterSubsystem.shootFlywheel();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     System.out.println("Current RPM: "+ shooterSubsystem.getFlywheelRPM() +"; Calculated RPM: " + shooterSubsystem.setPoint);
-    if (Math.abs(shooterSubsystem.getFlywheelRPM() - shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
-      intakeSubsystem.intakeIn();
-      // hopperSubsystem.hopperIn();
-      pinchRollerSubsystem.pinchIn();
-    } else {
-      intakeSubsystem.intakeStop();
-      // hopperSubsystem.hopperStop();
-      pinchRollerSubsystem.pinchStop();
+      if (Math.abs(shooterSubsystem.getFlywheelRPM() - shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
+        if(readyToFire){
+          intakeSubsystem.intakeIn();
+          hopperSubsystem.hopperIn();
+          pinchRollerSubsystem.pinchIn();
+        }
+        else{
+          try {
+            wait(500);
+            System.out.println("wait did the waiting :)");
+          }
+          catch (Exception e) {
+            e.printStackTrace();
+          }
+
+          if (Math.abs(shooterSubsystem.getFlywheelRPM() - shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
+            readyToFire = true;
+          }
+        }
+      }
+      else {
+        intakeSubsystem.intakeStop();
+        hopperSubsystem.hopperStop();
+        pinchRollerSubsystem.pinchStop();
+      }
     }
-  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // hopperSubsystem.hopperStop();
+    hopperSubsystem.hopperStop();
     intakeSubsystem.intakeStop();
     pinchRollerSubsystem.pinchStop();
     shooterSubsystem.stopFlywheel();
+    readyToFire = false;
   }
 
   // Returns true when the command should end.
