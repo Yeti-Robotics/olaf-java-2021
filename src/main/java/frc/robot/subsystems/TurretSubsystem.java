@@ -24,6 +24,11 @@ public class TurretSubsystem extends SubsystemBase {
         turretSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)turretEncoderFromAngle(TurretConstants.TURRET_MIN_ANGLE));
     }
 
+    @Override
+    public void periodic() {
+//        System.out.println("Turret Angle: " + turretAngleFromEncoder(getEncoder())+ "; Turret Encoder: "+ getEncoder());
+    }
+
     public void moveTurret(double power) {
         turretSpark.set(power);
     }

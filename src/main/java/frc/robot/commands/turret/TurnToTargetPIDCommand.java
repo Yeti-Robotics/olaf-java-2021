@@ -43,4 +43,9 @@ public class TurnToTargetPIDCommand extends PIDCommand {
     // System.out.println("i am aligned (supposedly)");
     return getController().atSetpoint() || turretSubsystem.getPhysicalLimit();
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    turretSubsystem.stopTurret();
+  }
 }
