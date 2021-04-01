@@ -34,6 +34,7 @@ public class TerminateAndSaveRecordingCommand extends CommandBase {
   public void execute() {
     try {
       String filename = "/home/lvuser/recordings/" + System.currentTimeMillis() + "recording.txt";
+      System.out.println("File name: " +'"'+filename+'"');
       File file = new File(filename);
       FileOutputStream fs = new FileOutputStream(file);
       ObjectOutputStream os = new ObjectOutputStream(fs);

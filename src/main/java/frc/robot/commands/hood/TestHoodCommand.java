@@ -25,6 +25,7 @@ public class TestHoodCommand extends CommandBase {
   @Override
   public void execute() {
     hoodSubsystem.moveHood(power);
+    System.out.println("hood angle: " + hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder()));
   }
 
   // Called once the command ends or is interrupted.

@@ -46,4 +46,8 @@ public class TurnToAnglePIDCommand extends PIDCommand {
   public boolean isFinished() {
     return getController().atSetpoint() || turretSubsystem.getPhysicalLimit() || (angle < 0 || angle > TurretConstants.TURRET_MAX_ANGLE);
   }
+  @Override
+  public void end(boolean interrupted) {
+    turretSubsystem.stopTurret();
+  }
 }

@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveKinematicsConstraint;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -26,6 +31,14 @@ public final class Constants {
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
+
+    public static final double ksVolts = 0.583;
+    public static final double kvVoltSecondsPerMeter = 0.142;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.00871;
+    public static final double trackWidthMeters = 1.9730585666928624; //quetisonably meters lol
+
+    public static final double MAX_SPEED_INCHES_PER_SEC = 9.08 * 12.0;
+    public static final double MAX_ACCEL_INCHES_PER_SEC2 = 7.5 * 12.0;
   }
 
   public static final class AutoConstants {
@@ -78,7 +91,6 @@ public final class Constants {
   }
   
   public static final class ShooterConstants{
-    //PLACEHOLDER VALUES!
     public static final int RIGHT_FLYWHEEL = 5; //rightside falcon
     public static final int LEFT_FLYWHEEL = 6; //leftside falcon
     public static final double SHOOT_1_SPEED = 1.0;
@@ -91,6 +103,7 @@ public final class Constants {
     public static final double ENCODER_TIME_CONVERSION = 600.0; // minutes per 100 ms
     public static final double MAX_RPM = 7500;
     public static final double FEED_FORWARD = 69.420; // place
+    public static final double RPM_TOLERANCE = 25;
   }
 
 
@@ -99,14 +112,14 @@ public final class Constants {
     public static final double COUNTS_PER_REVOLUTION = 42.0;
     public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
     public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-    public static final int HOOD_ANGLE_TOLERANCE = 1;
+    public static final double HOOD_ANGLE_TOLERANCE = .25;
     public static final double MAX_HOOD_ANGLE = 30.0;
   }
   
   public static final class PinchRollerConstants{
     public static final int PINCH_ROLLER_VICTOR = 7;
-    public static final double PINCH_ROLLER_IN_SPEED = .60;
-    public static final double PINCH_ROLLER_OUT_SPEED = -.60;
+    public static final double PINCH_ROLLER_IN_SPEED = .3;
+    public static final double PINCH_ROLLER_OUT_SPEED = -.3;
   }
 
   public static final class CalcConstants{

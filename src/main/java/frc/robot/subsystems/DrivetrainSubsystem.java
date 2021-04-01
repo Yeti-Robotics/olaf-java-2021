@@ -22,7 +22,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private PigeonIMU gyro;
   
   // The robot's drive
-  private final DifferentialDrive m_drive;
+  public final DifferentialDrive m_drive;
 
   private DriveMode driveMode;
 
@@ -53,7 +53,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   
     gyro = new PigeonIMU(DriveConstants.GYRO_ID);
 
-    driveMode = DriveMode.TANK;
+    driveMode = DriveMode.CHEEZY;
   }
 
   @Override

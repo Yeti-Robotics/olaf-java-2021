@@ -27,6 +27,8 @@ public class HoodSubsystem extends SubsystemBase {
     hoodSpark.setInverted(true);
     beamBreak = hoodSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
     hoodSpark.setSoftLimit(SoftLimitDirection.kForward, (float)hoodEncoderFromAngle(HoodConstants.MAX_HOOD_ANGLE));
+    hoodSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)hoodEncoderFromAngle(0));
+
   }
 
   @Override
@@ -62,8 +64,9 @@ public class HoodSubsystem extends SubsystemBase {
     return beamBreak.get();
   }
 
-  // public double calcHoodAngle() {
-  //   return Math.toDegrees(Math.asin((-CalcConstants.GRAVITY * Limelight.getHorDistance()) / ShooterSubsystem.flywheelVel ));
-  // }
+   public double calcHoodAngle(double distance) {
+     //y = mx+b values based on hood testing
+     return ((.0867898* distance) + 12.4589);
+   }
 
 }
