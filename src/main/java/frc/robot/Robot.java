@@ -22,7 +22,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.LED.SetLEDYetiBlueCommand;
+import frc.robot.commands.replay.InitiateRecordingCommand;
+import frc.robot.commands.replay.PlayRecordingCommand;
 import frc.robot.commands.replay.RobotInput;
+import frc.robot.commands.replay.TerminateAndSaveRecordingCommand;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
@@ -97,7 +100,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     // maxRPM = 0.0;
     // maxEncoder = 0.0;
-    if(m_robotContainer.turretSubsystem.getForwardLimit()){
+    if(m_robotContainer.turretSubsystem.getReverseLimit()){
       m_robotContainer.turretSubsystem.resetEncoder();
     }
     if (m_robotContainer.hoodSubsystem.getBeamBreak()){
@@ -116,6 +119,7 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+      
       m_autonomousCommand.schedule();
     }
   }
@@ -154,17 +158,15 @@ public class Robot extends TimedRobot {
       }
       currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
       currentInput.setJoystickXAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightX());
-      // for (int i = 0; i < 3; i++) {
-      // 	for (int j = 1; j <= 11; j++) {
-      // 		if (i == 0 && j != 4 && j != 5) {
-      // 			currentInput.setButtonState(RobotInput.Joystick.LEFT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
-      // 		} else if (i == 1) {
-      // 			currentInput.setButtonState(RobotInput.Joystick.RIGHT, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
-      // 		} else if (i == 2) {
-      // 			currentInput.setButtonState(RobotInput.Joystick.ARM, j, m_robotContainer.getButtonStatus(m_robotContainer.driverStationJoystick, j));
-      // 		}
-      // 	}
-      // }
+      for (int i = 1; i <= m_robotContainer.getButtonMap().size(); i++){
+        if (m_robotContainer.driverStationJoystick.getRawButton(i)){
+          if (m_robotContainer.getButtonMap().get(i).getClass() != PlayRecordingCommand.class &&
+                  m_robotContainer.getButtonMap().get(i).getClass() != TerminateAndSaveRecordingCommand.class &&
+                  m_robotContainer.getButtonMap().get(i).getClass() != InitiateRecordingCommand.class){
+            currentInput.setButtonState(i, true);
+          }
+        }
+      }
       inputSequence.add(currentInput);
     }
   }

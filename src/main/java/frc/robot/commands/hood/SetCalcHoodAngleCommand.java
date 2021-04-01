@@ -5,6 +5,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.utils.Limelight;
 
+import java.sql.SQLOutput;
+
 
 public class SetCalcHoodAngleCommand extends CommandBase {
     private final HoodSubsystem hoodSubsystem;
@@ -26,13 +28,13 @@ public class SetCalcHoodAngleCommand extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.println("Current Angle: " + hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder()) +"; Calculated Hood Angle: " + hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
+        System.out.println("encoder goal: "+ encoderGoal + ", actual enc value: " + hoodSubsystem.getEncoder());
         hoodSubsystem.moveHood(power);
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(encoderGoal - hoodSubsystem.getEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_TOLERANCE;
+        return Math.abs(hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()) - hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder())) <= Constants.HoodConstants.HOOD_ANGLE_TOLERANCE;
     }
 
     @Override

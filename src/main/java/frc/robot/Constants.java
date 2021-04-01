@@ -91,7 +91,6 @@ public final class Constants {
   }
   
   public static final class ShooterConstants{
-    //PLACEHOLDER VALUES!
     public static final int RIGHT_FLYWHEEL = 5; //rightside falcon
     public static final int LEFT_FLYWHEEL = 6; //leftside falcon
     public static final double SHOOT_1_SPEED = 1.0;
@@ -113,14 +112,14 @@ public final class Constants {
     public static final double COUNTS_PER_REVOLUTION = 42.0;
     public static final double HOOD_GEAR_RATIO = 340.0;//510.0/1.0;
     public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
-    public static final double HOOD_ANGLE_TOLERANCE = .5;
+    public static final double HOOD_ANGLE_TOLERANCE = .25;
     public static final double MAX_HOOD_ANGLE = 30.0;
   }
   
   public static final class PinchRollerConstants{
     public static final int PINCH_ROLLER_VICTOR = 7;
-    public static final double PINCH_ROLLER_IN_SPEED = .60;
-    public static final double PINCH_ROLLER_OUT_SPEED = -.60;
+    public static final double PINCH_ROLLER_IN_SPEED = .3;
+    public static final double PINCH_ROLLER_OUT_SPEED = -.3;
   }
 
   public static final class CalcConstants{

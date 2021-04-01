@@ -16,14 +16,12 @@ public class RobotInput implements Serializable {
 
 	public static enum Joystick {
 		LEFT, RIGHT, ARM
-	};
+	}
 
 	private static boolean isRecording = false;
 	private double leftY, rightY, armY;
 	private double leftX, rightX;
-	public boolean[] leftButtons = new boolean[11];
-	public boolean[] rightButtons = new boolean[11];
-	public boolean[] armButtons = new boolean[11];
+	public boolean[] joystickButtons = new boolean[11];
 	public static CommandBase[] leftCommands = new CommandBase[11];
 	public static CommandBase[] rightCommands = new CommandBase[11];
 	public static CommandBase[] armCommands = new CommandBase[11];
@@ -36,19 +34,9 @@ public class RobotInput implements Serializable {
 		RobotInput.isRecording = isRecording;
 	}
 
-	public void setButtonState(Joystick joystick, int button, boolean state) {
+	public void setButtonState(int button, boolean state) {
 		button--;
-		switch (joystick) {
-			case LEFT:
-				leftButtons[button] = state;
-				break;
-			case RIGHT:
-				rightButtons[button] = state;
-				break;
-			case ARM:
-				armButtons[button] = state;
-				break;
-		}
+		joystickButtons[button] = state;
 	}
 
 	public void setJoystickXAxis(Joystick driverStationJoystick, double val) {
@@ -88,16 +76,7 @@ public class RobotInput implements Serializable {
 
 	public boolean getButtonStatus(Joystick joystick, int button) {
 		button--;
-		switch (joystick) {
-			case LEFT:
-				return leftButtons[button];
-			case RIGHT:
-				return rightButtons[button];
-			case ARM:
-				return armButtons[button];
-			default:
-				return false;
-		}
+		return joystickButtons[button];
 	}
 
 	public static void elicitCommand(Joystick joystick, int button) {

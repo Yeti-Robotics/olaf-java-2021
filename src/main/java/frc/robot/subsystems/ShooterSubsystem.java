@@ -47,8 +47,8 @@ public class ShooterSubsystem extends SubsystemBase {
         leftFlywheel.selectProfileSlot(0, 0);
         leftFlywheel.config_kF(0, 0.0517594042839351); // centeres around 16,000 vel/100ms
         leftFlywheel.config_kP(0, 0.25); 
-        leftFlywheel.config_kI(0, 0.0); //0.0003
-        leftFlywheel.config_kD(0, 2.5);//2.5);//1.9);
+        leftFlywheel.config_kI(0, 0.0000005); //0.0003
+        leftFlywheel.config_kD(0, 2.7);//2.5);//1.9);
 
         setPoint = 6700;
     }

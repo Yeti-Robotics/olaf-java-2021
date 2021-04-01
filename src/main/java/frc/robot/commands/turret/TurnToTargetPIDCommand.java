@@ -33,7 +33,7 @@ public class TurnToTargetPIDCommand extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     this.turretSubsystem = turretSubsystem;
     getController().enableContinuousInput(-28,28);
-    getController().setTolerance(.5);
+    getController().setTolerance(.25);
     addRequirements(turretSubsystem);
   }
 
@@ -42,5 +42,10 @@ public class TurnToTargetPIDCommand extends PIDCommand {
   public boolean isFinished() {
     // System.out.println("i am aligned (supposedly)");
     return getController().atSetpoint() || turretSubsystem.getPhysicalLimit();
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    turretSubsystem.stopTurret();
   }
 }
