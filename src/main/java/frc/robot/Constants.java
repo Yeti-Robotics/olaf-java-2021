@@ -118,8 +118,8 @@ public final class Constants {
   
   public static final class PinchRollerConstants{
     public static final int PINCH_ROLLER_VICTOR = 7;
-    public static final double PINCH_ROLLER_IN_SPEED = .3;
-    public static final double PINCH_ROLLER_OUT_SPEED = -.3;
+    public static final double PINCH_ROLLER_IN_SPEED = 0.7;
+    public static final double PINCH_ROLLER_OUT_SPEED = -0.7;
   }
 
   public static final class CalcConstants{
