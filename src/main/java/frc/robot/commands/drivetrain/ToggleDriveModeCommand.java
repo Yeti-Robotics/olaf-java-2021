@@ -4,6 +4,7 @@
 
 package frc.robot.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -12,9 +13,11 @@ import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 public class ToggleDriveModeCommand extends CommandBase {
 
   private DrivetrainSubsystem drivetrainSubsystem;
+  private Joystick driverStationJoystick;
 
-  public ToggleDriveModeCommand(DrivetrainSubsystem drivetrainSubsystem) {
+  public ToggleDriveModeCommand(DrivetrainSubsystem drivetrainSubsystem, Joystick driverStationJoystick) {
     this.drivetrainSubsystem = drivetrainSubsystem;
+    this.driverStationJoystick = driverStationJoystick;
     addRequirements(drivetrainSubsystem);
   }
 
@@ -22,8 +25,11 @@ public class ToggleDriveModeCommand extends CommandBase {
   public void initialize() {
     if(drivetrainSubsystem.getDriveMode() == DriveMode.TANK){
       drivetrainSubsystem.setDriveMode(DriveMode.CHEEZY);
+      drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(driverStationJoystick.getRawAxis(1), driverStationJoystick.getRawAxis(2)), drivetrainSubsystem));
+
     } else {
       drivetrainSubsystem.setDriveMode(DriveMode.TANK);
+      drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(driverStationJoystick.getRawAxis(1), driverStationJoystick.getRawAxis(3)), drivetrainSubsystem));
     }
   }
 
