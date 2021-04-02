@@ -25,6 +25,7 @@ import frc.robot.commands.drivetrain.TurnForAnglePIDCommand;
 import frc.robot.commands.groups.AimTurretAndHoodCommandGroup;
 import frc.robot.commands.groups.FireBallCommandGroup;
 import frc.robot.commands.hood.SetCalcHoodAngleCommand;
+import frc.robot.commands.hood.SetCalcHoodAnglePIDCommand;
 import frc.robot.commands.hood.TestHoodCommand;
 import frc.robot.commands.hopper.HopperInCommand;
 import frc.robot.commands.intake.IntakeInCommand;
@@ -142,7 +143,8 @@ public class RobotContainer {
      * POWER PORT ROBOT CONTROLS
      */
 
-    setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 1, new AimTurretAndHoodCommandGroup(turretSubsystem, hoodSubsystem));
+    //setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 2, new ToggleIntakePistonCommand(intakeSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 3, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
     setJoystickButtonWhileHeld(driverStationJoystick, 4, new ShootingCommand(shooterSubsystem));
@@ -155,6 +157,9 @@ public class RobotContainer {
 
     setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
 
+
+    // testing buttons
+    // setJoystickButtonWhenPressed(driverStationJoystick, 1, new SetCalcHoodAngleCommand(hoodSubsystem, 0.1));
   }
 
     public double getLeftY() {

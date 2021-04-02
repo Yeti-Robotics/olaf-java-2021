@@ -64,9 +64,16 @@ public class HoodSubsystem extends SubsystemBase {
     return beamBreak.get();
   }
 
-   public double calcHoodAngle(double distance) {
-     //y = mx+b values based on hood testing
-     return ((.0867898* distance) + 12.4589);
-   }
-
+  public double calcHoodAngle(double distance) {
+    double angle;
+    if(distance > 165.909){
+      angle = 30;
+    } else if(distance < 60.9){
+      angle = 11.26896353;
+    } else {
+      //based on hood testing math; ax^2 + bx + c
+      angle = -0.00176559 * Math.pow(distance, 2) + 0.585856 * distance - 17.7769;
+    }
+    return angle;
+  }
 }

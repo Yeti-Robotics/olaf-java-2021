@@ -110,7 +110,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double calcFlywheelRPM(){
         double distance = Limelight.getHorDistance();
-        if(distance < 186.0){
+        if(distance < 200.0){
             return 6600.0;
         }
         return 6700.0;

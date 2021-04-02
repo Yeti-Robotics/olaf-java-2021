@@ -14,31 +14,37 @@ public class SetCalcHoodAngleCommand extends CommandBase {
     private double power;
     public SetCalcHoodAngleCommand(HoodSubsystem hoodSubsystem, double power) {
         this.hoodSubsystem = hoodSubsystem;
-        this.power = Math.abs(power);
+        this.power = power;
         addRequirements(hoodSubsystem);
     }
 
     @Override
     public void initialize() {
+        System.out.println("the command has been initialized");
         encoderGoal = hoodSubsystem.hoodEncoderFromAngle(hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
         if (encoderGoal < hoodSubsystem.getEncoder()){
-            power = -power;
+            power = -Math.abs(power);
+            System.out.println("moving backwards");
+        } else {
+            power = Math.abs(power);
+            System.out.println("moving forward");
         }
     }
 
     @Override
     public void execute() {
-        System.out.println("encoder goal: "+ encoderGoal + ", actual enc value: " + hoodSubsystem.getEncoder());
+        System.out.println("encoder goal: "+ encoderGoal + ", actual enc value: " + hoodSubsystem.getEncoder() + "; power: " + power);
         hoodSubsystem.moveHood(power);
     }
 
     @Override
     public boolean isFinished() {
-        return Math.abs(hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()) - hoodSubsystem.hoodAngleFromEncoder(hoodSubsystem.getEncoder())) <= Constants.HoodConstants.HOOD_ANGLE_TOLERANCE;
+        return Math.abs(hoodSubsystem.hoodEncoderFromAngle(hoodSubsystem.calcHoodAngle(Limelight.getHorDistance())) - hoodSubsystem.getEncoder()) <= Constants.HoodConstants.HOOD_ANGLE_TOLERANCE;
     }
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("the end.");
         hoodSubsystem.stopHood();
     }
 }
