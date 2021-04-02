@@ -4,32 +4,23 @@
 
 package frc.robot;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.io.Serializable;
 import java.util.List;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 
-import com.revrobotics.CANDigitalInput;
-
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.commands.LED.SetLEDYetiBlueCommand;
 import frc.robot.commands.replay.InitiateRecordingCommand;
 import frc.robot.commands.replay.PlayRecordingCommand;
 import frc.robot.commands.replay.RobotInput;
 import frc.robot.commands.replay.TerminateAndSaveRecordingCommand;
-import frc.robot.subsystems.HoodSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
-import frc.robot.utils.Limelight;
+import frc.robot.utils.GalacticSearch;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -46,6 +37,13 @@ public class Robot extends TimedRobot {
   // private double maxEncoder = 0.0;
 
   private RobotContainer m_robotContainer;
+
+  //gal search viz
+  private VisionThread visionThread;
+  private double centerX, centerY;
+  private final Object imgLock = new Object();
+
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -55,6 +53,23 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();   
+    
+    //gal search viz
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    visionThread = new VisionThread(camera, new GalacticSearch(), pipeline -> {
+      if(!pipeline.filterContoursOutput().isEmpty()){
+        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+        synchronized (imgLock) {
+          centerX = r.x + (r.width /2);
+          centerY = r.y + (r.height/2);
+        }
+      } else {
+        centerX = 69.420;
+        centerY = 69.420;
+      }
+    });
+    visionThread.start();
+
   }
 
   /**
@@ -88,7 +103,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     // System.out.println("Distance: " + m_robotContainer.drivetrainSubsystem.getLeftEncoder() + "; Encoder: " + m_robotContainer.drivetrainSubsystem.getRawEncoder() + "; gear status: " + m_robotContainer.shiftingGearSubsystem.shiftStatus);
 
-    
+    double centerX, centerY;
+    synchronized (imgLock){
+      centerX = this.centerX;
+      centerY = this.centerY;
+    }
+
+    System.out.println("CenterX: " + centerX + "; CenterY: " + centerY);
+
     CommandScheduler.getInstance().run();
   }
 
