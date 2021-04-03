@@ -39,7 +39,7 @@ public class AllInShootCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Current RPM: "+ shooterSubsystem.getFlywheelRPM() +"; Calculated RPM: " + shooterSubsystem.setPoint);
+    // System.out.println("Current RPM: "+ shooterSubsystem.getFlywheelRPM() +"; Calculated RPM: " + shooterSubsystem.setPoint);
       if (Math.abs(shooterSubsystem.getFlywheelRPM() - shooterSubsystem.setPoint) <= Constants.ShooterConstants.RPM_TOLERANCE){
         if(readyToFire){
           intakeSubsystem.intakeIn();
