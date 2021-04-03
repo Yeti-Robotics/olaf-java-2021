@@ -43,6 +43,7 @@ public final class Constants {
 
   public static final class AutoConstants {
     // note: copy pasted directly
+    public static final double RED_BALL_AREA_THRESHOLD = 1000.0;
     public static final double kMaxSpeedMetersPerSecond = 3.0;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3.0;
   }

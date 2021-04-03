@@ -4,8 +4,12 @@
 
 package frc.robot.commands.groups;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Robot;
 import frc.robot.commands.intake.IntakeInCommand;
+import frc.robot.commands.intake.ToggleIntakePistonCommand;
 import frc.robot.commands.replay.PlayRecordingCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -13,14 +17,27 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class GalacticSearchCommandGroup extends ParallelCommandGroup {
+public class GalacticSearchPathACommandGroup extends SequentialCommandGroup {
   /** Creates a new GalacticSearchCommandGroup. */
-  public GalacticSearchCommandGroup(IntakeSubsystem intakeSubsystem, DrivetrainSubsystem drivetrainSubsystem) {
+  public GalacticSearchPathACommandGroup(IntakeSubsystem intakeSubsystem, DrivetrainSubsystem drivetrainSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeInCommand(intakeSubsystem),
-      new PlayRecordingCommand(drivetrainSubsystem)
+      new ToggleIntakePistonCommand(intakeSubsystem),
+      new ParallelCommandGroup(
+        new IntakeInCommand(intakeSubsystem),
+        new PlayRecordingCommand(getRecording(), drivetrainSubsystem))
     );
+  }
+
+  public String getRecording(){
+    if (Robot.pathSetUp == Robot.PathState.RED){
+      //path a red
+      return "pathAredgalacticsearch.txt";
+    } else if (Robot.pathSetUp == Robot.PathState.BLUE){
+      return "pathAbluegalacticsearch.txt";
+    } else{
+      return null;
+    }
   }
 }

@@ -33,11 +33,13 @@ public class PlayRecordingCommand extends CommandBase {
     public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem) {
         this.filename = "/home/lvuser/recordings/" + filename;
         this.drivetrainSubsystem = drivetrainSubsystem;
+        addRequirements(drivetrainSubsystem);
     }
 
     public PlayRecordingCommand(DrivetrainSubsystem drivetrainSubsystem) {
         this.filename = null;
         this.drivetrainSubsystem = drivetrainSubsystem;
+        addRequirements(drivetrainSubsystem);
     }
 
     // Called when the command is initially scheduled.

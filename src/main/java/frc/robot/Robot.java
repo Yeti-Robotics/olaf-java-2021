@@ -16,6 +16,7 @@ import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.replay.InitiateRecordingCommand;
 import frc.robot.commands.replay.PlayRecordingCommand;
 import frc.robot.commands.replay.RobotInput;
@@ -33,7 +34,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static List<RobotInput> inputSequence = new ArrayList<RobotInput>();
 	public static List<RobotInput> recentInputSequence = new ArrayList<RobotInput>();
-
   // private double maxRPM = 0.0;
   // private double maxEncoder = 0.0;
 
@@ -41,9 +41,16 @@ public class Robot extends TimedRobot {
 
   //gal search viz
   private VisionThread visionThread;
-  private double centerX, centerY;
-  private final Object imgLock = new Object();
+  public enum PathState {
+    RED, BLUE, NONE
+  }
+  public static PathState pathSetUp = PathState.BLUE;
+  // private final Object imgLock = new Object();
+  
 
+  public static void resetPath(){
+    pathSetUp = PathState.NONE;
+  }
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -54,19 +61,25 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();   
-    
+
     //gal search viz
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(640, 480);
     visionThread = new VisionThread(camera, new GalacticSearch(), pipeline -> {
-      if(!pipeline.filterContoursOutput().isEmpty()){
+      while (true) {
         Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-        synchronized (imgLock) {
-          centerX = r.x + (r.width /2);
-          centerY = r.y + (r.height/2);
+        // System.out.println("area: " + r.area());
+        if(!pipeline.filterContoursOutput().isEmpty()){
+          // for (int i=0; i< pipeline.filterContoursOutput().size(); i++){
+          //   synchronized (imgLock){
+          //     if(r.area() >= AutoConstants.RED_BALL_AREA_THRESHOLD){
+                pathSetUp = PathState.RED;
+          //     }
+          //   }
+          // }
+        } else {
+          pathSetUp = PathState.BLUE;
         }
-      } else {
-        centerX = 69.420;
-        centerY = 69.420;
       }
     });
     visionThread.start();
@@ -103,14 +116,12 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     // System.out.println("Distance: " + m_robotContainer.drivetrainSubsystem.getLeftEncoder() + "; Encoder: " + m_robotContainer.drivetrainSubsystem.getRawEncoder() + "; gear status: " + m_robotContainer.shiftingGearSubsystem.shiftStatus);
+    // PathState pathSetUp;
+    // synchronized (imgLock){
+    //   pathSetUp = this.pathSetUp;
+    // }
 
-    double centerX, centerY;
-    synchronized (imgLock){
-      centerX = this.centerX;
-      centerY = this.centerY;
-    }
-
-    // System.out.println("CenterX: " + centerX + "; CenterY: " + centerY);
+    System.out.println("PathSetUp: " + pathSetUp.toString());
 
     CommandScheduler.getInstance().run();
   }

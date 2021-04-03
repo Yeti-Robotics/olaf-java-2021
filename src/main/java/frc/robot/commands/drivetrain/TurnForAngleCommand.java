@@ -26,7 +26,7 @@ public class TurnForAngleCommand extends CommandBase {
 
   @Override
   public void execute(){
-    if(gyroGoal < 0){
+    if(gyroGoal > 0){
       drivetrainSubsystem.tankDrive(-leftPower, rightPower);
     } else {
       drivetrainSubsystem.tankDrive(leftPower, -rightPower);
