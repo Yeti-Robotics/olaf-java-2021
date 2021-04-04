@@ -21,33 +21,32 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class PlayGalacticSearchPathCommand extends CommandBase {
   /** Creates a new PlayGalacticSearchPathCommand. */
   private DrivetrainSubsystem drivetrainSubsystem;
-  private String filename;
-  private List<RobotInput> localInputSequence;
-  private int parsingIndex;
-  private boolean[] activatedButtons = new boolean[33];
-  public PlayGalacticSearchPathCommand(DrivetrainSubsystem drivetrainSubsystem) {
+  private IntakeSubsystem intakeSubsystem;
+  public PlayGalacticSearchPathCommand(IntakeSubsystem intakeSubsystem, DrivetrainSubsystem drivetrainSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    drivetrainSubsystem = this.drivetrainSubsystem;
-    // addRequirements(drivetrainSubsystem);
+    this.drivetrainSubsystem = drivetrainSubsystem;
+    this.intakeSubsystem= intakeSubsystem;
+    addRequirements(this.intakeSubsystem, this.drivetrainSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // new PlayRecordingCommand(getRecording(), drivetrainSubsystem).schedule();
+      intakeSubsystem.intakeIn();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (Robot.pathType == PathType.PATHA && Robot.pathColor == PathColor.RED){
-      new PlayRecordingCommand("pathAredgalacticsearch.txt",drivetrainSubsystem);
+      new PlayRecordingCommand("oldredA.txt",drivetrainSubsystem).schedule();
     } else if (Robot.pathType == PathType.PATHA && Robot.pathColor == PathColor.BLUE){
-      new PlayRecordingCommand("pathAbluegalacticsearch.txt", drivetrainSubsystem);
+      new PlayRecordingCommand("oldblueA.txt", drivetrainSubsystem).schedule();
     } else if (Robot.pathType == PathType.PATHB && Robot.pathColor == PathColor.BLUE){
-      new PlayRecordingCommand("pathBbluegalacticsearch.txt", drivetrainSubsystem);
+      new PlayRecordingCommand("oldblueB.txt", drivetrainSubsystem).schedule();
     } else{
-      new PlayRecordingCommand("pathBredgalacticsearch.txt", drivetrainSubsystem);
+      new PlayRecordingCommand("oldredB.txt", drivetrainSubsystem).schedule();
     }
   }
 

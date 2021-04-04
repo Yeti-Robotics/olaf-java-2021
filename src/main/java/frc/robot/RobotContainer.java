@@ -23,6 +23,7 @@ import frc.robot.commands.drivetrain.ToggleDriveModeCommand;
 import frc.robot.commands.drivetrain.ToggleShiftingCommand;
 import frc.robot.commands.drivetrain.TurnForAnglePIDCommand;
 import frc.robot.commands.galsearch.DetectGalacticSearchCommand;
+import frc.robot.commands.galsearch.GalacticSearchCommandGroup;
 import frc.robot.commands.galsearch.PlayGalacticSearchPathCommand;
 import frc.robot.commands.groups.AimTurretAndHoodCommandGroup;
 import frc.robot.commands.groups.FireBallCommandGroup;
@@ -124,14 +125,13 @@ public class RobotContainer {
     // // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
     setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
     setJoystickButtonWhenPressed(driverStationJoystick, 3, new TestGalSearchReplayCommandGroup(intakeSubsystem, drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 4, new RunCommand(() -> intakeSubsystem.intakeStop(), intakeSubsystem));
+     setJoystickButtonWhenPressed(driverStationJoystick, 4, new RunCommand(() -> intakeSubsystem.intakeStop(), intakeSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 4, new BouncePathCommandGroup(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-
-    // setJoystickButtonWhenPressed(driverStationJoystick, 5, new GalacticSearchCommandGroup(intakeSubsystem, drivetrainSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoystick, 5, new GalacticSearchCommandGroup(intakeSubsystem, drivetrainSubsystem));
     setJoystickButtonWhenPressed(driverStationJoystick, 6, new DetectGalacticSearchCommand());
-    setJoystickButtonWhenPressed(driverStationJoystick, 7, new PlayGalacticSearchPathCommand(drivetrainSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 7, new PlayGalacticSearchPathCommand(intakeSubsystem, drivetrainSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 1, new AimTurretAndHoodCommandGroup(turretSubsystem, hoodSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInShootCommand(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem, intakeSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 4, new ShootingCommand(shooterSubsystem));
@@ -143,6 +143,7 @@ public class RobotContainer {
      setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
     //setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
     //setJoystickButtonWhenPressed(driverStationJoystick, 9, new SetCalcHoodAngleCommand(hoodSubsystem, .05)); //turret L
+        setJoystickButtonWhenPressed(driverStationJoystick, 9, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 9, new AimTurretAndHoodCommandGroup(turretSubsystem, hoodSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -0.2)); //left
     // setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, 0.2)); //right
