@@ -40,17 +40,22 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   //gal search viz
-  private VisionThread visionThread;
-  public enum PathState {
+  public static UsbCamera camera;
+  public enum PathColor {
     RED, BLUE, NONE
   }
-  public static PathState pathSetUp = PathState.BLUE;
+  public enum PathType {
+    PATHA, PATHB, NONE
+  }
+  public static PathColor pathColor = PathColor.NONE;
+  public static PathType pathType = PathType.NONE;
   // private final Object imgLock = new Object();
   
 
-  public static void resetPath(){
-    pathSetUp = PathState.NONE;
-  }
+  // public static void resetPath(){
+  //   pathColor = PathColor.NONE;
+  //   System.out.println("Color: " + pathColor + "| Type: " + pathType);
+  // }
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -63,27 +68,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();   
 
     //gal search viz
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(640, 480);
-    visionThread = new VisionThread(camera, new GalacticSearch(), pipeline -> {
-      while (true) {
-        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-        // System.out.println("area: " + r.area());
-        if(!pipeline.filterContoursOutput().isEmpty()){
-          // for (int i=0; i< pipeline.filterContoursOutput().size(); i++){
-          //   synchronized (imgLock){
-          //     if(r.area() >= AutoConstants.RED_BALL_AREA_THRESHOLD){
-                pathSetUp = PathState.RED;
-          //     }
-          //   }
-          // }
-        } else {
-          pathSetUp = PathState.BLUE;
-        }
-      }
-    });
-    visionThread.start();
-
   }
 
   /**
@@ -104,7 +90,7 @@ public class Robot extends TimedRobot {
 
     // System.out.println("Flywheel RPM, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getFlywheelRPM() + " - " + m_robotContainer.shooterSubsystem.setPoint);
     // System.out.println("Flywheel Enc, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getAverageEncoder() + " - " + m_robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(m_robotContainer.shooterSubsystem.setPoint) + "\n.");
-    System.out.println("Distance: " + Limelight.getHorDistance() + "; Angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + "; RPM: " + m_robotContainer.shooterSubsystem.calcFlywheelRPM() + "; calc hood angle: " + m_robotContainer.hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
+    // System.out.println("Distance: " + Limelight.getHorDistance() + "; Angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + "; RPM: " + m_robotContainer.shooterSubsystem.calcFlywheelRPM() + "; calc hood angle: " + m_robotContainer.hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
     //  System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
 
     // System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
@@ -121,7 +107,7 @@ public class Robot extends TimedRobot {
     //   pathSetUp = this.pathSetUp;
     // }
 
-    System.out.println("PathSetUp: " + pathSetUp.toString());
+    // System.out.println("PathSetUp: " + pathColor.toString());
 
     CommandScheduler.getInstance().run();
   }

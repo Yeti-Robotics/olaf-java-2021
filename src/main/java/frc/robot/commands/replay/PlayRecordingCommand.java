@@ -33,13 +33,13 @@ public class PlayRecordingCommand extends CommandBase {
     public PlayRecordingCommand(String filename, DrivetrainSubsystem drivetrainSubsystem) {
         this.filename = "/home/lvuser/recordings/" + filename;
         this.drivetrainSubsystem = drivetrainSubsystem;
-        addRequirements(drivetrainSubsystem);
+        // addRequirements(drivetrainSubsystem);
     }
 
     public PlayRecordingCommand(DrivetrainSubsystem drivetrainSubsystem) {
         this.filename = null;
         this.drivetrainSubsystem = drivetrainSubsystem;
-        addRequirements(drivetrainSubsystem);
+        // addRequirements(drivetrainSubsystem);
     }
 
     // Called when the command is initially scheduled.
@@ -51,12 +51,14 @@ public class PlayRecordingCommand extends CommandBase {
         parsingIndex = 0;
         if (filename != null) {
             try {
+                System.out.println("filename: " + filename);
                 File file = new File(filename);
                 FileInputStream fs = new FileInputStream(file);
                 ObjectInputStream os = new ObjectInputStream(fs);
                 localInputSequence = (List<RobotInput>) os.readObject();
                 os.close();
             } catch (Exception e) {
+                System.out.println("error reading file");
                 e.printStackTrace();
             }
         } else {

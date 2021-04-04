@@ -22,7 +22,8 @@ import frc.robot.commands.drivetrain.DriveForDistanceProfiledPIDCommand;
 import frc.robot.commands.drivetrain.ToggleDriveModeCommand;
 import frc.robot.commands.drivetrain.ToggleShiftingCommand;
 import frc.robot.commands.drivetrain.TurnForAnglePIDCommand;
-import frc.robot.commands.galsearch.PathBBlueCommandGroup;
+import frc.robot.commands.galsearch.DetectGalacticSearchCommand;
+import frc.robot.commands.galsearch.PlayGalacticSearchPathCommand;
 import frc.robot.commands.groups.AimTurretAndHoodCommandGroup;
 import frc.robot.commands.groups.FireBallCommandGroup;
 import frc.robot.commands.groups.GalacticSearchPathACommandGroup;
@@ -128,9 +129,9 @@ public class RobotContainer {
     // setJoystickButtonWhenPressed(driverStationJoystick, 4, new BouncePathCommandGroup(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
 
-    setJoystickButtonWhenPressed(driverStationJoystick, 5, new GalacticSearchPathACommandGroup(intakeSubsystem, drivetrainSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 6, new GalacticSearchPathBCommandGroup(intakeSubsystem, drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 7, new RunCommand(() -> Robot.resetPath()));
+    // setJoystickButtonWhenPressed(driverStationJoystick, 5, new GalacticSearchCommandGroup(intakeSubsystem, drivetrainSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 6, new DetectGalacticSearchCommand());
+    setJoystickButtonWhenPressed(driverStationJoystick, 7, new PlayGalacticSearchPathCommand(drivetrainSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 1, new AimTurretAndHoodCommandGroup(turretSubsystem, hoodSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInShootCommand(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem, intakeSubsystem));
     // setJoystickButtonWhileHeld(driverStationJoystick, 4, new ShootingCommand(shooterSubsystem));
@@ -201,7 +202,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         //barrel racing path
-        Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
+        Command command = new PlayRecordingCommand("pathAredgalacticsearch.txt", drivetrainSubsystem);
         return command;
     }
 

@@ -37,10 +37,10 @@ public class GalacticSearchPathBCommandGroup extends SequentialCommandGroup {
   }
 
   public String getRecording(){
-    if (Robot.pathSetUp == Robot.PathState.RED){
+    if (Robot.pathColor == Robot.PathColor.RED){
       //path a red
       return "pathBredgalacticsearch.txt";
-    } else if (Robot.pathSetUp == Robot.PathState.BLUE){
+    } else if (Robot.pathColor == Robot.PathColor.BLUE){
       return "pathBbluegalacticsearch.txt";
     } else{
       return null;
