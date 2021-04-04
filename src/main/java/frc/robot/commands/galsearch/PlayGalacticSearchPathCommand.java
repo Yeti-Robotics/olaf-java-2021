@@ -40,13 +40,13 @@ public class PlayGalacticSearchPathCommand extends CommandBase {
   @Override
   public void execute() {
     if (Robot.pathType == PathType.PATHA && Robot.pathColor == PathColor.RED){
-      new PlayRecordingCommand("oldredA.txt",drivetrainSubsystem).schedule();
+      new PlayRecordingCommand("pathAredgalsearch.txt",drivetrainSubsystem).schedule();
     } else if (Robot.pathType == PathType.PATHA && Robot.pathColor == PathColor.BLUE){
-      new PlayRecordingCommand("oldblueA.txt", drivetrainSubsystem).schedule();
+      new PlayRecordingCommand("pathAbluegalsearch.txt", drivetrainSubsystem).schedule();
     } else if (Robot.pathType == PathType.PATHB && Robot.pathColor == PathColor.BLUE){
-      new PlayRecordingCommand("oldblueB.txt", drivetrainSubsystem).schedule();
+      new PlayRecordingCommand("pathBbluegalsearch.txt", drivetrainSubsystem).schedule();
     } else{
-      new PlayRecordingCommand("oldredB.txt", drivetrainSubsystem).schedule();
+      new PlayRecordingCommand("pathBredgalsearch.txt", drivetrainSubsystem).schedule();
     }
   }
 
@@ -62,13 +62,13 @@ public class PlayGalacticSearchPathCommand extends CommandBase {
 
   private String getRecording(){
     if (Robot.pathType == PathType.PATHA && Robot.pathColor == PathColor.RED){
-      return "pathAredgalacticsearch.txt";
+      return "pathAredgalsearch.txt";
     } else if (Robot.pathType == PathType.PATHA && Robot.pathColor == PathColor.BLUE){
-      return "pathAbluegalacticsearch.txt";
+      return "pathAbluegalsearch.txt";
     } else if (Robot.pathType == PathType.PATHB && Robot.pathColor == PathColor.BLUE){
-      return "pathBbluegalacticsearch.txt";
+      return "pathBbluegalsearch.txt";
     } else{
-      return "pathBredgalacticsearch.txt";
+      return "pathBredgalsearch.txt";
     }
   }
 }
