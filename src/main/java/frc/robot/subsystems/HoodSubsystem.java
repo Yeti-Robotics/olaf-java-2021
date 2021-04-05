@@ -66,14 +66,15 @@ public class HoodSubsystem extends SubsystemBase {
 
   public double calcHoodAngle(double distance) {
     double angle;
-    if(distance > 165.909){
-      angle = 30;
-    } else if(distance < 60.9){
-      angle = 11.26896353;
-    } else {
-      //based on hood testing math; ax^2 + bx + c
-      angle = -0.00176559 * Math.pow(distance, 2) + 0.585856 * distance - 17.7769;
-    }
-    return angle;
+//    if(distance > 165.909){
+//      angle = 30;
+//    } else if(distance < 60.9){
+//      angle = 11.26896353;
+//    } else {
+//      //based on hood testing math; ax^2 + bx + c
+//      angle = -0.00176559 * Math.pow(distance, 2) + 0.585856 * distance - 17.7769;
+//    }
+      angle = ((-0.00111975897498) * (distance*distance) + (0.406811137117*(distance)) - 5.86601615437);
+      return angle;
   }
 }

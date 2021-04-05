@@ -54,6 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
     @Override
     public void periodic(){
+//        System.out.println("output: " + leftFlywheel.getMotorOutputPercent());
     }
 
     public void shootFlywheel() {
@@ -110,11 +111,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double calcFlywheelRPM(){
         double distance = Limelight.getHorDistance();
-        if(distance < 200.0){
-            return 6600.0;
+        if(distance <=174.90725155){
+            return 6500;
+        } else if (distance <= 200){
+            return 6450;
+        } else{
+            return 6425;
         }
-        return 6700.0;
+        }
     }
-
-
-}

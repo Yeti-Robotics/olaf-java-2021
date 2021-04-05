@@ -26,18 +26,18 @@ public class DetectGalacticSearchCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    visionThread = new VisionThread(Robot.camera, new GalacticSearch(), pipeline -> {
-      for(int i = 0; i < pipeline.filterContoursOutput().size(); i++){
-        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(i));
-        if(i!= 0 && r.area() > Imgproc.boundingRect(pipeline.filterContoursOutput().get(i-1)).area()){
-          largestContourIndex = i;
-        }
-      }
-      Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(largestContourIndex));
-      Robot.pathColor = r.area() >= AutoConstants.RED_BALL_AREA_THRESHOLD ? PathColor.RED : PathColor.BLUE;
-      Robot.pathType = (r.x + r.width/2)>320 ? PathType.PATHA : PathType.PATHB;
-    });
-    visionThread.start();
+//    visionThread = new VisionThread(Robot.camera, new GalacticSearch(), pipeline -> {
+//      for(int i = 0; i < pipeline.filterContoursOutput().size(); i++){
+//        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(i));
+//        if(i!= 0 && r.area() > Imgproc.boundingRect(pipeline.filterContoursOutput().get(i-1)).area()){
+//          largestContourIndex = i;
+//        }
+//      }
+//      Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(largestContourIndex));
+//      Robot.pathColor = r.area() >= AutoConstants.RED_BALL_AREA_THRESHOLD ? PathColor.RED : PathColor.BLUE;
+//      Robot.pathType = (r.x + r.width/2)>320 ? PathType.PATHA : PathType.PATHB;
+//    });
+//    visionThread.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
