@@ -126,7 +126,7 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
     setJoystickButtonWhenPressed(driverStationJoystick, 3, new TestGalSearchReplayCommandGroup(intakeSubsystem, drivetrainSubsystem));
      setJoystickButtonWhenPressed(driverStationJoystick, 4, new RunCommand(() -> intakeSubsystem.intakeStop(), intakeSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand(drivetrainSubsystem));
+    setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 4, new BouncePathCommandGroup(drivetrainSubsystem));
     // setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
         setJoystickButtonWhenPressed(driverStationJoystick, 5, new GalacticSearchCommandGroup(intakeSubsystem, drivetrainSubsystem));
