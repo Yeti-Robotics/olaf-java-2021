@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   //gal search viz
-  public static UsbCamera camera;
+//  public static UsbCamera camera;
   public enum PathColor {
     RED, BLUE, NONE
   }
@@ -68,8 +68,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();   
 
     //gal search viz
-    camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(640, 480);
+//    camera = CameraServer.getInstance().startAutomaticCapture();
+//    camera.setResolution(640, 480);
   }
 
   /**
@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
 
     // System.out.println("Flywheel RPM, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getFlywheelRPM() + " - " + m_robotContainer.shooterSubsystem.setPoint);
     // System.out.println("Flywheel Enc, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getAverageEncoder() + " - " + m_robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(m_robotContainer.shooterSubsystem.setPoint) + "\n.");
-    // System.out.println("Distance: " + Limelight.getHorDistance() + "; Angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + "; RPM: " + m_robotContainer.shooterSubsystem.calcFlywheelRPM() + "; calc hood angle: " + m_robotContainer.hoodSubsystem.calcHoodAngle(Limelight.getHorDistance()));
+//     System.out.println("Distance: " + Limelight.getHorDistance() + "; Angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + "; RPM: " + m_robotContainer.shooterSubsystem.calcFlywheelRPM());
     //  System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
 
     // System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
