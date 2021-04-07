@@ -26,9 +26,6 @@ public class TurretTestCommand extends CommandBase {
   @Override
   public void execute() {
     turretSubsystem.moveTurret(power);
-    if (turretSubsystem.getPhysicalLimit()){
-      power = -power;
-    }
   }
 
   // Called once the command ends or is interrupted.
