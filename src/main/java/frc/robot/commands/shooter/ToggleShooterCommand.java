@@ -6,6 +6,7 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ShooterSubsystem.ShooterStatus;
 
 public class ToggleShooterCommand extends CommandBase {
   private final ShooterSubsystem shooterSubsystem;
@@ -19,10 +20,12 @@ public class ToggleShooterCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (ShooterSubsystem.getShooterStatus() == ShooterSubsystem.shooterStatus.OFF) {
+    if (ShooterSubsystem.getShooterStatus() == ShooterStatus.OFF) {
       shooterSubsystem.shootFlywheel();
+      ShooterSubsystem.shooterStatus = ShooterStatus.FORWARDS;
     } else {
       shooterSubsystem.stopFlywheel();
+      ShooterSubsystem.shooterStatus = ShooterStatus.OFF;
     }
   }
 

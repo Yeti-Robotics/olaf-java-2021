@@ -33,7 +33,7 @@ public class SetCalcHoodAngleCommand extends CommandBase {
 
     @Override
     public void execute() {
-        System.out.println("encoder goal: "+ encoderGoal + ", actual enc value: " + hoodSubsystem.getEncoder() + "; power: " + power);
+        // System.out.println("encoder goal: "+ encoderGoal + ", actual enc value: " + hoodSubsystem.getEncoder() + "; power: " + power);
         hoodSubsystem.moveHood(power);
     }
 
