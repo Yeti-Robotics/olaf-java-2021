@@ -103,13 +103,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     // System.out.println("Distance: " + m_robotContainer.drivetrainSubsystem.getLeftEncoder() + "; Encoder: " + m_robotContainer.drivetrainSubsystem.getRawEncoder() + "; gear status: " + m_robotContainer.shiftingGearSubsystem.shiftStatus);
 
-    double centerX, centerY;
-    synchronized (imgLock){
-      centerX = this.centerX;
-      centerY = this.centerY;
-    }
+    // double centerX, centerY;
+    // synchronized (imgLock){
+    //   centerX = this.centerX;
+    //   centerY = this.centerY;
+    // }
 
-    System.out.println("CenterX: " + centerX + "; CenterY: " + centerY);
+    // System.out.println("CenterX: " + centerX + "; CenterY: " + centerY);
+    System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()));
 
     CommandScheduler.getInstance().run();
   }
