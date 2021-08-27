@@ -27,7 +27,7 @@ public class TurretTestCommand extends CommandBase {
   public void execute() {
     turretSubsystem.moveTurret(power);
     if (turretSubsystem.getPhysicalLimit()){
-      power = -power;
+      power = 0;
     }
   }
 

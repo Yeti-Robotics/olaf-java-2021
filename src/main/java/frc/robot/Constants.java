@@ -83,7 +83,7 @@ public final class Constants {
     public static final double TURRET_ANGLE_THRESHOLD = 5.0;
     public static final double TURRET_MIN_ANGLE = 0.0;
     public static final double TURRET_MAX_ANGLE = 270; // Double check angle. Is estimate
-
+    public static final double TURRET_SPEED = 0.2;
     //placeholders
     public static final double kPTurretVel = 0.01; 
     public static final double kITurretVel = 0;
@@ -114,6 +114,7 @@ public final class Constants {
     public static final double COUNTS_PER_DEGREE = (HOOD_GEAR_RATIO) / 360.0;
     public static final double HOOD_ANGLE_TOLERANCE = .25;
     public static final double MAX_HOOD_ANGLE = 30.0;
+    public static final double HOOD_SPEED = .1;
   }
   
   public static final class PinchRollerConstants{

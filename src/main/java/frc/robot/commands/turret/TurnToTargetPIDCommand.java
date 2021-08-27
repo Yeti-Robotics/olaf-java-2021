@@ -26,7 +26,8 @@ public class TurnToTargetPIDCommand extends PIDCommand {
         // This should return the setpoint (can also be a constant)
         0.0,
         // This uses the output
-        output -> {turretSubsystem.moveTurret(-output);
+        output -> {
+          turretSubsystem.moveTurret(-output);
         }
     );
     // Use addRequirements() here to declare subsystem dependencies.
