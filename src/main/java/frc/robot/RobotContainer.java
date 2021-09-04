@@ -4,11 +4,20 @@
 
 package frc.robot;
 
+import java.util.Arrays;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AllInCommand;
 import frc.robot.commands.AllInShootCommand;
@@ -52,6 +61,7 @@ import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 import frc.robot.utils.Limelight;
 
 import java.util.HashMap;
+import java.util.function.BiConsumer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -204,10 +214,33 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        //barrel racing path
-        Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
-        return command;
+        // barrel racing path
+        // Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
+        // return command;
+        
+        TrajectoryConfig config = new TrajectoryConfig(Units.inchesToMeters(DriveConstants.MAX_SPEED_INCHES_PER_SEC), Units.inchesToMeters(DriveConstants.MAX_ACCEL_INCHES_PER_SEC2));
+        config.setKinematics(drivetrainSubsystem.getKinematics()); // ensures max velocity isn't exceeded
+
+        // manually created trajectory; use PathWeaver to build actualy paths
+        Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
+            Arrays.asList(new Pose2d(), new Pose2d(1.0, 0.0, new Rotation2d())), // moves 1m forward
+            config
+        );
+
+        RamseteCommand testCommand = new RamseteCommand(
+            testTrajectory, 
+            drivetrainSubsystem::getPose, 
+            new RamseteController(2.0, 0.7), // 2.0 & 0.7 are values recommended by the documentation (and are default if unspecified)
+            drivetrainSubsystem.getFeedforward(), 
+            drivetrainSubsystem.getKinematics(), 
+            drivetrainSubsystem::getDifferentialDriveSpeeds, 
+            drivetrainSubsystem.getLeftPIDController(), 
+            drivetrainSubsystem.getRightPIDController(), 
+            drivetrainSubsystem.getDifferentialDriveConsumer(), // might be scuffed, will see in testing
+            drivetrainSubsystem
+        );
+
+        return testCommand;
     }
 
     public boolean getButtonStatus(Joystick joystick, int button) {

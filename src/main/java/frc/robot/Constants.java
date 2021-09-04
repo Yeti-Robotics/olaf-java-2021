@@ -28,14 +28,18 @@ public final class Constants {
     public static final double HIGH_GEAR_RATIO = 5.533243;// fudge values  // 6.86;// JVN Values
     public static final double LOW_GEAR_RATIO = 8.01801; // fudge values // 9.93;// JVN Values
     public static final double DISTANCE_PER_PULSE = (3.875 * Math.PI ) / 4096; //wheel diam in inches :)
+    public static final double WHEEL_RADIUS = 3.875 / 2.0; // inches; diam / 2, taken from above comment, should actually measure when in the zone
+
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
 
-    public static final double ksVolts = 0.583;
+    // trajectory constants
+    public static final double ksVolts = 0.583; // voltage necessary to overcome static friction
     public static final double kvVoltSecondsPerMeter = 0.142;
     public static final double kaVoltSecondsSquaredPerMeter = 0.00871;
-    public static final double trackWidthMeters = 1.9730585666928624; //quetisonably meters lol
+    public static final double trackWidthMeters = 0.0; // was 1.9730585666928624
+    public static final double kPDriveVel = 0.0; // find using characterization tool
 
     public static final double MAX_SPEED_INCHES_PER_SEC = 9.08 * 12.0;
     public static final double MAX_ACCEL_INCHES_PER_SEC2 = 7.5 * 12.0;
