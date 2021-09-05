@@ -102,21 +102,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     pose = odometry.update(getHeading(), wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
   }
 
-  // BiConsumer is essentially a hacky way to have a mini, two input void method
-  // that can be passed as a method reference; RameseteCommand requires it
-  public BiConsumer getDifferentialDriveConsumer(){
-    BiConsumer<Double, Double> output = (leftVolts, rightVolts) -> tankDriveVolts(leftVolts, rightVolts); 
-    return output;
-  }
-
   // public void setLeftVolts(double leftVolts){
-  //   // divide by 12.0 to convert volts (0-12) to a percentage
-  //   leftFalcon1.set(ControlMode.PercentOutput, leftVolts / 12.0);
+  //   leftFalcon1.setVoltage(leftVolts);
   // }
 
   // public void setRightVolts(double rightVolts){
-  //   // divide by 12.0 to convert volts (0-12) to a percentage
-  //   rightFalcon1.set(ControlMode.PercentOutput, rightVolts / 12.0);
+  //   rightFalcon1.setVoltage(rightVolts);
   // }
 
   public void tankDrive(double leftpower, double rightpower) {
@@ -124,7 +115,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts){
-    // might have to invert these is setInvert doesn't work
+    // might have to invert these if setInvert doesn't work
     m_leftMotors.setVoltage(leftVolts);
     m_rightMotors.setVoltage(rightVolts);
     m_drive.feed();
@@ -225,7 +216,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   private Rotation2d getHeading(){
-    // negative applied because gType safety: The expression of type BiConsumer needs unchecked conversion to conform to BiConsumer<Double,Double>Java(16777748)yro (presumably) returns positive degrees 
+    // negative applied because gyro (presumably) returns positive degrees 
     // as the gyro turns ccw; we want the opposite, as the opposite is true 
     // in math / on the unit circle
     return Rotation2d.fromDegrees(-getAngle()); 

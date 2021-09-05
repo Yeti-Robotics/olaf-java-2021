@@ -7,11 +7,13 @@ package frc.robot;
 import java.util.Arrays;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -218,8 +220,14 @@ public class RobotContainer {
         // Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
         // return command;
         
-        TrajectoryConfig config = new TrajectoryConfig(Units.inchesToMeters(DriveConstants.MAX_SPEED_INCHES_PER_SEC), Units.inchesToMeters(DriveConstants.MAX_ACCEL_INCHES_PER_SEC2));
-        config.setKinematics(drivetrainSubsystem.getKinematics()); // ensures max velocity isn't exceeded
+        // set voltage constraint to 10V as opposed to the nominal 12V to account for "voltage sag"
+        DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(drivetrainSubsystem.getFeedforward(), drivetrainSubsystem.getKinematics(), 10.0);
+
+        // kinematics ensures max velocity isn't exceeded
+        TrajectoryConfig config = new TrajectoryConfig(
+            Units.inchesToMeters(DriveConstants.MAX_SPEED_INCHES_PER_SEC), 
+            Units.inchesToMeters(DriveConstants.MAX_ACCEL_INCHES_PER_SEC2)
+        ).setKinematics(drivetrainSubsystem.getKinematics()).addConstraint(voltageConstraint); 
 
         // manually created trajectory; use PathWeaver to build actualy paths
         Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
@@ -236,7 +244,7 @@ public class RobotContainer {
             drivetrainSubsystem::getDifferentialDriveSpeeds, 
             drivetrainSubsystem.getLeftPIDController(), 
             drivetrainSubsystem.getRightPIDController(), 
-            drivetrainSubsystem.getDifferentialDriveConsumer(), // might be scuffed, will see in testing
+            drivetrainSubsystem::tankDriveVolts, 
             drivetrainSubsystem
         );
 
