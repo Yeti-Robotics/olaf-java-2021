@@ -220,8 +220,10 @@ public class RobotContainer {
         // Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
         // return command;
         
-        // set voltage constraint to 10V as opposed to the nominal 12V to account for "voltage sag"
-        DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(drivetrainSubsystem.getFeedforward(), drivetrainSubsystem.getKinematics(), 10.0);
+        // set voltage constraint to 10.5V as opposed to the nominal 12V to account for "voltage sag"
+        // was 10.0V but last season we were having issues with it that low; Prateek said to go ahead and increase it to 10.5V
+        // on our GitHub issue
+        DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(drivetrainSubsystem.getFeedforward(), drivetrainSubsystem.getKinematics(), DriveConstants.autoVoltageConstraint);
 
         // kinematics ensures max velocity isn't exceeded
         TrajectoryConfig config = new TrajectoryConfig(
@@ -229,7 +231,7 @@ public class RobotContainer {
             Units.inchesToMeters(DriveConstants.MAX_ACCEL_INCHES_PER_SEC2)
         ).setKinematics(drivetrainSubsystem.getKinematics()).addConstraint(voltageConstraint); 
 
-        // manually created trajectory; use PathWeaver to build actualy paths
+        // manually created trajectory; use PathWeaver to build actual paths
         Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
             Arrays.asList(new Pose2d(), new Pose2d(1.0, 0.0, new Rotation2d())), // moves 1m forward
             config

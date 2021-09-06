@@ -40,6 +40,7 @@ public final class Constants {
     public static final double kaVoltSecondsSquaredPerMeter = 0.00871;
     public static final double trackWidthMeters = 0.0; // was 1.9730585666928624
     public static final double kPDriveVel = 0.0; // find using characterization tool
+    public static final double autoVoltageConstraint = 10.5; // limits voltage used in trajectory
 
     public static final double MAX_SPEED_INCHES_PER_SEC = 9.08 * 12.0;
     public static final double MAX_ACCEL_INCHES_PER_SEC2 = 7.5 * 12.0;
