@@ -93,7 +93,8 @@ public class Robot extends TimedRobot {
     
     //  System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
 
-    // System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
+    System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
+    System.out.println("driveEncoder" + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
 //good line
     // System.out.println("drive mode: "+m_robotContainer.drivetrainSubsystem.getDriveMode()+ "; ShiftStatus: " + m_robotContainer.shiftingGearSubsystem.shiftStatus + "; AvgEnc: " + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
 
@@ -110,7 +111,7 @@ public class Robot extends TimedRobot {
     // }
 
     // System.out.println("CenterX: " + centerX + "; CenterY: " + centerY);
-    System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()));
+    //System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()));
 
     CommandScheduler.getInstance().run();
   }
@@ -139,6 +140,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_robotContainer.drivetrainSubsystem.resetGyro();
+    m_robotContainer.drivetrainSubsystem.resetEncoders();
     // schedule the autonomous command
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -158,6 +161,7 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     m_robotContainer.drivetrainSubsystem.resetGyro();
+    m_robotContainer.drivetrainSubsystem.resetEncoders();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
