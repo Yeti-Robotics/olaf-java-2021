@@ -57,10 +57,10 @@ import java.util.ArrayList;
 
 public class Robot extends TimedRobot {
 
-  static private double ENCODER_EDGES_PER_REV = 4096;
+  static private double ENCODER_EDGES_PER_REV = 16384;
   static private int PIDIDX = 0;
-  static private int ENCODER_EPR = 4096;
-  static private double GEARING = 5.533243;
+  static private int ENCODER_EPR = 16384;
+  static private double GEARING = 1.0;
   
   private double encoderConstant = (1 / GEARING) * (1 / ENCODER_EDGES_PER_REV);
 

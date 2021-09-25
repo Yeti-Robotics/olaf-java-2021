@@ -19,9 +19,9 @@
     "rightMotorsInverted": [False, False],
     # Encoder edges-per-revolution (*NOT* cycles per revolution!)
     # For the CTRE Mag Encoder, use 4096 (4 * 1024 = 4096)
-    "encoderEPR": 4096,
+    "encoderEPR": 16384,
     # Gearing accounts for the gearing between the encoder and the output shaft
-    "gearing": 5.533243,
+    "gearing": 9.93,
     # Encoder ports (leave empty "[]" if not needed)
     # Specifying encoder ports indicates you want to use Rio-side encoders
     # If doing drive test, treat this as the left side of the drivetrain
@@ -46,5 +46,4 @@
     # "" (NavX using default SPI, ADXRS450 using onboard CS0, or no gyro)
     "gyroPort": "13",
 }
-
 
