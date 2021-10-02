@@ -39,6 +39,6 @@ public static ShiftStatus getShifterPosition() {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // System.out.println("shifter status: " + shiftStatus);
   }
 }

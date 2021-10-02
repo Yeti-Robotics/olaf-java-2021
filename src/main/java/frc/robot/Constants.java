@@ -25,21 +25,22 @@ public final class Constants {
     public static final int RIGHT_FALCON_1 = 3;
     public static final int RIGHT_FALCON_2 = 4;
 
-    public static final double HIGH_GEAR_RATIO = 5.533243;// fudge values  // 6.86;// JVN Values
-    public static final double LOW_GEAR_RATIO = 8.01801; // fudge values // 9.93;// JVN Values
-    public static final double DISTANCE_PER_PULSE = (3.875 * Math.PI ) / 4096; //wheel diam in inches :)
-    public static final double WHEEL_RADIUS = 3.875 / 2.0; // inches; diam / 2, taken from above comment, should actually measure when in the zone
+    public static final double HIGH_GEAR_RATIO = 6.86; //5.533243;// fudge values
+    public static final double LOW_GEAR_RATIO = 9.93; //8.01801; // fudge values
+    public static final double DISTANCE_PER_PULSE = (4.0 * Math.PI ) / 4096;
+    public static final double WHEEL_RADIUS = 4.0 / 2.0; // 4.0 == wheel diameter
 
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
 
+    // 7.5283470458
     // trajectory constants
-    public static final double ksVolts = 0.583; // voltage necessary to overcome static friction
-    public static final double kvVoltSecondsPerMeter = 0.142;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.00871;
-    public static final double trackWidthMeters = 0.0; // was 1.9730585666928624
-    public static final double kPDriveVel = 0.0; // find using characterization tool
+    public static final double ksVolts = 0.59134; // voltage necessary to overcome static friction
+    public static final double kvVoltSecondsPerMeter = 0.14179;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.0072877;
+    public static final double trackWidth = 19.75; // inches
+    public static final double kPDriveVel = 1.3743; 
     public static final double autoVoltageConstraint = 10.5; // limits voltage used in trajectory
 
     public static final double MAX_SPEED_INCHES_PER_SEC = 9.08 * 12.0;

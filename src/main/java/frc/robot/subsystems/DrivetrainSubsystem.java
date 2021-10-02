@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
 
@@ -71,7 +72,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     
     gyro = new PigeonIMU(DriveConstants.GYRO_ID);
 
-    kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidthMeters);
+    kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(DriveConstants.trackWidth));
     odometry = new DifferentialDriveOdometry(getHeading());
     feedforward = new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter);
     wheelSpeeds = new DifferentialDriveWheelSpeeds();
@@ -100,6 +101,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     wheelSpeeds.rightMetersPerSecond = getMetersPerSecondFromEncoder(rightFalcon1.getSelectedSensorVelocity()); 
     // update pose using gyro and encoder values
     pose = odometry.update(getHeading(), wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
+    var translation = odometry.getPoseMeters().getTranslation();
+    System.out.println("X: " + translation.getX() + ", Y: " + translation.getY());
   }
 
   // public void setLeftVolts(double leftVolts){

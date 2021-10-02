@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -63,6 +64,7 @@ import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 import frc.robot.utils.Limelight;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
@@ -233,7 +235,16 @@ public class RobotContainer {
 
         // manually created trajectory; use PathWeaver to build actual paths
         Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
-            Arrays.asList(new Pose2d(), new Pose2d(1.0, 0.0, new Rotation2d())), // moves 1m forward
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(
+                new Translation2d(1, 1),
+                new Translation2d(2, -1)
+            ),  
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(3, 0, new Rotation2d(0)),
+            // Pass config
             config
         );
 

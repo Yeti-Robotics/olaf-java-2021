@@ -94,7 +94,7 @@ public class Robot extends TimedRobot {
     //  System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
 
     System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
-    System.out.println("driveEncoder" + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
+    // System.out.println("driveEncoder" + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
 //good line
     // System.out.println("drive mode: "+m_robotContainer.drivetrainSubsystem.getDriveMode()+ "; ShiftStatus: " + m_robotContainer.shiftingGearSubsystem.shiftStatus + "; AvgEnc: " + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
 
@@ -130,7 +130,7 @@ public class Robot extends TimedRobot {
     if (m_robotContainer.hoodSubsystem.getBeamBreak()){
       m_robotContainer.hoodSubsystem.resetEncoder();
     }
-
+    m_robotContainer.drivetrainSubsystem.resetGyro();
     // System.out.println("whore distance: " + Limelight.getHorDistance() + " & estimated angle to shoot from: " + m_robotContainer.hoodSubsystem.calcHoodAngle());
 
     // System.out.println("Hood encoder: " + m_robotContainer.hoodSubsystem.getEncoder());
@@ -152,6 +152,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
+    System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
   }
 
   @Override
