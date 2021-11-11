@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AllInCommand;
 import frc.robot.commands.AllInShootCommand;
 import frc.robot.commands.AllOutCommand;
@@ -42,14 +43,16 @@ import frc.robot.commands.turret.CalibrateTurretCommand;
 import frc.robot.commands.turret.TurnToAnglePIDCommand;
 import frc.robot.commands.turret.TurnToTargetPIDCommand;
 import frc.robot.commands.turret.TurretTestCommand;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 import frc.robot.utils.Limelight;
+import frc.robot.utils.XboxTrigger;
 
 import java.util.HashMap;
 
@@ -63,6 +66,11 @@ import java.util.HashMap;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     public final Joystick driverStationJoystick;
+    private XboxController xboxController; 
+    private XboxTrigger rightTrigger; 
+    private XboxTrigger leftTrigger;
+    private boolean isDriverStation;
+
     public DrivetrainSubsystem drivetrainSubsystem;
     public ShooterSubsystem shooterSubsystem;
     public IntakeSubsystem intakeSubsystem;
@@ -80,6 +88,11 @@ public class RobotContainer {
      */
     public RobotContainer() {
         driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
+        xboxController = new XboxController(OIConstants.XBOX_PORT); 
+        rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
+        leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
+
+        isDriverStation = true; // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
 
         shooterSubsystem = new ShooterSubsystem();
         intakeSubsystem = new IntakeSubsystem();
@@ -108,91 +121,72 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
+        // POWER PORT ROBOT CONTROLS
+        // setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 2, new ToggleIntakePistonCommand(intakeSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 3, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterCommand(shooterSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopShooterCommand(shooterSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 7, new TestHoodCommand(hoodSubsystem, .1));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 8, new TestHoodCommand(hoodSubsystem, -.1));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -0.2)); //left
+        // setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, 0.2)); //right
+        // setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
 
-    //joystick buttons (primary driver)
-    //setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 12, ); //toggle intake piston down, intake and slow hopper run
+        if(isDriverStation){
+            setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
+            setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+            setJoystickButtonWhenPressed(driverStationJoystick, 3, new ToggleShooterCommand(shooterSubsystem));
+            setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, HoodConstants.HOOD_SPEED)); //up
+            setJoystickButtonWhileHeld(driverStationJoystick, 5, new TurretTestCommand(turretSubsystem, TurretConstants.TURRET_SPEED)); //right
+            
+            setJoystickButtonWhileHeld(driverStationJoystick, 6, new IntakeInCommand(intakeSubsystem));
+            setJoystickButtonWhileHeld(driverStationJoystick, 7, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+            //button 8 not used
+            setJoystickButtonWhileHeld(driverStationJoystick, 9, new TestHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED)); //down
+            setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, -TurretConstants.TURRET_SPEED)); //left
+    
+            setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+            setJoystickButtonWhenPressed(driverStationJoystick, 12, new ToggleIntakePistonCommand(intakeSubsystem));
+        } else {
+            /*  
+                Allowed buttons:
+                kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
+            */
+            setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
 
-    //secondary buttons
+            setXboxTriggerWhileHeld(Hand.kRight, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+            setXboxTriggerWhileHeld(Hand.kLeft, new IntakeInCommand(intakeSubsystem));
 
-    //driving~~~~~~
-    // setJoystickButtonWhenPressed(driverStationJoystick, 1, new InitiateRecordingCommand());
-    // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)); //reverse everything
-    // setJoystickButtonWhenPressed(driverStationJoystick, 2, new TerminateAndSaveRecordingCommand());
-    // setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand(drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 3, new PlayRecordingCommand("1616857289307recording.txt", drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 4, new BouncePathCommandGroup(drivetrainSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kB, new ToggleShooterCommand(shooterSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kA, new TurnToTargetPIDCommand(turretSubsystem));
+            
 
-    // setJoystickButtonWhileHeld(driverStationJoystick, 1, new AimTurretAndHoodCommandGroup(turretSubsystem, hoodSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInShootCommand(shooterSubsystem, hopperSubsystem, pinchRollerSubsystem, intakeSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoystick, 4, new ShootingCommand(shooterSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, 0.05)); //hood out
-    //setJoystickButtonWhileHeld(driverStationJoystick, 5, new TestHoodCommand(hoodSubsystem, -0.05)); //hood in
-    // setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopShooterCommand(shooterSubsystem));
-    // setJoystickButtonWhenPressed(driverStationJoystick, 7, new TurnToTargetPIDCommand(turretSubsystem)); //aim
-    //  setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleIntakePistonCommand(intakeSubsystem)); //temp
-    //setJoystickButtonWhenPressed(driverStationJoystick, 8, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    //setJoystickButtonWhenPressed(driverStationJoystick, 9, new SetCalcHoodAngleCommand(hoodSubsystem, .05)); //turret L
-    // setJoystickButtonWhileHeld(driverStationJoystick, 9, new AimTurretAndHoodCommandGroup(turretSubsystem, hoodSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -0.2)); //left
-    // setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, 0.2)); //right
-
-
-    /*
-     * POWER PORT ROBOT CONTROLS
-     */
-        /*
-    setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 2, new ToggleIntakePistonCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 3, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-    // setJoystickButtonWhileHeld(driverStationJoystick, 4, new ShootingCommand(shooterSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterCommand(shooterSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopShooterCommand(shooterSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 7, new TestHoodCommand(hoodSubsystem, .1));
-    setJoystickButtonWhileHeld(driverStationJoystick, 8, new TestHoodCommand(hoodSubsystem, -.1));
-    setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -0.2)); //left
-    setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, 0.2)); //right
-
-    setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
-    */
-
-    setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 3, new ToggleShooterCommand(shooterSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 4, new TestHoodCommand(hoodSubsystem, HoodConstants.HOOD_SPEED)); //up
-    setJoystickButtonWhileHeld(driverStationJoystick, 5, new TurretTestCommand(turretSubsystem, TurretConstants.TURRET_SPEED)); //right
-    setJoystickButtonWhileHeld(driverStationJoystick, 6, new IntakeInCommand(intakeSubsystem));
-    setJoystickButtonWhileHeld(driverStationJoystick, 7, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-    //button 8 not used
-    setJoystickButtonWhileHeld(driverStationJoystick, 9, new TestHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED)); //down
-    setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, -TurretConstants.TURRET_SPEED)); //left
-
-    setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-    setJoystickButtonWhenPressed(driverStationJoystick, 12, new ToggleIntakePistonCommand(intakeSubsystem));
-  }
+        }
+    }
 
     public double getLeftY() {
-        return -driverStationJoystick.getRawAxis(0);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : xboxController.getY(Hand.kLeft);
     }
 
     public double getLeftX() {
-        return driverStationJoystick.getRawAxis(1);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : xboxController.getX(Hand.kLeft);
     }
 
     public double getRightY() {
-        return -driverStationJoystick.getRawAxis(2);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : xboxController.getY(Hand.kRight);
     }
 
     public double getRightX() {
-        return driverStationJoystick.getRawAxis(3);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : xboxController.getX(Hand.kRight);
     }
 
     public HashMap<Integer, CommandBase> getButtonMap() {
         return buttonMap;
     }
+
     private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
         new JoystickButton(joystick, button).whenPressed(command);
         buttonMap.put(button, command);
@@ -203,9 +197,32 @@ public class RobotContainer {
         buttonMap.put(button, command);
     }
 
+    // Xbox controller equivalents
+    private void setXboxButtonWhenPressed(XboxController xboxController, XboxController.Button button, CommandBase command) {
+        new JoystickButton(xboxController, button.value).whenPressed(command);
+    }
+
+    private void setXboxButtonWhileHeld(XboxController xboxController, XboxController.Button button, CommandBase command) {
+        new JoystickButton(xboxController, button.value).whileHeld(command);
+    }
+
+    private void setXboxTriggerWhenPressed(Hand triggerSide, CommandBase command){
+        if(triggerSide == Hand.kLeft){ 
+            leftTrigger.whenActive(command);
+        } else {
+            rightTrigger.whenActive(command);
+        }
+    }
+
+    private void setXboxTriggerWhileHeld(Hand triggerSide, CommandBase command){
+        if(triggerSide == Hand.kLeft){ 
+            leftTrigger.whileActiveContinuous(command);
+        } else {
+            rightTrigger.whileActiveContinuous(command);
+        }
+    }
+
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        //barrel racing path
         Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
         return command;
     }

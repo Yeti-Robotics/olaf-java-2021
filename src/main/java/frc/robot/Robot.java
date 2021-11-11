@@ -81,28 +81,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // if(m_robotContainer.shooterSubsystem.getFlywheelRPM() > maxRPM){
-    //   maxRPM = m_robotContainer.shooterSubsystem.getFlywheelRPM();
-    // }
-    // if(m_robotContainer.shooterSubsystem.getAverageEncoder() > maxEncoder){
-    //   maxEncoder = m_robotContainer.shooterSubsystem.getAverageEncoder();
-    // }
-
-    // System.out.println("Flywheel RPM, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getFlywheelRPM() + " - " + m_robotContainer.shooterSubsystem.setPoint);
-    // System.out.println("Flywheel Enc, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getAverageEncoder() + " - " + m_robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(m_robotContainer.shooterSubsystem.setPoint) + "\n.");
-    
-    //  System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
-
-    // System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
-//good line
-    // System.out.println("drive mode: "+m_robotContainer.drivetrainSubsystem.getDriveMode()+ "; ShiftStatus: " + m_robotContainer.shiftingGearSubsystem.shiftStatus + "; AvgEnc: " + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
-
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
-    // block in order for anything in the Command-based framework to work.
-    // System.out.println("Distance: " + m_robotContainer.drivetrainSubsystem.getLeftEncoder() + "; Encoder: " + m_robotContainer.drivetrainSubsystem.getRawEncoder() + "; gear status: " + m_robotContainer.shiftingGearSubsystem.shiftStatus);
-
     // double centerX, centerY;
     // synchronized (imgLock){
     //   centerX = this.centerX;
@@ -129,10 +107,6 @@ public class Robot extends TimedRobot {
     if (m_robotContainer.hoodSubsystem.getBeamBreak()){
       m_robotContainer.hoodSubsystem.resetEncoder();
     }
-
-    // System.out.println("whore distance: " + Limelight.getHorDistance() + " & estimated angle to shoot from: " + m_robotContainer.hoodSubsystem.calcHoodAngle());
-
-    // System.out.println("Hood encoder: " + m_robotContainer.hoodSubsystem.getEncoder());
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
