@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 
-// will this work? who knows :)
 public class XboxTrigger extends Trigger {
     private XboxController xboxController; 
     private Hand triggerSide; 

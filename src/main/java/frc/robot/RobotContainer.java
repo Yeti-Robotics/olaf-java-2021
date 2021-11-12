@@ -46,6 +46,7 @@ import frc.robot.commands.turret.TurretTestCommand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TurretConstants;
@@ -65,11 +66,12 @@ import java.util.HashMap;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    public final Joystick driverStationJoystick;
+    private DriverStation driverStation;
+    public Joystick driverStationJoystick;
     private XboxController xboxController; 
     private XboxTrigger rightTrigger; 
     private XboxTrigger leftTrigger;
-    private boolean isDriverStation;
+    public boolean isDriverStation;
 
     public DrivetrainSubsystem drivetrainSubsystem;
     public ShooterSubsystem shooterSubsystem;
@@ -87,13 +89,10 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
-        xboxController = new XboxController(OIConstants.XBOX_PORT); 
-        rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
-        leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
-
-        isDriverStation = true; // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
-
+        driverStation = DriverStation.getInstance();
+        
+        isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT); // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
+        
         shooterSubsystem = new ShooterSubsystem();
         intakeSubsystem = new IntakeSubsystem();
         drivetrainSubsystem = new DrivetrainSubsystem();
@@ -105,21 +104,21 @@ public class RobotContainer {
         ledSubsystem = new LEDSubsystem();
         shiftingGearSubsystem = new ShiftingGearSubsystem();
         buttonMap = new HashMap<>();
-
+        
         switch (drivetrainSubsystem.getDriveMode()) {
             case TANK:
-                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
-                break;
+            drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
+            break;
             case CHEEZY:
-                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-                break;
+            drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+            break;
             case ARCADE:
-                drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+            drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
         }
         // Configure the button bindings
         configureButtonBindings();
     }
-
+    
     private void configureButtonBindings() {
         // POWER PORT ROBOT CONTROLS
         // setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
@@ -133,8 +132,9 @@ public class RobotContainer {
         // setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -0.2)); //left
         // setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, 0.2)); //right
         // setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
-
+        
         if(isDriverStation){
+            driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
             setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
             setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
             setJoystickButtonWhenPressed(driverStationJoystick, 3, new ToggleShooterCommand(shooterSubsystem));
@@ -146,41 +146,47 @@ public class RobotContainer {
             //button 8 not used
             setJoystickButtonWhileHeld(driverStationJoystick, 9, new TestHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED)); //down
             setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, -TurretConstants.TURRET_SPEED)); //left
-    
+            
             setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
             setJoystickButtonWhenPressed(driverStationJoystick, 12, new ToggleIntakePistonCommand(intakeSubsystem));
         } else {
+            xboxController = new XboxController(OIConstants.XBOX_PORT); 
+            rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
+            leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
             /*  
                 Allowed buttons:
                 kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
-            */
-            setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-            setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
-
+                */
+                setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+                setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
+            
             setXboxTriggerWhileHeld(Hand.kRight, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
             setXboxTriggerWhileHeld(Hand.kLeft, new IntakeInCommand(intakeSubsystem));
-
-            setXboxButtonWhenPressed(xboxController, Button.kB, new ToggleShooterCommand(shooterSubsystem));
-            setXboxButtonWhenPressed(xboxController, Button.kA, new TurnToTargetPIDCommand(turretSubsystem));
             
-
+            setXboxButtonWhileHeld(xboxController, Button.kBumperLeft, new TurretTestCommand(turretSubsystem, -TurretConstants.TURRET_SPEED));//left
+            setXboxButtonWhileHeld(xboxController, Button.kBumperRight, new TurretTestCommand(turretSubsystem, TurretConstants.TURRET_SPEED));//right
+            
+            setXboxButtonWhenPressed(xboxController, Button.kA, new TurnToTargetPIDCommand(turretSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kB, new ToggleShooterCommand(shooterSubsystem));
+            setXboxButtonWhileHeld(xboxController, Button.kY, new TestHoodCommand(hoodSubsystem, HoodConstants.HOOD_SPEED));// up
+            setXboxButtonWhileHeld(xboxController, Button.kX, new TestHoodCommand(hoodSubsystem, -HoodConstants.HOOD_SPEED));// down
         }
     }
 
     public double getLeftY() {
-        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : xboxController.getY(Hand.kLeft);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : -xboxController.getY(Hand.kLeft);
     }
 
     public double getLeftX() {
-        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : xboxController.getX(Hand.kLeft);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : -xboxController.getX(Hand.kLeft);
     }
 
     public double getRightY() {
-        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : xboxController.getY(Hand.kRight);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : -xboxController.getY(Hand.kRight);
     }
 
     public double getRightX() {
-        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : xboxController.getX(Hand.kRight);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : -xboxController.getX(Hand.kRight);
     }
 
     public HashMap<Integer, CommandBase> getButtonMap() {
@@ -220,6 +226,10 @@ public class RobotContainer {
         } else {
             rightTrigger.whileActiveContinuous(command);
         }
+    }
+
+    public void updateIsDriverStation(){
+        isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT);
     }
 
     public Command getAutonomousCommand() {
