@@ -90,6 +90,10 @@ public class RobotContainer {
      */
     public RobotContainer() {
         driverStation = DriverStation.getInstance();
+        driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
+        xboxController = new XboxController(OIConstants.XBOX_PORT); 
+        rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
+        leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
         
         isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT); // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
         
@@ -134,7 +138,6 @@ public class RobotContainer {
         // setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
         
         if(isDriverStation){
-            driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
             setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
             setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
             setJoystickButtonWhenPressed(driverStationJoystick, 3, new ToggleShooterCommand(shooterSubsystem));
@@ -150,15 +153,12 @@ public class RobotContainer {
             setJoystickButtonWhenPressed(driverStationJoystick, 11, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
             setJoystickButtonWhenPressed(driverStationJoystick, 12, new ToggleIntakePistonCommand(intakeSubsystem));
         } else {
-            xboxController = new XboxController(OIConstants.XBOX_PORT); 
-            rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
-            leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
             /*  
                 Allowed buttons:
                 kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
-                */
-                setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-                setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
+            */
+            setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
             
             setXboxTriggerWhileHeld(Hand.kRight, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
             setXboxTriggerWhileHeld(Hand.kLeft, new IntakeInCommand(intakeSubsystem));
