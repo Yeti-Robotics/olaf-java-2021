@@ -54,6 +54,8 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 import frc.robot.utils.Limelight;
 import frc.robot.utils.XboxTrigger;
+import frc.robot.utils.XboxDPad.Direction;
+import frc.robot.utils.XboxDPad;
 
 import java.util.HashMap;
 
@@ -69,8 +71,6 @@ public class RobotContainer {
     private DriverStation driverStation;
     public Joystick driverStationJoystick;
     private XboxController xboxController; 
-    private XboxTrigger rightTrigger; 
-    private XboxTrigger leftTrigger;
     public boolean isDriverStation;
 
     public DrivetrainSubsystem drivetrainSubsystem;
@@ -92,8 +92,6 @@ public class RobotContainer {
         driverStation = DriverStation.getInstance();
         driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
         xboxController = new XboxController(OIConstants.XBOX_PORT); 
-        rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
-        leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
         
         isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT); // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
         
@@ -212,20 +210,28 @@ public class RobotContainer {
         new JoystickButton(xboxController, button.value).whileHeld(command);
     }
 
-    private void setXboxTriggerWhenPressed(Hand triggerSide, CommandBase command){
+    private void setXboxTriggerWhenPressed(Hand triggerSide, CommandBase command) {
         if(triggerSide == Hand.kLeft){ 
-            leftTrigger.whenActive(command);
+            new XboxTrigger(xboxController, triggerSide).whenActive(command);
         } else {
-            rightTrigger.whenActive(command);
+            new XboxTrigger(xboxController, triggerSide).whenActive(command);
         }
     }
 
-    private void setXboxTriggerWhileHeld(Hand triggerSide, CommandBase command){
+    private void setXboxTriggerWhileHeld(Hand triggerSide, CommandBase command) {
         if(triggerSide == Hand.kLeft){ 
-            leftTrigger.whileActiveContinuous(command);
+            new XboxTrigger(xboxController, triggerSide).whileActiveContinuous(command);
         } else {
-            rightTrigger.whileActiveContinuous(command);
+            new XboxTrigger(xboxController, triggerSide).whileActiveContinuous(command);
         }
+    }
+
+    private void setXboxDPadWhenPressed(Direction direction, CommandBase command) {
+        new XboxDPad(xboxController, direction).whenPressed(command);
+    }
+
+    private void setXboxDPadWhileHeld(Direction direction, CommandBase command) {
+        new XboxDPad(xboxController, direction).whileHeld(command);
     }
 
     public void updateIsDriverStation(){
