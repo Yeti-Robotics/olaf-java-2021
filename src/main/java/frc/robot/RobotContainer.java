@@ -54,6 +54,7 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.DrivetrainSubsystem.DriveMode;
 import frc.robot.utils.Limelight;
 import frc.robot.utils.XboxTrigger;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.HashMap;
 
@@ -67,6 +68,7 @@ import java.util.HashMap;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private DriverStation driverStation;
+    private CommandScheduler commandScheduler;
     public Joystick driverStationJoystick;
     private XboxController xboxController; 
     private XboxTrigger rightTrigger; 
@@ -90,10 +92,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         driverStation = DriverStation.getInstance();
-        driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
-        xboxController = new XboxController(OIConstants.XBOX_PORT); 
-        rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
-        leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
+        commandScheduler = CommandScheduler.getInstance();
         
         isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT); // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
         
@@ -138,6 +137,7 @@ public class RobotContainer {
         // setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
         
         if(isDriverStation){
+            driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
             setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
             setJoystickButtonWhileHeld(driverStationJoystick, 2, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
             setJoystickButtonWhenPressed(driverStationJoystick, 3, new ToggleShooterCommand(shooterSubsystem));
@@ -157,6 +157,10 @@ public class RobotContainer {
                 Allowed buttons:
                 kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
             */
+            xboxController = new XboxController(OIConstants.XBOX_PORT); 
+            rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
+            leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
+
             setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
             setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
             
@@ -229,7 +233,14 @@ public class RobotContainer {
     }
 
     public void updateIsDriverStation(){
+        boolean prev = isDriverStation;
         isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT);
+        if (prev == isDriverStation) {
+            return;
+        } else {
+            commandScheduler.clearButtons();
+            configureButtonBindings();
+        }
     }
 
     public Command getAutonomousCommand() {
