@@ -47,6 +47,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TurretConstants;
@@ -69,6 +70,7 @@ import java.util.HashMap;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private DriverStation driverStation;
+    private CommandScheduler commandScheduler;
     public Joystick driverStationJoystick;
     private XboxController xboxController; 
     public boolean isDriverStation;
@@ -90,6 +92,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         driverStation = DriverStation.getInstance();
+        commandScheduler = CommandScheduler.getInstance();
         driverStationJoystick = new Joystick(OIConstants.DRIVER_STATION_JOY);
         xboxController = new XboxController(OIConstants.XBOX_PORT); 
         
@@ -235,7 +238,14 @@ public class RobotContainer {
     }
 
     public void updateIsDriverStation(){
+        boolean prev = isDriverStation;
         isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT);
+        if (prev == isDriverStation) {
+            return;
+        } else {
+            commandScheduler.clearButtons();
+            configureButtonBindings();
+        }
     }
 
     public Command getAutonomousCommand() {
