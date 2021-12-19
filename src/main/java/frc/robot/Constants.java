@@ -27,7 +27,7 @@ public final class Constants {
 
     public static final double HIGH_GEAR_RATIO = 5.533243;// fudge values  // 6.86;// JVN Values
     public static final double LOW_GEAR_RATIO = 8.01801; // fudge values // 9.93;// JVN Values
-    public static final double DISTANCE_PER_PULSE = (3.875 * Math.PI ) / 4096; //wheel diam in inches :)
+    public static final double DISTANCE_PER_PULSE = (3.875 * Math.PI ) / 2048; //wheel diam in inches & falcon CPR
     // placeholder values
     public static final int[] SHIFTER_SOLENOID = {1,6}; 
     public static final int GYRO_ID = 13;
