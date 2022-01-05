@@ -9,9 +9,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class StopShooterCommand extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
-  /** Creates a new StopShooterCommand. */
   public StopShooterCommand(ShooterSubsystem shooterSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
     addRequirements(shooterSubsystem);
   }
@@ -33,6 +31,6 @@ public class StopShooterCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return true; 
   }
 }

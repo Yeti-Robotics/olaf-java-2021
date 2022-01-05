@@ -37,16 +37,6 @@ public class TurretSubsystem extends SubsystemBase {
         turretSpark.set(0);
     }
 
-    /*
-        Couldn't find an actual way to reset SparkMAX, so I found this method on Chief Delphi from the Co-Founder of REV
-        https://www.chiefdelphi.com/t/resetting-encoders-on-spark-max/344485
-
-        Said to save the offset of the current encoder value and subtract it from subsequent reads. Not sure if I implemented it correctly
-        but I tried ;)
-    */
-    
-    // i implemented something that i found in this github example but idk if it works. if not we can revert to what hank originally had
-    // https://github.com/REVrobotics/SPARK-MAX-Examples/blob/master/Java/Read%20Encoder%20Values/src/main/java/frc/robot/Robot.java
     public void resetEncoder(){
         turretEncoder.setPosition(0);
     }

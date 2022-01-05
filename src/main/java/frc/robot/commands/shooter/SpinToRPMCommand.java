@@ -15,7 +15,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class SpinToRPMCommand extends PIDCommand {
   private final ShooterSubsystem shooterSubsystem;
   
-  /** Creates a new SpinToRPMCommand. */
   public SpinToRPMCommand(ShooterSubsystem shooterSubsystem) {
     super(
         // The controller that the command will use
@@ -30,11 +29,9 @@ public class SpinToRPMCommand extends PIDCommand {
           System.out.println(output);
           shooterSubsystem.shootFlywheel(0.85 + output);
         });
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
     this.shooterSubsystem = shooterSubsystem;
     //getController().setTolerance(10.0);
-    addRequirements(shooterSubsystem);
+    addRequirements(shooterSubsystem); 
   }
 
   // Returns true when the command should end.
