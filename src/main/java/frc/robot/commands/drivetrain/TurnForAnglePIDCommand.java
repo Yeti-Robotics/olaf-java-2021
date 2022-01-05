@@ -34,7 +34,6 @@ public class TurnForAnglePIDCommand extends PIDCommand {
         }
       }
     );
-        // Use the output h;
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     this.drivetrainSubsystem = drivetrainSubsystem;
