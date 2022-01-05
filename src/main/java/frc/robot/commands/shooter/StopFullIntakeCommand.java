@@ -15,9 +15,7 @@ public class StopFullIntakeCommand extends CommandBase {
   private HopperSubsystem hopperSubsystem;
   private PinchRollerSubsystem pinchRollerSubsystem;
 
-  /** Creates a new StopFullIntakeCommand. */
   public StopFullIntakeCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem, PinchRollerSubsystem pinchRollerSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSubsystem = intakeSubsystem;
     this.hopperSubsystem = hopperSubsystem;
     this.pinchRollerSubsystem = pinchRollerSubsystem;
@@ -42,7 +40,7 @@ public class StopFullIntakeCommand extends CommandBase {
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished() { 
     return true;
   }
 }
