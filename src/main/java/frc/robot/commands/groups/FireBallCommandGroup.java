@@ -16,10 +16,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class FireBallCommandGroup extends SequentialCommandGroup {
-  /** Creates a new FireBallCommandGroup. */
   public FireBallCommandGroup(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem, PinchRollerSubsystem pinchRollerSubsystem) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShootingCommand(shooterSubsystem), 
       new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem)
