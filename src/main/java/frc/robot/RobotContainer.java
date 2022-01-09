@@ -44,7 +44,6 @@ import frc.robot.commands.turret.TurnToAnglePIDCommand;
 import frc.robot.commands.turret.TurnToTargetPIDCommand;
 import frc.robot.commands.turret.TurretTestCommand;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.HoodConstants;
@@ -158,17 +157,17 @@ public class RobotContainer {
                 kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
             */
             xboxController = new XboxController(OIConstants.XBOX_PORT); 
-            rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
-            leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
+            // rightTrigger = new XboxTrigger(xboxController, Hand.kRight);
+            // leftTrigger = new XboxTrigger(xboxController, Hand.kLeft);
 
-            setXboxButtonWhenPressed(xboxController, Button.kStickLeft, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
-            setXboxButtonWhenPressed(xboxController, Button.kStickRight, new ToggleIntakePistonCommand(intakeSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kLeftStick, new ToggleShiftingCommand(shiftingGearSubsystem, drivetrainSubsystem));
+            setXboxButtonWhenPressed(xboxController, Button.kRightStick, new ToggleIntakePistonCommand(intakeSubsystem));
             
-            setXboxTriggerWhileHeld(Hand.kRight, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
-            setXboxTriggerWhileHeld(Hand.kLeft, new IntakeInCommand(intakeSubsystem));
+            // setXboxTriggerWhileHeld(Hand.kRight, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+            // setXboxTriggerWhileHeld(Hand.kLeft, new IntakeInCommand(intakeSubsystem));
             
-            setXboxButtonWhileHeld(xboxController, Button.kBumperLeft, new TurretTestCommand(turretSubsystem, -TurretConstants.TURRET_SPEED));//left
-            setXboxButtonWhileHeld(xboxController, Button.kBumperRight, new TurretTestCommand(turretSubsystem, TurretConstants.TURRET_SPEED));//right
+            setXboxButtonWhileHeld(xboxController, Button.kLeftBumper, new TurretTestCommand(turretSubsystem, -TurretConstants.TURRET_SPEED));//left
+            setXboxButtonWhileHeld(xboxController, Button.kRightBumper, new TurretTestCommand(turretSubsystem, TurretConstants.TURRET_SPEED));//right
             
             setXboxButtonWhenPressed(xboxController, Button.kA, new TurnToTargetPIDCommand(turretSubsystem));
             setXboxButtonWhenPressed(xboxController, Button.kB, new ToggleShooterCommand(shooterSubsystem));
@@ -178,19 +177,19 @@ public class RobotContainer {
     }
 
     public double getLeftY() {
-        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : -xboxController.getY(Hand.kLeft);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : -xboxController.getLeftY();
     }
 
     public double getLeftX() {
-        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : -xboxController.getX(Hand.kLeft);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : -xboxController.getLeftX();
     }
 
     public double getRightY() {
-        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : -xboxController.getY(Hand.kRight);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : -xboxController.getRightY();
     }
 
     public double getRightX() {
-        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : -xboxController.getX(Hand.kRight);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : -xboxController.getRightX();
     }
 
     public HashMap<Integer, CommandBase> getButtonMap() {
@@ -216,21 +215,21 @@ public class RobotContainer {
         new JoystickButton(xboxController, button.value).whileHeld(command);
     }
 
-    private void setXboxTriggerWhenPressed(Hand triggerSide, CommandBase command){
-        if(triggerSide == Hand.kLeft){ 
-            leftTrigger.whenActive(command);
-        } else {
-            rightTrigger.whenActive(command);
-        }
-    }
+    // private void setXboxTriggerWhenPressed(Hand triggerSide, CommandBase command){
+    //     if(triggerSide == Hand.kLeft){ 
+    //         leftTrigger.whenActive(command);
+    //     } else {
+    //         rightTrigger.whenActive(command);
+    //     }
+    // }
 
-    private void setXboxTriggerWhileHeld(Hand triggerSide, CommandBase command){
-        if(triggerSide == Hand.kLeft){ 
-            leftTrigger.whileActiveContinuous(command);
-        } else {
-            rightTrigger.whileActiveContinuous(command);
-        }
-    }
+    // private void setXboxTriggerWhileHeld(Hand triggerSide, CommandBase command){
+    //     if(triggerSide == Hand.kLeft){ 
+    //         leftTrigger.whileActiveContinuous(command);
+    //     } else {
+    //         rightTrigger.whileActiveContinuous(command);
+    //     }
+    // }
 
     public void updateIsDriverStation(){
         boolean prev = isDriverStation;

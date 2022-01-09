@@ -10,7 +10,7 @@ import java.util.List;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();   
     
     //gal search viz
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    UsbCamera camera = CameraServer.startAutomaticCapture();
     visionThread = new VisionThread(camera, new GalacticSearch(), pipeline -> {
       if(!pipeline.filterContoursOutput().isEmpty()){
         Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
