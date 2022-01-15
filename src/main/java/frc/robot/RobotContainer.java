@@ -178,19 +178,19 @@ public class RobotContainer {
     }
 
     public double getLeftY() {
-        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : -xboxController.getY(Hand.kLeft);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : -xboxController.getLeftY();
     }
 
     public double getLeftX() {
-        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : -xboxController.getX(Hand.kLeft);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : -xboxController.getLeftX();
     }
 
     public double getRightY() {
-        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : -xboxController.getY(Hand.kRight);
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : -xboxController.getRightY();
     }
 
     public double getRightX() {
-        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : -xboxController.getX(Hand.kRight);
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : -xboxController.getRightX();
     }
 
     public HashMap<Integer, CommandBase> getButtonMap() {
