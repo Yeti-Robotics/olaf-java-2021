@@ -4,23 +4,9 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.vision.VisionThread;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.replay.InitiateRecordingCommand;
-import frc.robot.commands.replay.PlayRecordingCommand;
-import frc.robot.commands.replay.RobotInput;
-import frc.robot.commands.replay.TerminateAndSaveRecordingCommand;
-import frc.robot.utils.GalacticSearch;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,19 +16,8 @@ import frc.robot.utils.GalacticSearch;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static List<RobotInput> inputSequence = new ArrayList<RobotInput>();
-	public static List<RobotInput> recentInputSequence = new ArrayList<RobotInput>();
-
-  // private double maxRPM = 0.0;
-  // private double maxEncoder = 0.0;
 
   private RobotContainer m_robotContainer;
-
-  //gal search viz
-  private VisionThread visionThread;
-  private double centerX, centerY;
-  private final Object imgLock = new Object();
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -52,24 +27,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();   
-    
-    //gal search viz
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    visionThread = new VisionThread(camera, new GalacticSearch(), pipeline -> {
-      if(!pipeline.filterContoursOutput().isEmpty()){
-        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-        synchronized (imgLock) {
-          centerX = r.x + (r.width /2);
-          centerY = r.y + (r.height/2);
-        }
-      } else {
-        centerX = 69.420;
-        centerY = 69.420;
-      }
-    });
-    visionThread.start();
-
+    m_robotContainer = new RobotContainer();
   }
 
   /**
@@ -81,38 +39,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // if(m_robotContainer.shooterSubsystem.getFlywheelRPM() > maxRPM){
-    //   maxRPM = m_robotContainer.shooterSubsystem.getFlywheelRPM();
-    // }
-    // if(m_robotContainer.shooterSubsystem.getAverageEncoder() > maxEncoder){
-    //   maxEncoder = m_robotContainer.shooterSubsystem.getAverageEncoder();
-    // }
-
-    // System.out.println("Flywheel RPM, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getFlywheelRPM() + " - " + m_robotContainer.shooterSubsystem.setPoint);
-    // System.out.println("Flywheel Enc, Max, Setpoint: " + m_robotContainer.shooterSubsystem.getAverageEncoder() + " - " + m_robotContainer.shooterSubsystem.getVelocityUnitsFromRPM(m_robotContainer.shooterSubsystem.setPoint) + "\n.");
-    
-    //  System.out.println(Limelight.getHorDistance() + ", " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()) + ", " + m_robotContainer.shooterSubsystem.getFlywheelRPM());
-
-    System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
-    // System.out.println("driveEncoder" + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
-//good line
-    // System.out.println("drive mode: "+m_robotContainer.drivetrainSubsystem.getDriveMode()+ "; ShiftStatus: " + m_robotContainer.shiftingGearSubsystem.shiftStatus + "; AvgEnc: " + m_robotContainer.drivetrainSubsystem.getAverageEncoder());
-
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    // System.out.println("Distance: " + m_robotContainer.drivetrainSubsystem.getLeftEncoder() + "; Encoder: " + m_robotContainer.drivetrainSubsystem.getRawEncoder() + "; gear status: " + m_robotContainer.shiftingGearSubsystem.shiftStatus);
-
-    // double centerX, centerY;
-    // synchronized (imgLock){
-    //   centerX = this.centerX;
-    //   centerY = this.centerY;
-    // }
-
-    // System.out.println("CenterX: " + centerX + "; CenterY: " + centerY);
-    //System.out.println("hood angle: " + m_robotContainer.hoodSubsystem.hoodAngleFromEncoder(m_robotContainer.hoodSubsystem.getEncoder()));
-
     CommandScheduler.getInstance().run();
   }
 
@@ -121,28 +51,14 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-    // maxRPM = 0.0;
-    // maxEncoder = 0.0;
-    if(m_robotContainer.turretSubsystem.getReverseLimit()){
-      m_robotContainer.turretSubsystem.resetEncoder();
-    }
-    if (m_robotContainer.hoodSubsystem.getBeamBreak()){
-      m_robotContainer.hoodSubsystem.resetEncoder();
-    }
-    m_robotContainer.drivetrainSubsystem.resetGyro();
-    // System.out.println("whore distance: " + Limelight.getHorDistance() + " & estimated angle to shoot from: " + m_robotContainer.hoodSubsystem.calcHoodAngle());
-
-    // System.out.println("Hood encoder: " + m_robotContainer.hoodSubsystem.getEncoder());
-  }
+  public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_robotContainer.drivetrainSubsystem.resetGyro();
-    m_robotContainer.drivetrainSubsystem.resetEncoders();
-    // schedule the autonomous command
+
+    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -150,10 +66,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    CommandScheduler.getInstance().run();
-    System.out.println("gyro:" + m_robotContainer.drivetrainSubsystem.getAngle());
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -161,8 +74,6 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_robotContainer.drivetrainSubsystem.resetGyro();
-    m_robotContainer.drivetrainSubsystem.resetEncoders();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -170,34 +81,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    if (RobotInput.getRecordingState()) {
-      RobotInput currentInput = new RobotInput();
-      switch (m_robotContainer.drivetrainSubsystem.getDriveMode()) {
-        case TANK:
-          currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
-          currentInput.setJoystickYAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightY());
-          break;
-        case CHEEZY:
-        case ARCADE:
-          currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
-          currentInput.setJoystickXAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightX());
-          break;
-      }
-      currentInput.setJoystickYAxis(RobotInput.Joystick.LEFT, m_robotContainer.getLeftY());
-      currentInput.setJoystickXAxis(RobotInput.Joystick.RIGHT, m_robotContainer.getRightX());
-      for (int i = 1; i <= m_robotContainer.getButtonMap().size(); i++){
-        if (m_robotContainer.driverStationJoystick.getRawButton(i)){
-          if (m_robotContainer.getButtonMap().get(i).getClass() != PlayRecordingCommand.class &&
-                  m_robotContainer.getButtonMap().get(i).getClass() != TerminateAndSaveRecordingCommand.class &&
-                  m_robotContainer.getButtonMap().get(i).getClass() != InitiateRecordingCommand.class){
-            currentInput.setButtonState(i, true);
-          }
-        }
-      }
-      inputSequence.add(currentInput);
-    }
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
@@ -207,7 +91,5 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {
-    CommandScheduler.getInstance().run();
-  }
+  public void testPeriodic() {}
 }

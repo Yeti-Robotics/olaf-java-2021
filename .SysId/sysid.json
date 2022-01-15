@@ -1,0 +1,16 @@
+{
+  "SysId": {
+    "Analysis Type": "Drivetrain",
+    "Analyzer": {
+      "window": {
+        "visible": false
+      }
+    },
+    "AnalyzerJSONLocation": "C:\\Users\\mehta\\OneDrive\\Desktop\\sysid_data20220114-184953.json",
+    "NetworkTables Settings": {
+      "serverTeam": "3506"
+    },
+    "mode": "Client",
+    "serverTeam": "3506"
+  }
+}
