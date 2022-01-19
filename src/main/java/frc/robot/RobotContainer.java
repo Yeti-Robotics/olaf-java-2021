@@ -66,7 +66,6 @@ import java.util.HashMap;
  */
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private DriverStation driverStation;
     private CommandScheduler commandScheduler;
     public Joystick driverStationJoystick;
     private XboxController xboxController; 
@@ -90,11 +89,11 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        driverStation = DriverStation.getInstance();
         commandScheduler = CommandScheduler.getInstance();
         
-        isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT); // change this boolean to go from xbox -> driver station control (maybe put on SmartDashboard at some point)
-        
+        // isDriverStation = !DriverStation.getJoystickIsXbox(OIConstants.XBOX_PORT); 
+        isDriverStation = true;
+
         shooterSubsystem = new ShooterSubsystem();
         intakeSubsystem = new IntakeSubsystem();
         drivetrainSubsystem = new DrivetrainSubsystem();
@@ -233,7 +232,7 @@ public class RobotContainer {
 
     public void updateIsDriverStation(){
         boolean prev = isDriverStation;
-        isDriverStation = !driverStation.getJoystickIsXbox(OIConstants.XBOX_PORT);
+        isDriverStation = DriverStation.getJoystickIsXbox(OIConstants.XBOX_PORT);
         if (prev == isDriverStation) {
             return;
         } else {
