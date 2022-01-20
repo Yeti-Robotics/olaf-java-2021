@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANDigitalInput;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxLimitSwitch;
+import com.revrobotics.SparkMaxLimitSwitch.Type;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -11,17 +13,19 @@ import frc.robot.Constants.TurretConstants;
 
 public class TurretSubsystem extends SubsystemBase {
     public CANSparkMax turretSpark;
-    private CANDigitalInput leftLimitSwitch;
-    private CANDigitalInput rightLimitSwitch;
-    private CANEncoder turretEncoder;
+    private SparkMaxLimitSwitch leftLimitSwitch;
+    private SparkMaxLimitSwitch rightLimitSwitch;
+    private RelativeEncoder turretEncoder;
 
     public TurretSubsystem() {
         turretSpark = new CANSparkMax(TurretConstants.TURRET_SPARK, MotorType.kBrushless);
-        rightLimitSwitch = turretSpark.getReverseLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
-        leftLimitSwitch = turretSpark.getForwardLimitSwitch(CANDigitalInput.LimitSwitchPolarity.kNormallyClosed);
+        rightLimitSwitch = turretSpark.getReverseLimitSwitch(Type.kNormallyClosed);
+        leftLimitSwitch = turretSpark.getForwardLimitSwitch(Type.kNormallyClosed);
         turretEncoder = turretSpark.getEncoder();
         turretSpark.setSoftLimit(SoftLimitDirection.kForward, (float)turretEncoderFromAngle(TurretConstants.TURRET_MAX_ANGLE));
         turretSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)turretEncoderFromAngle(TurretConstants.TURRET_MIN_ANGLE));
+        
+        turretSpark.setIdleMode(IdleMode.kBrake);
     }
 
     @Override
@@ -54,14 +58,14 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean getPhysicalLimit(){
-        return leftLimitSwitch.get() || rightLimitSwitch.get();
+        return leftLimitSwitch.isPressed() || rightLimitSwitch.isPressed();
     }
 
     public boolean getReverseLimit() {
-        return rightLimitSwitch.get();
+        return rightLimitSwitch.isPressed();
     }
 
     public boolean getForwardLimit() {
-        return leftLimitSwitch.get();
+        return leftLimitSwitch.isPressed();
     }
 }

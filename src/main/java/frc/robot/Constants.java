@@ -85,7 +85,7 @@ public final class Constants {
     public static final double TURRET_ANGLE_THRESHOLD = 5.0;
     public static final double TURRET_MIN_ANGLE = 0.0;
     public static final double TURRET_MAX_ANGLE = 270; // Double check angle. Is estimate
-    public static final double TURRET_SPEED = 0.2;
+    public static final double TURRET_SPEED = 0.6; // was 0.2
     //placeholders
     public static final double kPTurretVel = 0.01; 
     public static final double kITurretVel = 0;
