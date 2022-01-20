@@ -37,6 +37,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightFalcon1 = new WPI_TalonFX(DriveConstants.RIGHT_FALCON_1);
     rightFalcon2 = new WPI_TalonFX(DriveConstants.RIGHT_FALCON_2);
 
+    rightFalcon1.setInverted(true);
+
     leftFalcon2.follow(leftFalcon1);
     leftFalcon2.setInverted(InvertType.FollowMaster);
     rightFalcon2.follow(rightFalcon1);

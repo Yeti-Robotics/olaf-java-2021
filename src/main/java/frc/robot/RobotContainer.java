@@ -106,16 +106,16 @@ public class RobotContainer {
         shiftingGearSubsystem = new ShiftingGearSubsystem();
         buttonMap = new HashMap<>();
         
-        switch (drivetrainSubsystem.getDriveMode()) {
-            case TANK:
+        // switch (drivetrainSubsystem.getDriveMode()) {
+        //     case TANK:
             drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()), drivetrainSubsystem));
-            break;
-            case CHEEZY:
-            drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-            break;
-            case ARCADE:
-            drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
-        }
+        //     break;
+        //     case CHEEZY:
+        //     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        //     break;
+        //     case ARCADE:
+        //     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()), drivetrainSubsystem));
+        // }
         // Configure the button bindings
         configureButtonBindings();
     }
