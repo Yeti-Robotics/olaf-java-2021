@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -46,6 +49,7 @@ import frc.robot.commands.turret.TurretTestCommand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
@@ -245,6 +249,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         Command command = new PlayRecordingCommand("1616845434755recording.txt", drivetrainSubsystem);
+        PathPlannerTrajectory examplePath = PathPlanner.loadPath("Example Path", 10, 4);
+        PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1.2);
         return command;
     }
 
