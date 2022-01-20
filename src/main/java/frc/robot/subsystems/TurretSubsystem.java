@@ -25,7 +25,7 @@ public class TurretSubsystem extends SubsystemBase {
         turretSpark.setSoftLimit(SoftLimitDirection.kForward, (float)turretEncoderFromAngle(TurretConstants.TURRET_MAX_ANGLE));
         turretSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)turretEncoderFromAngle(TurretConstants.TURRET_MIN_ANGLE));
         
-        turretSpark.setIdleMode(IdleMode.kBrake);
+        turretSpark.setIdleMode(IdleMode.kCoast);
     }
 
     @Override
